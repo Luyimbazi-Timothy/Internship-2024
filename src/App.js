@@ -1,9 +1,9 @@
 import './App.css';
-
+import AddActivityForm from './Components/addActivityForm/form';
 function App() {
   return (
     <div className="App">
-    <h1>Sup peeps!</h1>
+      <AddActivityForm />
     </div>
   );
 }
