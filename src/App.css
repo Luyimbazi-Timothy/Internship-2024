@@ -1,0 +1,33 @@
+body {
+  width: 100%;
+  /* max-width: 100%; */
+  height: 100%;
+  margin: 0;
+  padding: 0 2px;
+}
+.header-section {
+  height: 5rem;
+  /* position: fixed; */
+  margin-top: 0;
+
+}
+
+.middle-section {
+  height: calc(100vh - 5rem);
+  /* position: fixed; */
+
+}
+
+.sidebar {
+  height: calc(100vh - 5rem);
+  background-color: #1167b1;
+  padding: 0;
+}
+.sidepanel-top{
+ height: 65vh;
+}
+
+.sidepanel-footer{
+  height: 20vh;
+
+}
