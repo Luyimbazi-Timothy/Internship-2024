@@ -24,10 +24,10 @@ body {
   padding: 0;
 }
 .sidepanel-top{
- height: 65vh;
+ height: 75vh;
 }
 
 .sidepanel-footer{
-  height: 20vh;
+  /* height: 10vh; */
 
 }

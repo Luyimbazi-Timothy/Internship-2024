@@ -15,16 +15,15 @@ function SideBar() {
           </Nav.Item>
         </Nav>
       </div>
-      <div className="sidepanel-footer d-flex justify-content-center align-item-center" style={{ backgroundColor: "red", padding: 0 }} >
-        <div>
-          <Image
-            src="https://via.placeholder.com/40"
-            roundedCircle
-            style={{ width: '50px', height: '50px', border: '1px solid' }}
-          />
-        </div>
-        <div>John</div>
+      <div className="sidepanel-footer d-flex flex-column align-items-center justify-content-center" style={{ backgroundColor: "", padding: 0 }}>
+        <Image
+          src="https://via.placeholder.com/40"
+          roundedCircle
+          style={{ width: '40px', height: '40px', border: '1px solid' }}
+        />
+        <div>Ahaabwe John</div>
       </div>
+
     </div>
   );
 }
