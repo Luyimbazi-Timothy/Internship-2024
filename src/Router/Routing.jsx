@@ -1,9 +1,10 @@
 import React from 'react'
 import { Routes,Route } from 'react-router-dom'
-import Dashboard from '../Components/Dashboard'
-import ControlPanel from '../Components/ControlPanel'
+import Dashboard from '../Pages/Dashboard/Dashboard'
+import ControlPanel from '../Pages/ControlPanel'
 // import PageNotFound from './Components/dashboard/PageNotFound';
-import PageNotFound from '../Pages/Fixed/PageNotFound';
+// import PageNotFound from '../Pages/PageNotFound';
+import PageNotFound from '../Pages/Error/PageNotFound'
 
 
 
