@@ -14,6 +14,7 @@ function App() {
     const getData = async () => {
       try {
         const result = await fetchData();
+        console.log('Fetched Data:', result); // Log the fetched data
         setData(result);
         setLoading(false);
       } catch (err) {
