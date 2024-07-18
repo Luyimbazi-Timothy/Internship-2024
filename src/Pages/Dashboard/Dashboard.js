@@ -1,8 +1,12 @@
 import React from 'react'
+import TableHandler from '../ActivityData/TableHandler'
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div>
+      Dashboard
+      <TableHandler />
+    </div>
   )
 }
 

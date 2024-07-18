@@ -1,11 +1,11 @@
+// src/layout/fullPage/Layout.js
 import React from 'react';
-
 import { Container, Row, Col } from 'react-bootstrap';
 import Routing from '../../Router/Routing';
 import SideBar from '../default/SideBar';
 import Header from '../default/Header';
 
-function Layout({ children }) {
+function Layout() {
   return (
     <>
       <Container fluid>
@@ -51,7 +51,7 @@ function Layout({ children }) {
             overflowY: 'auto'
           }}>
             <div style={{ height: 'auto' }}>
-              {children}
+              <Routing />
             </div>
           </Col>
         </Row>

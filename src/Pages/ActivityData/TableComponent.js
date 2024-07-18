@@ -3,7 +3,7 @@ import React from 'react';
 
 const TableComponent = ({ data, onRowClick }) => {
   return (
-    <table border="1">
+    <table className='table table-bordered table-striped'>
       <thead>
         <tr>
           <th>PERIOD</th>
