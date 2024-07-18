@@ -120,6 +120,11 @@ function AddActivityForm() {
             label='Implementation'
             name='implementation'
           />
+      <FormikControl
+            control='date'
+            label='Date'
+            name='date'
+          />
 
       <FormikControl
             control='textarea'
