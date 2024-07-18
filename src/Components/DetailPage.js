@@ -16,9 +16,14 @@ const DetailPage = ({ data, onBack }) => {
       <p><strong>Stakeholders:</strong> {data.stakeholders}</p>
       <p><strong>Evidence:</strong></p>
       <div>
-        {data.evidence.map((img, i) => (
-          <img key={i} src={img} alt={`Evidence ${i + 1}`} style={{ width: '100px', height: '100px', marginRight: '10px' }} />
-        ))}
+      {data.evidence.map((img, i) => {
+          const imgName = img.split('/').pop().split('.')[0]; // Extract the file name without extension
+          return (
+            <a key={i} href={img} download={imgName}>
+              {imgName}
+            </a>
+          );
+        })}
       </div>
     </div>
   );
