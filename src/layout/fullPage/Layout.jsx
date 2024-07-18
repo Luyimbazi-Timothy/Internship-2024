@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-import { Container, Row, Col } from'react-bootstrap'
-import Routing from '../../Router/Routing'
-import SideBar from '../default/SideBar'
-import Header from '../default/Header'
+import { Container, Row, Col } from 'react-bootstrap';
+import Routing from '../../Router/Routing';
+import SideBar from '../default/SideBar';
+import Header from '../default/Header';
 
-function Layout() {
+function Layout({ children }) {
   return (
     <>
-     <Container fluid>
+      <Container fluid>
         {/* First Row (Header) */}
         <Row style={{
           height: '5rem',
@@ -40,8 +40,6 @@ function Layout() {
               flexGrow: 1,
             }}>
               <SideBar />
-    
-      
             </div>
           </Col>
 
@@ -53,13 +51,13 @@ function Layout() {
             overflowY: 'auto'
           }}>
             <div style={{ height: 'auto' }}>
-              <Routing/>
+              {children}
             </div>
           </Col>
         </Row>
       </Container>
     </>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

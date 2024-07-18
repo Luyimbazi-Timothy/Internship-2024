@@ -1,10 +1,6 @@
 // src/services/dataService.js
-import cow1 from '../photos/cow1.jpg';
-import cow2 from '../photos/cow2.jpg';
-import goat1 from '../photos/goat1.jpg';
-import goat2 from '../photos/goat2.jpg';
-import goat3 from '../photos/goat3.jpg';
-import cow3 from '../photos/cow3.jpg';
+import cow1 from "../Pages/ActivityData/cow1.jpg"
+import cow2 from "../Pages/ActivityData/cow2.jpg"
 
 const fetchData = async () => {
   const tableData = [
@@ -17,7 +13,7 @@ const fetchData = async () => {
       implementations: 'Implemented new sales strategies',
       comments: 'Quarterly goals met',
       stakeholders: 'Sales team, Marketing', 
-      evidence: [cow1, goat2],
+      evidence: [cow1, cow2],
     },
     {
       period: '2024 Q2',
@@ -28,7 +24,7 @@ const fetchData = async () => {
       implementations: 'Conducted customer feedback surveys',
       comments: 'Positive feedback received',
       stakeholders: 'Customer support, Quality assurance',
-      evidence: [cow1, goat2],
+      evidence: [cow1, cow2],
     },
   ];
   return tableData;
