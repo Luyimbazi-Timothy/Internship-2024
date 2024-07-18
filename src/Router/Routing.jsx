@@ -11,7 +11,7 @@ import PageNotFound from '../Pages/Error/PageNotFound'
 function Routing() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<Dashboard />} /> 
       <Route path="/control-panel" element={<ControlPanel />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
