@@ -1,34 +1,40 @@
-// src/services/dataService.js
-import cow1 from "../Pages/ActivityData/cow1.jpg"
-import cow2 from "../Pages/ActivityData/cow2.jpg"
 
 const fetchData = async () => {
   const tableData = [
     {
-      period: '2024 Q1',
+      period: 'Q1',
       perspective: 'Financial',
       ssMartaObjectives: 'Increase Revenue',
-      initiative: 'Expand Market',
-      measurableActivities: 'Increase sales by 10%',
-      implementations: 'Implemented new sales strategies',
-      comments: 'Quarterly goals met',
-      stakeholders: 'Sales team, Marketing', 
-      evidence: [cow1, cow2],
-      date: '2024-01-15', // Example date
+      initiative: {
+        title: 'Develop tax collection applications',
+        initiativeDetails: {
+          measurableActivities: ['Implement tax collection feature', 'Improve existing features'],
+          implementations: ['Implementation 1', 'Implementation 2'],
+          comments: ['comment 1', 'comment 2'],
+          stakeholders: ['stakeholder 1', 'stakeholder 2'],
+          evidence: ['evidence 1', 'evidence 2'],
+        },
+      },
+      date: '2024-01-15',
     },
     {
-      period: '2024 Q2',
-      perspective: 'Customer',
-      ssMartaObjectives: 'Enhance Customer Satisfaction',
-      initiative: 'Improve Service Quality',
-      measurableActivities: 'Reduce complaints by 20%',
-      implementations: 'Conducted customer feedback surveys',
-      comments: 'Positive feedback received',
-      stakeholders: 'Customer support, Quality assurance',
-      evidence: [cow1, cow2],
-      date: '2024-04-20', // Example date
+      period: 'Q2',
+      perspective: 'Operational',
+      ssMartaObjectives: 'Enhance Efficiency',
+      initiative: {
+        title: 'Optimize tax processing systems',
+        initiativeDetails: {
+          measurableActivities: ['Automate tax return process'],
+          implementations: ['Implementation 3'],
+          comments: ['comment 3', 'comment 4'],
+          stakeholders: ['stakeholder 3'],
+          evidence: ['evidence 3'],
+        },
+      },
+      date: '2024-04-20',
     },
   ];
+  
   return tableData;
 };
 

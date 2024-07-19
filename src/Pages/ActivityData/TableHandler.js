@@ -39,10 +39,10 @@ function TableHandler() {
   if (error) return <div>Error loading data</div>;
 
   return (
-    <div>
+    <div className='mt-1'>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>My Table Data</h1>
-        <button onClick={() => setShowForm(!showForm)}>
+        <h4>Quarter Records Table</h4>
+        <button className='btn btn-primary mb-1' onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Show Table' : 'Add New'}
         </button>
       </div>

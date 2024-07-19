@@ -5,7 +5,6 @@ import TableHandler from '../ActivityData/TableHandler';
 function Dashboard() {
   return (
     <div>
-      Dashboard
       <TableHandler />
     </div>
   );

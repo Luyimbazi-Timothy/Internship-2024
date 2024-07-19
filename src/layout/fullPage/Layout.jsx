@@ -16,7 +16,7 @@ function Layout() {
           top: 0,
           width: '100%',
           backgroundColor: '#f8f9fa',
-          zIndex: 1
+          zIndex: 100
         }}>
           <Col>
             <Header />
@@ -44,9 +44,9 @@ function Layout() {
           </Col>
 
           <Col style={{
-            marginLeft: '20%',
+            marginLeft: '17%',
             backgroundColor: '#ffffff',
-            padding: '20px',
+            // padding: '20px',
             height: 'auto',
             overflowY: 'auto'
           }}>
