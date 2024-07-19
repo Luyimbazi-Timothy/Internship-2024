@@ -28,7 +28,7 @@ function Layout() {
           <Col className='col-2' style={{
             position: 'fixed',
             left: 0,
-            backgroundColor: 'blue',
+            backgroundColor: '#0693E3',
             height: '100vh',
             overflowY: 'auto',
             whiteSpace: 'normal',
