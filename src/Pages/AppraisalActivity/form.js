@@ -67,16 +67,7 @@ function AddActivityForm () {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, onSubmitProps) => {
-        const formData = {
-          ...values,
-          evidence: values.evidence.split(',').map(item => item.trim()), // Convert evidence back to an array
-          date: new Date(values.date).toISOString() // Ensure date is a string
-        };
-        onSubmit(formData);
-        onSubmitProps.setSubmitting(false);
-        onSubmitProps.resetForm();
-      }}
+      onSubmit={onSubmit}
       validateOnChange={true}
       enableReinitialize
     >
@@ -142,7 +133,8 @@ function AddActivityForm () {
 
           <div className='col-sm-12'>
           <FormikControl
-            control='textarea'
+            control='input'
+            type='text'
             label='Implementation'
             name='implementations'
           />
@@ -150,7 +142,7 @@ function AddActivityForm () {
           
           <div className='col-sm-12'>
           <FormikControl
-            control='unrequiredTextArea'
+            control='textarea'
             label='Comment'
             name='comments'
           />
@@ -158,7 +150,7 @@ function AddActivityForm () {
 
           <div className='col-sm-6'>
           <FormikControl
-            control='unrequiredInput'
+            control='input'
             type='text'
             label='Stakeholders'
             name='stakeholders'
@@ -178,7 +170,7 @@ function AddActivityForm () {
 
 
         <div>
-        < button type='cancel'disabled={formik.isSubmitting} className='btn btn-danger btn-sm'>
+        < button type='cancel' disabled={formik.isSubmitting} className='btn btn-danger btn-sm'>
         Cancel
         </button> 
 
