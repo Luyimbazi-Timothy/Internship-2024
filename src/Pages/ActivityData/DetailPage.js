@@ -1,10 +1,10 @@
 // src/components/DetailPage.js
 import React from 'react';
 
-const DetailPage = ({ data, onBack }) => {
+const DetailPage = ({ data, onCancel, onEdit,}) => {
   return (
     <div>
-      <button onClick={onBack}>Back to Table</button>
+      
       <h2>Detail Page</h2>
       <p><strong>Period:</strong> {data.period}</p>
       <p><strong>Perspective:</strong> {data.perspective}</p>
@@ -16,7 +16,7 @@ const DetailPage = ({ data, onBack }) => {
       <p><strong>Stakeholders:</strong> {data.stakeholders}</p>
       <p><strong>Evidence:</strong></p>
       <div>
-      {data.evidence.map((img, i) => {
+        {data.evidence.map((img, i) => {
           const imgName = img.split('/').pop().split('.')[0]; // Extract the file name without extension
           return (
             <a key={i} href={img} download={imgName}>
@@ -25,6 +25,11 @@ const DetailPage = ({ data, onBack }) => {
           );
         })}
       </div>
+      <button onClick={onCancel}>Cancel</button>
+      <button onClick={() => {
+        console.log("Edit button clicked with data:", data); // Add this line for debugging
+        onEdit(data);
+      }}>Edit</button>
     </div>
   );
 };

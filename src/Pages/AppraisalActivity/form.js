@@ -1,9 +1,9 @@
-// src/components/AddActivityForm.js
+import React, { useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import FormikControl from './formikControl';
 import validationSchema from './schema';
 
-const initialValues = {
+const defaultInitialValues = {
   period: '',
   perspective: '',
   ssMartaObjectives: '',
@@ -14,60 +14,67 @@ const initialValues = {
   comments: '',
   stakeholders: '',
   evidence: ''
-};
+}; 
 
 const quarterDropdownOptions = [
+  
   { key: 'Select a quarter', value: '' },
-  { key: 'Q1', value: 'quarter1' },
-  { key: 'Q2', value: 'quarter2' },
-  { key: 'Q3', value: 'quarter3' },
-  { key: 'Q4', value: 'quarter4' }
+  { key: 'Q1', value: '2024 Q1' },
+  { key: 'Q2', value: '2024 Q2' },
+  { key: 'Q3', value: '2024 Q3' },
+  { key: 'Q4', value: '2024 Q4' }
+
 ];
 
 const perspectiveDropdownOptions = [
   { key: 'Select a perspective', value: '' },
-  { key: 'Organisation', value: 'organisation' },
-  { key: 'Business', value: 'business' },
-  { key: 'Financial', value: 'financial' },
-  { key: 'Client', value: 'client' }
+  { key: 'Financial', value: 'Financial' },
+  { key: 'Customer', value: 'Customer' },
+  { key: 'Internal', value: 'Internal' },
+  { key: 'Learning and Growth', value: 'Learning and Growth' }
 ];
 
 const ssmartaObjectiveDropdownOptions = [
   { key: 'Select an objective', value: '' },
-  { key: 'SO1', value: 'so1' },
-  { key: 'SO2', value: 'so2' },
-  { key: 'SO3', value: 'so3' },
-  { key: 'SO4', value: 'so4' }
+  { key: 'Increase Revenue', value: 'Increase Revenue' },
+  { key: 'Enhance Customer Satisfaction', value: 'Enhance Customer Satisfaction' }
 ];
 
 const initiativeDropdownOptions = [
   { key: 'Select an initiative', value: '' },
-  { key: 'I1', value: 'i1' },
-  { key: 'I2', value: 'i2' },
-  { key: 'I3', value: 'i3' },
-  { key: 'I4', value: 'i4' }
+  { key: 'Expand Market', value: 'Expand Market' },
+  { key: 'Improve Service Quality', value: 'Improve Service Quality' }
 ];
 
 const measurableActivityDropdownOptions = [
   { key: 'Select a measurable activity', value: '' },
-  { key: 'MA1', value: 'ma1' },
-  { key: 'MA2', value: 'ma2' },
-  { key: 'MA3', value: 'ma3' },
-  { key: 'MA4', value: 'ma4' }
+  { key: 'Increase sales by 10%', value: 'Increase sales by 10%' },
+  { key: 'Reduce complaints by 20%', value: 'Reduce complaints by 20%' }
 ];
 
-const AddActivityForm = ({ onSubmit }) => {
+const AddActivityForm = ({ initialValues = defaultInitialValues, onSubmit, onCancel }) => {
+  useEffect(() => {
+    console.log("Initial values in form:", initialValues); // Debugging log
+  }, [initialValues]);
+
+  const formatEvidence = (evidence) => {
+    if (Array.isArray(evidence)) {
+      return evidence.join(', ');
+    }
+    return evidence;
+  };
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ ...initialValues, evidence: formatEvidence(initialValues.evidence) }}
       validationSchema={validationSchema}
       onSubmit={(values, onSubmitProps) => {
         const formData = {
           ...values,
-          evidence: values.evidence.split(',').map(item => item.trim()), // Assuming evidence is a comma-separated string
+          evidence: values.evidence.split(',').map(item => item.trim()), // Convert evidence back to an array
           date: new Date(values.date).toISOString() // Ensure date is a string
         };
-        console.log('Form Data:', formData); // Debug the form data
+        console.log('Form Data:', formData); // Debugging log
         onSubmit(formData);
         onSubmitProps.setSubmitting(false);
         onSubmitProps.resetForm();
@@ -144,9 +151,11 @@ const AddActivityForm = ({ onSubmit }) => {
             name='evidence'
           />
 
+          <button onClick={onCancel}>Cancel</button>
           <button type='submit' disabled={!formik.isValid || formik.isSubmitting}>
             Submit
           </button>
+         
         </Form>
       )}
     </Formik>
