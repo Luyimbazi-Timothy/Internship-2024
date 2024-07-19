@@ -81,7 +81,7 @@ function AddActivityForm () {
           <div className='col-sm-6'>
           <FormikControl
             control='select'
-            label='Periodssssssss'
+            label='Period'
             name='period'
             options={Configs.quarterDropdownOptions}
           />
