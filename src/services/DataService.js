@@ -14,6 +14,7 @@ const fetchData = async () => {
       comments: 'Quarterly goals met',
       stakeholders: 'Sales team, Marketing', 
       evidence: [cow1, cow2],
+      date: '2024-01-15', // Example date
     },
     {
       period: '2024 Q2',
@@ -25,6 +26,7 @@ const fetchData = async () => {
       comments: 'Positive feedback received',
       stakeholders: 'Customer support, Quality assurance',
       evidence: [cow1, cow2],
+      date: '2024-04-20', // Example date
     },
   ];
   return tableData;
