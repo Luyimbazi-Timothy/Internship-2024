@@ -33,8 +33,8 @@ function SideBar() {
           />
           <div>
             <strong style={{color:"black"}}>Ahaabwe Derrick</strong>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );
