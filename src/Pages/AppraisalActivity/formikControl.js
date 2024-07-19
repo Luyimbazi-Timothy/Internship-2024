@@ -3,6 +3,7 @@ import Input from './input'
 import Textarea from './textArea'
 import Select from './select'
 import DatePicker from './datePicker'
+import Upload from './upload'
 
 function FormikControl (props) {
   const { control, ...rest } = props
@@ -14,7 +15,9 @@ function FormikControl (props) {
     case 'select':
       return <Select {...rest} />
     case 'date':
-        return <DatePicker {...rest} />   
+        return <DatePicker {...rest} />
+    case 'upload':
+        return <Upload {...rest} />        
     default:
       return null
   }

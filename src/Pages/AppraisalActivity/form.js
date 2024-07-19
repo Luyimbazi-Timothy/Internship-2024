@@ -56,101 +56,143 @@ const measurableActivityDropdownOptions = [
   { key: 'MA4', value: 'ma4' }
 ];
 
-const AddActivityForm = ({ onSubmit }) => {
+const onSubmit = (values, onSubmitProps)  => {
+    const formData = {
+      ...values,
+      evidence: values.evidence.split(',').map(item => item.trim()), // Assuming evidence is a comma-separated string
+      date: new Date(values.date).toISOString() // Ensure date is a string
+    }
+    console.log('Form Data:', formData) // Debug the form data
+    onSubmit(formData)
+    onSubmitProps.setSubmitting(false)
+    onSubmitProps.resetForm()
+  
+} 
+
+
+function AddActivityForm () {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, onSubmitProps) => {
-        const formData = {
-          ...values,
-          evidence: values.evidence.split(',').map(item => item.trim()), // Assuming evidence is a comma-separated string
-          date: new Date(values.date).toISOString() // Ensure date is a string
-        };
-        console.log('Form Data:', formData); // Debug the form data
-        onSubmit(formData);
-        onSubmitProps.setSubmitting(false);
-        onSubmitProps.resetForm();
-      }}
+      onSubmit={onSubmit}
       validateOnChange={true}
       enableReinitialize
     >
       {formik => (
         <Form>
+          <div className='container-sm border'>
+          <div className="row g-3">
+          <p></p>
+          <p className='text-center fw-semibold label'>APPRAISAL FORM</p>
+
+          <div className='col-sm-6'>
           <FormikControl
             control='select'
             label='Period'
             name='period'
             options={quarterDropdownOptions}
           />
+          </div>
 
+          <div className='col-sm-6'>
           <FormikControl
             control='select'
             label='Perspective'
             name='perspective'
             options={perspectiveDropdownOptions}
           />
+          </div>
 
+          <div className='col-sm-6'>
           <FormikControl
             control='select'
             label='Ssmarta Objectives'
             name='ssMartaObjectives'
             options={ssmartaObjectiveDropdownOptions}
           />
+          </div>
 
+          <div className='col-sm-6'>
           <FormikControl
             control='select'
             label='Initiative'
             name='initiative'
             options={initiativeDropdownOptions}
           />
+          </div>
 
+          <div className='col-sm-6'>
           <FormikControl
             control='select'
             label='Measurable Activities'
             name='measurableActivities'
             options={measurableActivityDropdownOptions}
           />
+          </div>
 
+          <div className='col-sm-6'>
+          <FormikControl
+            control='date'
+            label='Date'
+            name='date'
+          />
+          </div>
+
+          <div className='col-sm-12'>
           <FormikControl
             control='input'
             type='text'
             label='Implementation'
             name='implementations'
           />
-          <FormikControl
-            control='date'
-            label='Date'
-            name='date'
-          />
-
+          </div>
+          
+          <div className='col-sm-12'>
           <FormikControl
             control='textarea'
             label='Comment'
             name='comments'
           />
+          </div>
 
+          <div className='col-sm-6'>
           <FormikControl
             control='input'
             type='text'
             label='Stakeholders'
             name='stakeholders'
           />
+          </div>
 
+          <div className='col-sm-6'>
           <FormikControl
-            control='input'
-            type='text'
+            control='upload'
             label='Evidence'
             name='evidence'
           />
+          </div>
 
-          <button type='submit' disabled={!formik.isValid || formik.isSubmitting}>
-            Submit
-          </button>
+          <div className='col-sm-12'>
+          </div>
+
+
+        <div>
+        < button type='cancel' disabled={formik.isSubmitting} className='btn btn-danger btn-sm'>
+        Cancel
+        </button> 
+
+        <button type='submit' disabled={!formik.isValid || formik.isSubmitting} className='btn btn-primary btn-sm'>
+        Submit
+        </button>
+        </div> 
+        </div>
+
+      </div>
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
 export default AddActivityForm;

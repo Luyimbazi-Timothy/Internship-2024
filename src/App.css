@@ -112,3 +112,7 @@ body {
     font-size: 14px;
   }
 }
+
+.error {
+  color: rgb(223, 0, 0);
+}

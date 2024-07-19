@@ -6,8 +6,8 @@ function Select (props) {
   const { label, name, options, ...rest } = props
   return (
     <div >
-      <label htmlFor={name}>{label}</label>
-      <Field as='select' id={name} name={name} {...rest}>
+      <label htmlFor={name} className='form-label fw-semibold'>{label}</label>
+      <Field as='select' id={name} name={name} {...rest} className='form-select form-select-sm'>
         {options.map(option => {
           return (
             <option key={option.value} value={option.value}>

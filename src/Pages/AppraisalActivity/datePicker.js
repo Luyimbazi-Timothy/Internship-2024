@@ -8,7 +8,9 @@ function DatePicker (props) {
   const { label, name, ...rest } = props
   return (
     <div >
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name} className='fw-semibold form-label'>{label}</label>
+      <div className='col-sm-4'>
+      </div>
       <Field name={name}>
         {({ form, field }) => {
           const { setFieldValue } = form
@@ -20,6 +22,7 @@ function DatePicker (props) {
               {...rest}
               selected={value}
               onChange={val => setFieldValue(name, val)}
+              className='form-control form-control-sm'
             />
           )
         }}
