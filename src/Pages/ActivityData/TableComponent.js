@@ -68,6 +68,14 @@ const TableComponent = ({ data, onRowClick }) => {
     data: processedData,
     // enableDensityToggle: false,
     initialState: { density: 'compact' },
+    muiTableBodyRowProps: ({ row }) => ({
+      onClick: (event) => {
+        onRowClick(row.id)
+      },
+      sx: {
+        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+      },
+    }),
   });
   console.log(processedData);
   return (
