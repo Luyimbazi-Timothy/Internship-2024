@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from './TableComponent';
 import DetailPage from './DetailPage';
-import AddActivityForm from '../AppraisalActivity/addActivityForm';
+import AddActivityForm from '../AppraisalActivity/ActivityForm';
 import fetchData from '../../services/DataService';
 
 function TableHandler() {

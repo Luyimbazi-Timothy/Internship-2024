@@ -1,7 +1,7 @@
 // src/components/AddActivityForm.js
 import { Formik, Form } from 'formik';
-import FormikControl from './formikControl';
-import validationSchema from './schema';
+import FormikControl from './FormikControl';
+import validationSchema from './Schema';
 
 const initialValues = {
   period: '',
@@ -68,7 +68,6 @@ function AddActivityForm ({onSubmit}) {
           evidence: values.evidence.split(',').map(item => item.trim()), // Convert evidence back to an array
           date: new Date(values.date).toISOString() // Ensure date is a string
         };
-        console.log('Form Data:', formData); // Debugging log
         onSubmit(formData);
         onSubmitProps.setSubmitting(false);
         onSubmitProps.resetForm();

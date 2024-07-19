@@ -1,11 +1,11 @@
 import React from 'react'
-import Input from './input'
-import Textarea from './textArea'
-import Select from './select'
-import DatePicker from './datePicker'
-import Upload from './upload'
-import UnrequiredInput from './unrequiredInput'
-import UnrequiredTextArea from './unrequiredTextArea'
+import Input from './Input'
+import Textarea from './TextArea'
+import Select from './Select'
+import DatePicker from './DatePicker'
+import Upload from './Upload'
+import UnrequiredInput from './UnrequiredInput'
+import UnrequiredTextArea from './UnrequiredTextArea'
 
 function FormikControl (props) {
   const { control, ...rest } = props
