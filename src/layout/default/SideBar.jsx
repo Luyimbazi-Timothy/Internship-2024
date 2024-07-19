@@ -25,7 +25,7 @@ function SideBar() {
             </Nav.Link>
           </Nav.Item>
         </Nav>
-        <div style={{ marginTop: "60vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {/* <div style={{ marginTop: "60vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Image
             src="https://via.placeholder.com/40"
             roundedCircle
@@ -34,7 +34,7 @@ function SideBar() {
           <div>
             <strong style={{color:"black"}}>Ahaabwe Derrick</strong>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
