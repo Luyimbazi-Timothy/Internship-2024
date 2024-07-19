@@ -1,9 +1,14 @@
-import React from 'react'
+// src/Pages/Dashboard/Dashboard.js
+import React from 'react';
+import TableHandler from '../ActivityData/TableHandler';
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
-  )
+    <div>
+      Dashboard
+      <TableHandler />
+    </div>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

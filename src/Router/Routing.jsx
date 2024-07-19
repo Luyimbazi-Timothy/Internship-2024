@@ -1,11 +1,11 @@
-import React from 'react'
-import { Routes,Route } from 'react-router-dom'
-import Dashboard from '../Pages/Dashboard/Dashboard'
-import ControlPanel from '../Pages/ControlPanel'
+// src/Router/Routing.js
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Dashboard from '../Pages/Dashboard/Dashboard';
+import ControlPanel from '../Pages/ControlPanel';
 // import PageNotFound from './Components/dashboard/PageNotFound';
 // import PageNotFound from '../Pages/PageNotFound';
-import PageNotFound from '../Pages/Error/PageNotFound'
-
+import PageNotFound from '../Pages/Error/PageNotFound';
 
 
 function Routing() {
@@ -15,7 +15,7 @@ function Routing() {
       <Route path="/control-panel" element={<ControlPanel />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
-  )
+  );
 }
 
-export default Routing
+export default Routing;

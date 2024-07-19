@@ -1,27 +1,29 @@
 // src/components/TableComponent.js
 import React from 'react';
+import { format } from 'date-fns';
 
 const TableComponent = ({ data, onRowClick }) => {
+  
+
   return (
-    <table border="1">
-      <thead>
-        <tr>
-          <th>PERIOD</th>
-          <th>PERSPECTIVE</th>
-          <th>SSMARTA OBJECTIVES</th>
-          <th>INITIATIVE</th>
-          <th>MEASURABLE ACTIVITIES</th>
-          <th>IMPLEMENTATIONS</th>
-          <th>COMMENTS</th>
-          <th>STAKEHOLDERS</th>
-          <th>EVIDENCE</th>
-        </tr>
-      </thead>
-      <tbody> 
-        {data.map((row, index) => { 
-          console.log("DATA", data)
-          console.log(`Row ${index + 1} evidence: `, row.evidence); // Debugging line
-          return (
+    
+      <table className='table table-bordered table-striped'>
+        <thead>
+          <tr>
+            <th>PERIOD</th>
+            <th>PERSPECTIVE</th>
+            <th>SSMARTA OBJECTIVES</th>
+            <th>INITIATIVE</th>
+            <th>MEASURABLE ACTIVITIES</th>
+            <th>IMPLEMENTATIONS</th>
+            <th>COMMENTS</th>
+            <th>STAKEHOLDERS</th>
+            <th>EVIDENCE</th>
+            <th>DATE</th> 
+          </tr>
+        </thead>
+        <tbody> 
+          {data.map((row, index) => (
             <tr key={index} onClick={() => onRowClick(index)} style={{ cursor: 'pointer' }}>
               <td>{row.period}</td>
               <td>{row.perspective}</td>
@@ -33,15 +35,16 @@ const TableComponent = ({ data, onRowClick }) => {
               <td>{row.stakeholders}</td>
               <td>
                 {row.evidence.map((img, i) => {
-                  const imgName = img.split('/').pop().split('.')[0]; // Extract the file name without extension
+                  const imgName = img.split('/').pop().split('.')[0];
                   return <span key={i}>{imgName} </span>;
                 })}
               </td>
+              <td>{format(new Date(row.date), 'yyyy-MM-dd')}</td> 
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </tbody>
+      </table>
+    
   );
 };
 
