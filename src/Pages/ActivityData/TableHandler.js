@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from './TableComponent';
 import DetailPage from './DetailPage';
-import AddActivityForm from '../AppraisalActivity/form';
+import AddActivityForm from '../AppraisalActivity/addActivityForm';
 import fetchData from '../../services/DataService';
 
 function TableHandler() {
@@ -30,11 +30,12 @@ function TableHandler() {
     setSelectedRow(index);
   };
 
-  const handleFormSubmit = (newData) => {
+ const handleFormSubmit = (newData) => {
     setData(prevData => [...prevData, newData]);
     setShowForm(false);
   };
 
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
@@ -57,4 +58,4 @@ function TableHandler() {
   );
 }
 
-export default TableHandler;
+export default TableHandler

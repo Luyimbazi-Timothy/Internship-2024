@@ -56,26 +56,23 @@ const measurableActivityDropdownOptions = [
   { key: 'MA4', value: 'ma4' }
 ];
 
-const onSubmit = (values, onSubmitProps)  => {
-    const formData = {
-      ...values,
-      evidence: values.evidence.split(',').map(item => item.trim()), // Assuming evidence is a comma-separated string
-      date: new Date(values.date).toISOString() // Ensure date is a string
-    }
-    console.log('Form Data:', formData) // Debug the form data
-    onSubmit(formData)
-    onSubmitProps.setSubmitting(false)
-    onSubmitProps.resetForm()
-  
-} 
 
-
-function AddActivityForm () {
+function AddActivityForm ({onSubmit}) {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={(values, onSubmitProps) => {
+        const formData = {
+          ...values,
+          evidence: values.evidence.split(',').map(item => item.trim()), // Convert evidence back to an array
+          date: new Date(values.date).toISOString() // Ensure date is a string
+        };
+        console.log('Form Data:', formData); // Debugging log
+        onSubmit(formData);
+        onSubmitProps.setSubmitting(false);
+        onSubmitProps.resetForm();
+      }}
       validateOnChange={true}
       enableReinitialize
     >
@@ -141,8 +138,7 @@ function AddActivityForm () {
 
           <div className='col-sm-12'>
           <FormikControl
-            control='input'
-            type='text'
+            control='textarea'
             label='Implementation'
             name='implementations'
           />
@@ -150,7 +146,7 @@ function AddActivityForm () {
           
           <div className='col-sm-12'>
           <FormikControl
-            control='textarea'
+            control='unrequiredTextArea'
             label='Comment'
             name='comments'
           />
@@ -158,7 +154,7 @@ function AddActivityForm () {
 
           <div className='col-sm-6'>
           <FormikControl
-            control='input'
+            control='unrequiredInput'
             type='text'
             label='Stakeholders'
             name='stakeholders'
@@ -178,7 +174,7 @@ function AddActivityForm () {
 
 
         <div>
-        < button type='cancel' disabled={formik.isSubmitting} className='btn btn-danger btn-sm'>
+        < button type='cancel'disabled={formik.isSubmitting} className='btn btn-danger btn-sm'>
         Cancel
         </button> 
 

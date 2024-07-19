@@ -4,6 +4,8 @@ import Textarea from './textArea'
 import Select from './select'
 import DatePicker from './datePicker'
 import Upload from './upload'
+import UnrequiredInput from './unrequiredInput'
+import UnrequiredTextArea from './unrequiredTextArea'
 
 function FormikControl (props) {
   const { control, ...rest } = props
@@ -17,7 +19,11 @@ function FormikControl (props) {
     case 'date':
         return <DatePicker {...rest} />
     case 'upload':
-        return <Upload {...rest} />        
+        return <Upload {...rest} />    
+    case 'unrequiredInput':
+        return <UnrequiredInput {...rest} /> 
+    case 'unrequiredTextArea':
+        return <UnrequiredTextArea {...rest} />       
     default:
       return null
   }
