@@ -1,9 +1,9 @@
 // src/components/TableHandler.js
-import React, { useState, useEffect } from 'react';
-import TableComponent from './TableComponent';
-import DetailPage from './DetailPage';
-import AddActivityForm from '../AppraisalActivity/ActivityForm';
-import fetchData from '../../services/DataService';
+import React, { useState, useEffect } from "react";
+import TableComponent from "./TableComponent";
+import DetailPage from "./DetailPage";
+import AddActivityForm from "../AddActivity/ActivityForm";
+import fetchData from "../../../services/DataService";
 
 function TableHandler() {
   const [data, setData] = useState([]);
@@ -30,25 +30,36 @@ function TableHandler() {
     setSelectedRow(index);
   };
 
- const handleFormSubmit = (newData) => {
-    setData(prevData => [...prevData, newData]);
+  const handleFormSubmit = (newData) => {
+    setData((prevData) => [...prevData, newData]);
     setShowForm(false);
   };
 
-  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
   return (
-    <div className='mt-1'>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="mt-1">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <h4>Quarter Records Table</h4>
-        <button className='btn btn-primary mb-1' onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Show Table' : 'Add New'}
+        <button
+          className="btn btn-primary mb-1"
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? "Show Table" : "Add New"}
         </button>
       </div>
       {selectedRow !== null ? (
-        <DetailPage data={data[selectedRow]} onBack={() => setSelectedRow(null)} />
+        <DetailPage
+          data={data[selectedRow]}
+          onBack={() => setSelectedRow(null)}
+        />
       ) : showForm ? (
         <AddActivityForm onSubmit={handleFormSubmit} />
       ) : (
@@ -58,4 +69,4 @@ function TableHandler() {
   );
 }
 
-export default TableHandler
+export default TableHandler;
