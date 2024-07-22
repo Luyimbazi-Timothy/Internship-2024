@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Nav } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image';
-
 function SideBar() {
   const [activeKey, setActiveKey] = useState(window.location.pathname);
 
@@ -15,7 +13,7 @@ function SideBar() {
           className="flex-column"
         >
           <Nav.Item>
-            <Nav.Link href="/" eventKey="/" className="text-white">
+            <Nav.Link href="/dashboard" eventKey="/" className="text-white">
               Dashboard
             </Nav.Link>
           </Nav.Item>
@@ -25,16 +23,6 @@ function SideBar() {
             </Nav.Link>
           </Nav.Item>
         </Nav>
-        <div style={{ marginTop: "60vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <Image
-            src="https://via.placeholder.com/40"
-            roundedCircle
-            style={{ width: '50px', height: '50px', border: '1px solid' }}
-          />
-          <div>
-            <strong style={{color:"black"}}>Ahaabwe Derrick</strong>
-          </div>
-        </div>
       </div>
     </div>
   );

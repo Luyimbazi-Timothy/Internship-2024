@@ -1,26 +1,12 @@
-// src/components/TableHandler.js
 import React, { useState, useEffect } from 'react';
 import TableComponent from './TableComponent';
-import DetailPage from './DetailPage';
-import AddActivityForm from '../AppraisalActivity/form'; // Ensure this path is correct
-import fetchData from '../../services/DataService';
+import AddActivityForm from '../AddActivity/ActivityForm';
+import fetchData from '../../../services/DataService';
+import { useNavigate } from 'react-router-dom';
 
-const defaultInitialValues = {
-  period: '',
-  perspective: '',
-  ssMartaObjectives: '',
-  initiative: '',
-  measurableActivities: '',
-  implementations: '',
-  date: '',
-  comments: '',
-  stakeholders: '',
-  evidence: ''
-};
-
-const TableHandler = () => {
+function TableHandler() {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [selectedRow, setSelectedRow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -41,15 +27,15 @@ const TableHandler = () => {
   }, []);
 
   const handleRowClick = (index) => {
-    setSelectedRow(index);
+    navigateTo(data[index]);
+  };
+
+  const navigateTo = (rowData) => {
+    navigate('/appraisal-details', { state: { data: rowData } });
   };
 
   const handleFormSubmit = (newData) => {
-    if (formInitialValues && formInitialValues !== defaultInitialValues) {
-      setData(prevData => prevData.map(item => (item === formInitialValues ? newData : item)));
-    } else {
-      setData(prevData => [...prevData, newData]);
-    }
+    setData((prevData) => [...prevData, newData]);
     setShowForm(false);
     setFormInitialValues(defaultInitialValues);
     setSelectedRow(null); // Ensure DetailPage is hidden
@@ -79,21 +65,15 @@ const TableHandler = () => {
   if (error) return <div>Error loading data</div>;
 
   return (
-    <div>
-       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>Dashboard</h2>
-        <button onClick={() => {
-          setFormInitialValues(defaultInitialValues);
-          setShowForm(true);
-          setSelectedRow(null); // Ensure DetailPage is hidden
-        }}>
-          Add New
+    <div className='mt-1'>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h4>Appraisal Record Preview</h4>
+        <button className='btn btn-primary mb-1' onClick={() => setShowForm(!showForm)}>
+          {showForm ? 'Show Table' : 'Add New'}
         </button>
       </div>
-      {selectedRow !== null && !showForm ? (
-        <DetailPage data={data[selectedRow]} onBack={() => setSelectedRow(null)} onEdit={handleEdit} onCancel={handleCancel} />
-      ) : showForm ? (
-        <AddActivityForm initialValues={formInitialValues} onSubmit={handleFormSubmit} onCancel={handleCancel}/>
+      {showForm ? (
+        <AddActivityForm onSubmit={handleFormSubmit} />
       ) : (
         <TableComponent data={data} onRowClick={handleRowClick} />
       )}

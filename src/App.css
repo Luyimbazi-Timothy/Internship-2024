@@ -90,6 +90,18 @@ body {
   background: #211b19;
 }
 
+.sidebar-col{
+  background-color: #0693E3;
+  height: 100vh;
+  white-space: normal;
+  position: fixed;
+  left: 0;
+  overflow-y: auto;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 767px) {
   .notfound .notfound-404 h1 {
     font-size: 148px;
@@ -111,4 +123,8 @@ body {
     padding: 7px 15px;
     font-size: 14px;
   }
+}
+
+.error {
+  color: rgb(223, 0, 0);
 }
