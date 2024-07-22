@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, TextField, Box } from '@mui/material';
 import { FaArrowLeft } from 'react-icons/fa';
 import { MaterialReactTable } from 'material-react-table';
 import { Card } from 'react-bootstrap';
+import AddNewInitiativeDetailsModal from './AddNewInitiativeDetailsModal';
 
 const DetailPage = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const location = useLocation();
   const navigate = useNavigate();
   const data = location.state?.data;
@@ -38,12 +44,27 @@ const DetailPage = () => {
     {
       header: 'Action',
       accessorKey: 'action',
-      Cell: ({ cell }) => (
+      Cell: ({ cell, row, table }) => (
         <Box display="flex" gap={1}>
-          <Button variant="outlined" color="info" size="small">
+          <Button
+            variant="outlined"
+            color="info"
+            size="small"
+            onClick={() => {
+              table.setEditingRow(row);
+            }}
+          >
             Edit
           </Button>
-          <Button variant="outlined" color="error" size="small">
+          <Button
+            variant="outlined"
+            color="error"
+            size="small"
+            onClick={() => {
+              // Implement delete functionality
+              console.log("Delete action for row:", row.original);
+            }}
+          >
             Delete
           </Button>
         </Box>
@@ -63,33 +84,58 @@ const DetailPage = () => {
           Back
         </Button>
       </div>
-      <div style={{ marginBottom: '16px' }}>
+      <Card.Header>Contract Defaults</Card.Header>
+      <div className='d-flex justify-content-around' style={{ marginBottom: '16px' }}>
         <TextField
           label="Period"
+          disabled
           value={period}
-          fullWidth
           InputProps={{
             readOnly: true,
           }}
           variant="outlined"
           margin="normal"
+          sx={{
+            '& .MuiInputLabel-root': {
+              color: 'black',
+            },
+            '& .MuiInputBase-input': {
+              color: 'black',
+            },
+          }}
         />
         <TextField
           label="Perspective"
           value={perspective}
-          fullWidth
+          disabled
           InputProps={{
             readOnly: true,
           }}
           variant="outlined"
-          margin="normal"
+          margin="dense"
+          sx={{
+            '& .MuiInputLabel-root': {
+              color: 'black',
+            },
+            '& .MuiInputBase-input': {
+              color: 'black',
+            },
+          }}
         />
         <TextField
           label="SSMARTA Objectives"
           value={ssMartaObjectives}
-          fullWidth
+          disabled
           InputProps={{
             readOnly: true,
+          }}
+          sx={{
+            '& .MuiInputLabel-root': {
+              color: 'black',
+            },
+            '& .MuiInputBase-input': {
+              color: 'black',
+            },
           }}
           variant="outlined"
           margin="normal"
@@ -97,22 +143,33 @@ const DetailPage = () => {
         <TextField
           label="Initiative"
           value={title}
-          fullWidth
+          disabled
           InputProps={{
             readOnly: true,
           }}
           variant="outlined"
           margin="normal"
+          sx={{
+            '& .MuiInputLabel-root': {
+              color: 'black',
+            },
+            '& .MuiInputBase-input': {
+              color: 'black',
+            },
+          }}
         />
       </div>
-      <div className="d-flex justify-content-end align-items-end">
-  <Button variant="primary" className="custom-blue-button mb-2">Add</Button>
-</div>
+      <Card.Header>Contract Defaults</Card.Header>
 
+      <div className="d-flex justify-content-end align-items-end">
+        <Button variant="contained" className="custom-blue-button mb-2 mt-2" onClick={handleShow}>+ New Record</Button>
+      </div>
+      <AddNewInitiativeDetailsModal show={show} handleClose={handleClose} />
       <MaterialReactTable
         columns={columns}
         data={tableData}
-        editable
+        editDisplayMode={'modal'}
+        createDisplayMode={'modal'}
       />
     </Card>
   );

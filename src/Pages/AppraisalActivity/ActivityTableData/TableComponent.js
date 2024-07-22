@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { format } from 'date-fns';
 
-// Function to flatten the nested data
 const flattenData = (data) => {
   return data.flatMap(item => {
     const { initiative } = item;
@@ -16,7 +15,7 @@ const flattenData = (data) => {
       comments: initiative.initiativeDetails.comments[index] || '',
       stakeholders: initiative.initiativeDetails.stakeholders[index] || '',
       evidence: initiative.initiativeDetails.evidence[index] || '',
-      date: format(new Date(item.date), 'yyyy-MM-dd'), // format the date
+      date: format(new Date(item.date), 'yyyy-MM-dd'), 
     }));
   });
 };
