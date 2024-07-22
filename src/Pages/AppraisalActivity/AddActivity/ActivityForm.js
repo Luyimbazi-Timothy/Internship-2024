@@ -5,31 +5,26 @@ import validationSchema from "./Schema";
 import Configs from "../../../commons/Configs";
 
 function AddActivityForm() {
-  const onSubmit = (values, onSubmitProps) => {
+  const handleSubmit = (values, onSubmitProps) => {
     const formData = {
       ...values,
-      evidence: values.evidence.split(",").map((item) => item.trim()), // Assuming evidence is a comma-separated string
-      date: new Date(values.date).toISOString(), // Ensure date is a string
+      // evidence: values.evidence.split(',').map(item => item.trim()), // Assuming evidence is a comma-separated string
+      date: new Date(values.date).toISOString() // Ensure date is a string
     };
+    // Call your submit logic here, instead of `onSubmit`
+    // Replace this with your actual submit logic
+    console.log(formData); 
     onSubmit(formData);
     onSubmitProps.setSubmitting(false);
     onSubmitProps.resetForm();
+    
   };
 
   return (
     <Formik
       initialValues={Configs.initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, onSubmitProps) => {
-        const formData = {
-          ...values,
-          evidence: values.evidence.split(",").map((item) => item.trim()), // Convert evidence back to an array
-          date: new Date(values.date).toISOString(), // Ensure date is a string
-        };
-        onSubmit(formData);
-        onSubmitProps.setSubmitting(false);
-        onSubmitProps.resetForm();
-      }}
+      onSubmit={handleSubmit}
       validateOnChange={true}
       enableReinitialize
     >

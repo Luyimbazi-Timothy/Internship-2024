@@ -35,10 +35,26 @@ function TableHandler() {
   };
 
   const handleFormSubmit = (newData) => {
-    setData((prevData) => [...prevData, newData]);
-    setShowForm(false);
-    setFormInitialValues(defaultInitialValues);
-    setSelectedRow(null); // Ensure DetailPage is hidden
+        const dataFromForm =
+      {
+        period: newData.period,
+        perspective: newData.perspective,
+        ssMartaObjectives: newData.ssMartaObjectives,
+        initiative: {
+          title: newData.initiative,
+          initiativeDetails: {
+            measurableActivities: [newData.measurableActivities],
+            implementations: [newData.implementations],
+            comments: [newData.comments],
+            stakeholders: [newData.stakeholders],
+            evidence: [newData.evidence],
+          },
+        },
+        date: newData.date,
+      }  
+  
+      setData(prevData => [...prevData, dataFromForm]);
+      setShowForm(false);
   };
 
   const handleCancel = () => {
