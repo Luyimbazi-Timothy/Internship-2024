@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../Pages/Dashboard/Dashboard';
 import ControlPanel from '../Pages/ControlPanel';
 import PageNotFound from '../Pages/Error/PageNotFound';
-import DetailPage from '../Pages/ActivityData/DetailPage';
+import DetailPage from '../Pages/AppraisalActivity/ActivityTableData/DetailPage';
 import Login from '../Pages/Auth/Login';
 
 
