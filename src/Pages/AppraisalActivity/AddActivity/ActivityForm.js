@@ -6,42 +6,33 @@ import DateView from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Configs from "../../../commons/Configs";
 
-function AddActivityForm() {
-  const onSubmit = (values, onSubmitProps) => {
+function AddActivityForm({onSubmit}) {
+  const handleSubmit = (values, onSubmitProps) => {
     const formData = {
       ...values,
-      evidence: values.evidence.split(",").map((item) => item.trim()), // Assuming evidence is a comma-separated string
-      date: new Date(values.date).toISOString(), // Ensure date is a string
+      date: new Date(values.date).toISOString() // Ensure date is a string
     };
+    console.log(formData); 
     onSubmit(formData);
     onSubmitProps.setSubmitting(false);
     onSubmitProps.resetForm();
+    
   };
 
   return (
     <Formik
       initialValues={Configs.initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, onSubmitProps) => {
-        const formData = {
-          ...values,
-          evidence: values.evidence.split(",").map((item) => item.trim()), // Convert evidence back to an array
-          date: new Date(values.date).toISOString(), // Ensure date is a string
-        };
-        onSubmit(formData);
-        onSubmitProps.setSubmitting(false);
-        onSubmitProps.resetForm();
-      }}
+      onSubmit={handleSubmit}
       validateOnChange={true}
       enableReinitialize
     >
-      {(formik) => (
+      {formik => (
         <Form>
-          <div className="container-sm border">
+          <div className='container-sm border'>
             <div className="row g-3">
               <p></p>
-              <p className="text-center fw-semibold label">APPRAISAL FORM</p>
-
+              <p className='text-center fw-semibold label'>APPRAISAL FORM</p>
               <div className="col-sm-6">
                 <div >
                     <label htmlFor='period' className='form-label fw-semibold'>Period<span className="error">*</span></label>
@@ -183,22 +174,14 @@ function AddActivityForm() {
                 </div>
               </div>
 
-              <div className="col-sm-12"></div>
+              <div className='col-sm-12'></div>
 
               <div>
-                <button
-                  type="cancel"
-                  disabled={formik.isSubmitting}
-                  className="btn btn-danger btn-sm"
-                >
+                <button type='cancel' disabled={formik.isSubmitting} className='btn btn-danger btn-sm'>
                   Cancel
                 </button>
 
-                <button
-                  type="submit"
-                  disabled={!formik.isValid || formik.isSubmitting}
-                  className="btn btn-primary btn-sm"
-                >
+                <button type='submit' disabled={!formik.isValid || formik.isSubmitting} className='btn btn-primary btn-sm'>
                   Submit
                 </button>
               </div>
