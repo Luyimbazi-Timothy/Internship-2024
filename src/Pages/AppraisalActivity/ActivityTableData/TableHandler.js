@@ -34,7 +34,7 @@ function TableHandler() {
   };
 
   const handleFormSubmit = (newData) => {
-    setData(prevData => [...prevData, newData]);
+    setData((prevData) => [...prevData, newData]);
     setShowForm(false);
   };
 

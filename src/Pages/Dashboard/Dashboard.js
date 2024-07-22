@@ -1,6 +1,6 @@
 // src/Pages/Dashboard/Dashboard.js
-import React from 'react';
-import TableHandler from '../ActivityData/TableHandler';
+import React from "react";
+import TableHandler from "../AppraisalActivity/ActivityTableData/TableHandler";
 
 function Dashboard() {
   return (
