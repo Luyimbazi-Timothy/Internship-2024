@@ -1,17 +1,16 @@
+// src/components/TableHandler.js
 import React, { useState, useEffect } from 'react';
 import TableComponent from './TableComponent';
-import AddActivityForm from '../AddActivity/ActivityForm';
+import DetailPage from './DetailPage';
+import AddActivityForm from '../../AppraisalActivity/AddActivity/ActivityForm';
 import fetchData from '../../../services/DataService';
-import { useNavigate } from 'react-router-dom';
 
 function TableHandler() {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [formInitialValues, setFormInitialValues] = useState(defaultInitialValues);
-
   useEffect(() => {
     const getData = async () => {
       try {
@@ -27,68 +26,48 @@ function TableHandler() {
   }, []);
 
   const handleRowClick = (index) => {
-    navigateTo(data[index]);
+    setSelectedRow(index);
   };
 
-  const navigateTo = (rowData) => {
-    navigate('/appraisal-details', { state: { data: rowData } });
-  };
-
-  const handleFormSubmit = (newData) => {
-        const dataFromForm =
-      {
-        period: newData.period,
-        perspective: newData.perspective,
-        ssMartaObjectives: newData.ssMartaObjectives,
-        initiative: {
-          title: newData.initiative,
-          initiativeDetails: {
-            measurableActivities: [newData.measurableActivities],
-            implementations: [newData.implementations],
-            comments: [newData.comments],
-            stakeholders: [newData.stakeholders],
-            evidence: [newData.evidence],
-          },
-        },
-        date: newData.date,
-      }  
+ const handleFormSubmit = (newData) => {
+// console.log("nEW DATA",newData)
+const dataFromForm =
+  {
+    period: newData.period,
+    perspective: newData.perspective,
+    ssMartaObjectives: newData.ssMartaObjectives,
+    initiative: {
+      title: newData.initiative,
+      initiativeDetails: {
+        measurableActivities: [newData.measurableActivities],
+        implementations: [newData.implementations],
+        comments: [newData.comments],
+        stakeholders: [newData.stakeholders],
+        evidence: [newData.evidence],
+      },
+    },
+    date: newData.date,
+  }  
   
       setData(prevData => [...prevData, dataFromForm]);
       setShowForm(false);
   };
 
-  const handleCancel = () => {
-    setShowForm(false);
-    setSelectedRow(null);
-    setFormInitialValues(defaultInitialValues);
-  };
-
-  const handleEdit = (dataToEdit) => {
-    console.log("Editing data:", dataToEdit); // Debugging log
-    setFormInitialValues(dataToEdit);
-    setShowForm(true);
-  };
-
-  useEffect(() => {
-    console.log("Show Form updated:", showForm); // Debugging log
-  }, [showForm]);
-
-  useEffect(() => {
-    console.log("Current form initial values:", formInitialValues); // Debugging log
-  }, [formInitialValues]);
-
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
   return (
     <div className='mt-1'>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h4>Appraisal Record Preview</h4>
+        <h4>Quarter Records Table</h4>
         <button className='btn btn-primary mb-1' onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Show Table' : 'Add New'}
         </button>
       </div>
-      {showForm ? (
+      {selectedRow !== null ? (
+        <DetailPage data={data[selectedRow]} onBack={() => setSelectedRow(null)} />
+      ) : showForm ? (
         <AddActivityForm onSubmit={handleFormSubmit} />
       ) : (
         <TableComponent data={data} onRowClick={handleRowClick} />
@@ -97,4 +76,4 @@ function TableHandler() {
   );
 }
 
-export default TableHandler;
+export default TableHandler
