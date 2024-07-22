@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from './TableComponent';
-import AddActivityForm from '../AppraisalActivity/form';
-import fetchData from '../../services/DataService';
+import AddActivityForm from '../AddActivity/ActivityForm';
+import fetchData from '../../../services/DataService';
 import { useNavigate } from 'react-router-dom';
 
 function TableHandler() {
