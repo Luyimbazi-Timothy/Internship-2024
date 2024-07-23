@@ -6,11 +6,7 @@ const validationSchema = Yup.object({
     ssMartaObjectives: Yup.string().required('This is a required field.'),
     initiative: Yup.string().required('This is a required field.'),
     measurableActivities: Yup.string().required('This is a required field.'),
-    implementations: Yup.string().required('This is a required field.'),
     date: Yup.date().required('This is a required field.'),
-    comments: Yup.string(),
-    stakeholders: Yup.string(),
-    evidence: Yup.mixed().required('This is a required field.')
   })
 
 export default validationSchema  
