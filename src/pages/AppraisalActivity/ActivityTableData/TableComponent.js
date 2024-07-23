@@ -1,14 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { format, setDate } from 'date-fns';
 
 const TableComponent = ({ data, onRowClick }) => {
+  const [tableData, setTableData] = useState(data)
 
-  const [tableData,setTableData]=useState(data)
-
-  useEffect(()=>{
+  useEffect(() => {
     setTableData(data)
-  },[data])
+  }, [data])
 
   const columns = useMemo(() => [
     {
@@ -36,13 +34,13 @@ const TableComponent = ({ data, onRowClick }) => {
       header: 'Initiative',
       size: 150,
     },
-   
+
     {
       accessorKey: 'measurableActivity.activity',
       header: 'Measurable Activity',
       size: 200,
     },
-    
+
   ], []);
 
   const table = useMaterialReactTable({

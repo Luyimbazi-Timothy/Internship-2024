@@ -42,7 +42,7 @@ function AddActivityForm({ onSubmit }) {
         <Form>
           <div className='container-sm border'>
             <div className="row g-3">
-              <p className='text-center fw-semibold label'>APPRAISAL FORM</p>
+              <h4 className='text-center fw-semibold label'>Create Activity Form</h4>
               
               {/* Period Field */}
               <div className="col-sm-6">
