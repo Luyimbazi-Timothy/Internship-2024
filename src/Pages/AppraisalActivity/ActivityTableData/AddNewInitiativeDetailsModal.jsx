@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-function AddNewInitiativeDetailsModal({ show, handleClose }) {
+function AddNewInitiativeDetailsModal({ measurableActivity, show, handleClose }) {
   return (
     <Modal size='lg' show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Activity : {measurableActivity} </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -19,21 +19,11 @@ function AddNewInitiativeDetailsModal({ show, handleClose }) {
               placeholder="Enter Date"
             />
           </Form.Group>
-
-          <Form.Group controlId="formMeasurableActivities">
-            <Form.Label>Measurable Activities</Form.Label>
-            <Form.Control
-              as="textarea"
-              style={{ height: '100px' }}
-              name="measurableActivities"
-              placeholder="Enter Measurable Activities"
-            />
-          </Form.Group>
-
           <Form.Group controlId="formImplementations">
             <Form.Label>Implementations</Form.Label>
             <Form.Control
-              type="text"
+              as="textarea"
+              style={{ height: '80px' }}
               name="implementations"
               placeholder="Enter Implementations"
             />
@@ -66,10 +56,6 @@ function AddNewInitiativeDetailsModal({ show, handleClose }) {
               placeholder="Enter Evidence"
             />
           </Form.Group>
-
-          <Button variant="primary" type="submit" style={{ marginTop: '16px' }}>
-            Submit
-          </Button>
         </Form>
       </Modal.Body>
       <Modal.Footer>

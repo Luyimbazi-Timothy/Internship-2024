@@ -3,10 +3,13 @@ import TableComponent from './TableComponent';
 import AddActivityForm from '../AddActivity/ActivityForm';
 import fetchData from '../../../services/DataService';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { FaArrowLeft } from 'react-icons/fa';
 
-function TableHandler() {
+function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -25,8 +28,16 @@ function TableHandler() {
     getData();
   }, []);
 
+  useEffect(() => {
+    const filterData = () => {
+      const filtered = data.filter(row => row.measurableActivity.period === quartileFilter);
+      setFilteredData(filtered);
+    };
+    filterData();
+  }, [quartileFilter, data]);
+
   const handleRowClick = (index) => {
-    navigateTo(data[index]);
+    navigateTo(filteredData[index]);
   };
 
   const navigateTo = (rowData) => {
@@ -38,21 +49,26 @@ function TableHandler() {
     setShowForm(false);
   };
 
+  const handleButtonClick = () => {
+    setShowForm(!showForm)
+    toggleDashBoardBtnDisplay(showForm)
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
   return (
-    <div className='mt-1'>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h4>Appraisal Record Preview</h4>
-        <button className='btn btn-primary mb-1' onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Show Table' : 'Add New'}
-        </button>
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'end' }}>
+        {showForm ?null:null}
+        <Button className='btn btn-primary mb-1' onClick={() => handleButtonClick()}>
+          {showForm ?<FaArrowLeft />: 'Add New'}
+        </Button>
       </div>
       {showForm ? (
         <AddActivityForm onSubmit={handleFormSubmit} />
       ) : (
-        <TableComponent data={data} onRowClick={handleRowClick} />
+        <TableComponent data={filteredData} onRowClick={handleRowClick} />
       )}
     </div>
   );
