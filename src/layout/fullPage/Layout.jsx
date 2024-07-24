@@ -1,7 +1,7 @@
 // src/layout/fullPage/Layout.js
 import React, { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Routing from "../../router/Routing";
+import Routing from "../../Router/Routing";
 import SideBar from "../default/SideBar";
 import Header from "../default/Header";
 import { DisplaySidebarContext } from "../../Components/ContextHook/useDisplayContext";
