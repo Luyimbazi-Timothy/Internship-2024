@@ -4,6 +4,7 @@ const ControlPanel = () => {
   return (
     <>
     <Widgets  />
+    
     </>
   )
 }
