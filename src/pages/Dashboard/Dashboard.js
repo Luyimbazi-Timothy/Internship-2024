@@ -2,12 +2,20 @@ import React, { useState, useEffect } from "react";
 import TableHandler from "../AppraisalActivity/ActivityTableData/TableHandler";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button, ButtonGroup } from "@mui/material";
+import Swal from "sweetalert2";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("Q1");
   const [tabDisplay, setTabDisplay] = useState(true);
   const [quartileFilter, setQuartileFilter] = useState("Q1");
-
+  Swal.fire({
+    position:'top',
+    text: 'Welcome Derrick',
+    icon: 'success',
+    showConfirmButton: false,
+    timerProgressBar:true,
+    timer:1500
+  })
   useEffect(() => {
     setQuartileFilter(activeTab);
   }, [activeTab]);

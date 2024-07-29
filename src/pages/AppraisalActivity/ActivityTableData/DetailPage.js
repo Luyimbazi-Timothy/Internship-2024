@@ -5,10 +5,10 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { MaterialReactTable } from 'material-react-table';
 import { Card } from 'react-bootstrap';
 import AddNewInitiativeDetailsModal from './AddNewInitiativeDetailsModal';
+import Swal from 'sweetalert2';
 
 const DetailPage = () => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -16,11 +16,48 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const data = location.state?.data;
 
+  const confirmDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, continue!!",
+      allowOutsideClick:false,
+      allowEscapeKey:false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Implementation activity deleted successfully.",
+          icon: "success"
+        });
+      }
+    });
+  };
+
+  const displyaSuccessMessage = () => {
+    Swal.fire({
+      position: 'top',
+      text: 'Record Saved Successfully',
+      icon: 'success',
+      showConfirmButton: false,
+      timerProgressBar:true,
+      timer: 2000
+    });
+  };
+
+  const handleSave = () => {
+    console.log('saved');
+    handleClose();
+    displyaSuccessMessage();
+  };
+
   if (!data) {
     return <Container><p>No data available</p></Container>;
   }
-
-  console.log(data);
 
   const tableData = data.measurableActivity.implementations.map((implementation) => ({
     id: implementation.id,
@@ -58,7 +95,7 @@ const DetailPage = () => {
             color="error"
             size="small"
             onClick={() => {
-              // Implement delete functionality
+              confirmDelete();
               console.log("Delete action for row:", row.original);
             }}
           >
@@ -107,16 +144,16 @@ const DetailPage = () => {
         </div>
       </div>
       <Card.Header>Measurable Activity Implementations</Card.Header>
-
       <div className="d-flex justify-content-end align-items-end">
         <Button variant="contained" className="custom-blue-button mb-2 mt-2" onClick={handleShow}>+ New Record</Button>
       </div>
-      <AddNewInitiativeDetailsModal measurableActivity={data.measurableActivity.activity} show={show} handleClose={handleClose} />
+      <AddNewInitiativeDetailsModal displyaSuccessMessage={displyaSuccessMessage} measurableActivity={data.measurableActivity.activity} show={show} handleClose={handleClose} />
       <MaterialReactTable
         columns={columns}
         data={tableData}
         editDisplayMode={'modal'}
         createDisplayMode={'modal'}
+        onEditingRowSave={handleSave}
       />
     </Card>
   );
