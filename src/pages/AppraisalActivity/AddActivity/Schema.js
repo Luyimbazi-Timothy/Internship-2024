@@ -9,4 +9,8 @@ const validationSchema = Yup.object({
     date: Yup.date().required('This is a required field.'),
   })
 
+export const controlPanelValidationSchema = Yup.object({
+    content: Yup.string().required('Required*')
+  })
+
 export default validationSchema  

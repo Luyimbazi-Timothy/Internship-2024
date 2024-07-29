@@ -2,7 +2,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import ControlPanel from "../pages/ControlPanel";
+import ControlPanel from "../pages/ControlPanel/ControlPanel";
 import PageNotFound from "../pages/Error/PageNotFound";
 import DetailPage from "../pages/AppraisalActivity/ActivityTableData/DetailPage";
 import Login from "../pages/Auth/Login";
