@@ -44,8 +44,8 @@ function DeleteDialogBox() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button color='error' onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleFormDelete} autoFocus>
+              <Button variant='contained' color='error' onClick={handleClose}>Cancel</Button>
+              <Button variant='contained' onClick={handleFormDelete} autoFocus>
                 Yes
               </Button>
             </DialogActions>

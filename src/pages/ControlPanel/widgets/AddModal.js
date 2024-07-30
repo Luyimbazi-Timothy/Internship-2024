@@ -83,12 +83,15 @@ function AddModal() {
                       type="submit"
                       disabled={!formik.isValid || formik.isSubmitting}
                       color="primary"
+                      variant='contained'
+                      sx={{ mr: 1 }}
                     >
                       {isPreview ? 'Save' : 'Add'}
                     </Button>
                     <Button
                       onClick={handleClose}
                       color="error"
+                      variant='contained'
                     >
                       Cancel
                     </Button>
