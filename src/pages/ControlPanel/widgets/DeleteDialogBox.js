@@ -16,7 +16,7 @@ function DeleteDialogBox() {
         setTableData(tableData.filter(item => item !== rowToDelete.original))
         setAlertOpen(false)
         Swal.fire({
-          position: "top-end",
+          position: "top",
           icon: "success",
           title: "Record has been deleted successfully",
           showConfirmButton: false,

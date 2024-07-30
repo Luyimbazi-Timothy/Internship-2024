@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Grid from '@mui/material/Grid'
@@ -29,7 +28,7 @@ function AddModal() {
         item === editData ? { field: values.content } : item
       ))
       Swal.fire({
-        position: "top-end",
+        position: "top",
         icon: "success",
         title: "Record has been updated succesfully",
         showConfirmButton: false,
@@ -40,7 +39,7 @@ function AddModal() {
       const newEntry = { field: values.content }
       setTableData([...tableData, newEntry])
       Swal.fire({
-        position: "top-end",
+        position: "top",
         icon: "success",
         title: "Entry has been added successfully",
         showConfirmButton: false,

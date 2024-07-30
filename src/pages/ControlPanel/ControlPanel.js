@@ -63,7 +63,7 @@ const ControlPanel = () => {
           </Context.Provider>
           <Grid item xs={12}>
           {/* table data  */}
-          <Context.Provider value={[columnHeader, tableData, setFormOpen, setIsPreview, setEditData, setRowToDelete, setAlertOpen]}>
+          <Context.Provider value={[columnHeader, tableData, setFormOpen, setEditData, setIsPreview , setRowToDelete, setAlertOpen]}>
          <TableData />
          </Context.Provider>
          </Grid>

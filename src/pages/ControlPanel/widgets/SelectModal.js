@@ -22,7 +22,7 @@ function SelectModal() {
         { label: 'Perspective', id: 2 },
         { label: 'Ssmarta Objectives', id: 3 },
         { label: 'Initiatives', id: 4 },
-        { label: 'Measurable Activities', id: 5 },
+        { label: 'Activities', id: 5 },
       ]
 
       const handleChange = (event, value) => {
