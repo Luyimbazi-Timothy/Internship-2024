@@ -8,14 +8,22 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState("Q1");
   const [tabDisplay, setTabDisplay] = useState(true);
   const [quartileFilter, setQuartileFilter] = useState("Q1");
-  Swal.fire({
-    position:'top',
-    text: 'Welcome Derrick',
-    icon: 'success',
-    showConfirmButton: false,
-    timerProgressBar:true,
-    timer:1500
-  })
+
+  useEffect(() => {
+    const isFirstLoad = localStorage.getItem("isFirstLoad");
+    if (!isFirstLoad) {
+      Swal.fire({
+        position: 'center',
+        text: 'Welcome Derrick',
+        icon: 'success',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 1500
+      });
+      localStorage.setItem("isFirstLoad", "false");
+    }
+  }, []);
+
   useEffect(() => {
     setQuartileFilter(activeTab);
   }, [activeTab]);
@@ -23,8 +31,9 @@ function Dashboard() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
   const toggleDashBoardBtnDisplay = () => {
-    setTabDisplay(!tabDisplay)
+    setTabDisplay(!tabDisplay);
   };
 
   return (
@@ -47,7 +56,6 @@ function Dashboard() {
             </div>
           </Col>
         </Row>
-
       ) : null}
 
       <Row>
