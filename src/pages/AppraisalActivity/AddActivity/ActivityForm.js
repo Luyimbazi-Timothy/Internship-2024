@@ -1,7 +1,7 @@
 // src/components/AddActivityForm.js
 import React from 'react'
 import { Formik, Form , Field, ErrorMessage } from "formik";
-import validationSchema from "./Schema";
+import { validationSchema } from './Schema';
 import DateView from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Configs from "../../../commons/Configs";

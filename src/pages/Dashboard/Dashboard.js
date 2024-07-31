@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TableHandler from "../AppraisalActivity/ActivityTableData/TableHandler";
+import TableHandler from "../AppraisalActivity/activityTableData/TableHandler";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button, ButtonGroup } from "@mui/material";
 

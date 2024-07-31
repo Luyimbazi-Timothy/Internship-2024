@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Routing from "../../router/Routing";
 import SideBar from "../default/SideBar";
 import Header from "../default/Header";
-import { DisplaySidebarContext } from "../../Components/ContextHook/useDisplayContext";
+import { DisplaySidebarContext } from "../../Components/contextHook/useDisplayContext";
 
 function Layout() {
   const { displaySidebarPanel } = useContext(DisplaySidebarContext);
