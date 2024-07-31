@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 
 function DeleteDialogBox() {
 
-    const [rowToDelete, tableData, alertOpen , setTableData, setAlertOpen ] = useContext(Context)
+    const {rowToDelete, tableData, alertOpen , setTableData, setAlertOpen } = useContext(Context)
 
     const handleFormDelete = () => {
         setTableData(tableData.filter(item => item !== rowToDelete.original))

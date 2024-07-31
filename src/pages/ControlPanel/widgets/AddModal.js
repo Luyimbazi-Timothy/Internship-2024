@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
 
 function AddModal() {
 
-  const [isPreview, formOpen, setFormOpen, tableData, setTableData, editData, setEditData] = useContext(Context)
+  const {isPreview, formOpen, setFormOpen, tableData, setTableData, editData, setEditData} = useContext(Context)
 
   const initialValues = { content: editData ? editData.field : '' }
 
