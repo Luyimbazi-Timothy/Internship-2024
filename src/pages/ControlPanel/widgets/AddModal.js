@@ -28,7 +28,7 @@ function AddModal() {
         item === editData ? { field: values.content } : item
       ))
       Swal.fire({
-        position: "top",
+        position: "center",
         icon: "success",
         title: "Record has been updated succesfully",
         showConfirmButton: false,
@@ -39,7 +39,7 @@ function AddModal() {
       const newEntry = { field: values.content }
       setTableData([...tableData, newEntry])
       Swal.fire({
-        position: "top",
+        position: "center",
         icon: "success",
         title: "Entry has been added successfully",
         showConfirmButton: false,
