@@ -41,18 +41,17 @@ function AddModal() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Entry has been added successfully",
+        title: "Item has been added successfully",
         showConfirmButton: false,
         timer: 1500
       })
     }
     handleClose()
   }
-
   return (
     <>
     <Dialog open={formOpen} onClose={handleClose}>
-            <DialogTitle>{isPreview ? 'Edit details' : 'Add an Entry'}</DialogTitle>
+            <DialogTitle>{isPreview ? 'Edit details' : 'Add an Item'}</DialogTitle>
             <DialogContent>
               <Formik
                 initialValues={initialValues}

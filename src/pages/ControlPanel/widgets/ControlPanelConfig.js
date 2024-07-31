@@ -8,8 +8,8 @@ export const dataSets = {
 
 
 export const controlPanelOptions = [
-    { label: 'Period', id: 1 },
-    { label: 'Perspective', id: 2 },
+    { label: 'Periods', id: 1 },
+    { label: 'Perspectives', id: 2 },
     { label: 'Ssmarta Objectives', id: 3 },
     { label: 'Initiatives', id: 4 },
     { label: 'Activities', id: 5 },
