@@ -7,10 +7,14 @@ import { Edit, Delete } from '@mui/icons-material'
 import { Context } from '../ControlPanel'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom'
 
 function TableData({handleAdd, addBtnLabel}) {
   const { columnHeader, tableData, setFormOpen, setEditData, setIsPreview, setRowToDelete, setAlertOpen } = useContext(Context)
+
+  const navigate = useNavigate()
 
   const columns = useMemo(
     () => [
@@ -34,8 +38,18 @@ function TableData({handleAdd, addBtnLabel}) {
     setAlertOpen(true)
   }
 
+  const handleToDashboardNavigation = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <>
+      <Box display="flex" justifyContent="flex-end" width="100%">
+        <Button onClick={handleToDashboardNavigation} variant="contained" color="secondary" startIcon={<ArrowBackIcon />}>
+          Back to Dashboard
+        </Button>
+      </Box>
+      <br/>
       <Box display="flex" justifyContent="flex-end" width="100%">
         <Button onClick={handleAdd} variant="contained" endIcon={<AddIcon />}>
           Add {addBtnLabel}
