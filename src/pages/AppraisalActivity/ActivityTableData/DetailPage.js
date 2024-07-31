@@ -106,8 +106,9 @@ const DetailPage = () => {
 
   return (
     <Card variant="outlined" style={{ padding: '16px', margin: '16px 0' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>Activity Preview</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} className='mb-1'>
+        <h4>Activity:<span className='ms-2' style={{color:"red"}}>{data.measurableActivity.activity}</span>
+        </h4>
         <Button
           variant="contained"
           startIcon={<FaArrowLeft />}
@@ -120,11 +121,6 @@ const DetailPage = () => {
       <Card.Header>Contract Defaults</Card.Header>
       <div className='mb-4'>
         <div className='my-1' style={{ marginBottom: '16px' }}>
-          <div>
-            <h6>
-              Measurable Activity:<span className='ms-2' style={{color:"red"}}>{data.measurableActivity.activity}</span>
-            </h6>
-          </div>
           <div className='border-1'>
             <h6>
               <span className='me-2'>Period:</span> <span>{data.measurableActivity.period}</span>

@@ -1,146 +1,157 @@
-// src/components/AddActivityForm.js
-import React from 'react'
-import { Formik, Form , Field, ErrorMessage } from "formik";
-import validationSchema from "./Schema";
-import DateView from "react-datepicker";
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Card, Form as BootstrapForm } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import Configs from "../../../commons/Configs";
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object({
+  period: Yup.string().required('This is a required field.'),
+  perspective: Yup.string().required('This is a required field.'),
+  ssMartaObjectives: Yup.string().required('This is a required field.'),
+  initiative: Yup.string().required('This is a required field.'),
+  measurableActivities: Yup.string().required('This is a required field.'),
+  date: Yup.date().required('This is a required field.').max(new Date(), 'Date cannot be in the future'),
+});
 
 function AddActivityForm({ onSubmit }) {
   const handleSubmit = (values, onSubmitProps) => {
     const formData = {
       ...values,
-      date: new Date(values.date).toISOString() // Ensure date is a string
+      date: new Date(values.date).toISOString(),
     };
-    console.log('Form data:', formData);
-    // Convert record to a data_object_structure
-    const new_record =  {
+
+    const new_record = {
       id: 1,
       measurableActivity: {
         activity: formData.measurableActivities,
         period: formData.period,
-        perspective: formData.perspectiveActivity,
-        ssMartaObjectives: formData.ssMartaObjectivesActivity,
+        perspective: formData.perspective,
+        ssMartaObjectives: formData.ssMartaObjectives,
         initiative: formData.initiative,
-        implementations: [  ],
+        implementations: [],
       },
-    }
+    };
+
     onSubmit(new_record);
     onSubmitProps.setSubmitting(false);
     onSubmitProps.resetForm();
   };
 
   return (
-    <Formik
-      initialValues={Configs.initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      validateOnChange={true}
-      enableReinitialize
-    >
-      {formik => (
-        <Form>
-          <div className='container-sm border'>
-            <div className="row g-3">
-              <h4 className='text-center fw-semibold label'>Create Activity Form</h4>
-              
-              {/* Period Field */}
-              <div className="col-sm-6">
-                <label htmlFor='period' className='form-label fw-semibold'>Period<span className="error">*</span></label>
-                <Field as='select' id='period' name='period' className='form-select form-select-sm'>
-                  {Configs.quarterDropdownOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.key}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage component="div" name='period' className='text-danger' />
-              </div>
 
-              {/* Perspective Field */}
-              <div className="col-sm-6">
-                <label htmlFor='perspective' className='form-label fw-semibold'>Perspective<span className="error">*</span></label>
-                <Field as='select' id='perspective' name='perspective' className='form-select form-select-sm'>
-                  {Configs.perspectiveDropdownOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.key}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage component="div" name='perspective' className='text-danger' />
-              </div>
+    <Card>
+      <Card.Header>
+        <h5 className='text-center fw-semibold label'>Create Activity Form</h5>
+      </Card.Header>
+      <Card.Body>
+        <Formik
+          initialValues={Configs.initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+          validateOnChange={true}
+          enableReinitialize
+        >
+          {formik => (
+            <Form>
+              <div className='container'>
+                <div className="row">
+                  {/* Period Field */}
+                  <div className="col-sm-6 mb-3">
+                    <BootstrapForm.Group>
+                      <BootstrapForm.Label htmlFor="period">Period <span className="text-danger">*</span></BootstrapForm.Label>
+                      <Field as={BootstrapForm.Select} name="period">
+                        {Configs.quarterDropdownOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.key}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage name="period" component="div" className="text-danger" />
+                    </BootstrapForm.Group>
+                  </div>
 
-              {/* Ssmarta Objectives Field */}
-              <div className="col-sm-6">
-                <label htmlFor='ssMartaObjectives' className='form-label fw-semibold'>Ssmarta Objectives<span className="error">*</span></label>
-                <Field as='select' id='ssMartaObjectives' name='ssMartaObjectives' className='form-select form-select-sm'>
-                  {Configs.ssmartaObjectiveDropdownOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.key}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage component="div" name='ssMartaObjectives' className='text-danger' />
-              </div>
+                  {/* Perspective Field */}
+                  <div className="col-sm-6 mb-3">
+                    <BootstrapForm.Group>
+                      <BootstrapForm.Label htmlFor="perspective">Perspective <span className="text-danger">*</span></BootstrapForm.Label>
+                      <Field as={BootstrapForm.Select} name="perspective">
+                        {Configs.perspectiveDropdownOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.key}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage name="perspective" component="div" className="text-danger" />
+                    </BootstrapForm.Group>
+                  </div>
 
-              {/* Initiative Field */}
-              <div className="col-sm-6">
-                <label htmlFor='initiative' className='form-label fw-semibold'>Initiative<span className="error">*</span></label>
-                <Field as='select' id='initiative' name='initiative' className='form-select form-select-sm'>
-                  {Configs.initiativeDropdownOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.key}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage component="div" name='initiative' className='text-danger' />
-              </div>
+                  {/* SsMarta Objectives Field */}
+                  <div className="col-sm-6 mb-3">
+                    <BootstrapForm.Group>
+                      <BootstrapForm.Label htmlFor="ssMartaObjectives">SsMarta Objectives <span className="text-danger">*</span></BootstrapForm.Label>
+                      <Field as={BootstrapForm.Select} name="ssMartaObjectives">
+                        {Configs.ssmartaObjectiveDropdownOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.key}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage name="ssMartaObjectives" component="div" className="text-danger" />
+                    </BootstrapForm.Group>
+                  </div>
 
-              {/* Measurable Activities Field */}
-              <div className="col-sm-6">
-                <label htmlFor='measurableActivities' className='form-label fw-semibold'>Measurable Activity<span className="error">*</span></label>
-                <Field as='select' id='measurableActivities' name='measurableActivities' className='form-select form-select-sm'>
-                  {Configs.measurableActivityDropdownOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.key}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage component="div" name='measurableActivities' className='text-danger' />
-              </div>
+                  {/* Initiative Field */}
+                  <div className="col-sm-6 mb-3">
+                    <BootstrapForm.Group>
+                      <BootstrapForm.Label htmlFor="initiative">Initiative <span className="text-danger">*</span></BootstrapForm.Label>
+                      <Field as={BootstrapForm.Select} name="initiative">
+                        {Configs.initiativeDropdownOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.key}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage name="initiative" component="div" className="text-danger" />
+                    </BootstrapForm.Group>
+                  </div>
 
-              {/* Date Field */}
-              <div className="col-sm-6">
-                <label htmlFor='date' className="fw-semibold form-label">Date<span className="error">*</span></label>
-                <Field name='date'>
-                  {({ form, field }) => {
-                    const { setFieldValue } = form;
-                    const { value } = field;
-                    return (
-                      <DateView
-                        id='date'
-                        {...field}
-                        selected={value}
-                        onChange={(val) => setFieldValue('date', val)}
-                        className="form-control form-control-sm"
-                      />
-                    );
-                  }}
-                </Field>
-                <ErrorMessage component="div" name='date' className='text-danger' />
-              </div>
+                  {/* Measurable Activities Field */}
+                  <div className="col-sm-6 mb-3">
+                    <BootstrapForm.Group>
+                      <BootstrapForm.Label htmlFor="measurableActivities">Measurable Activity <span className="text-danger">*</span></BootstrapForm.Label>
+                      <Field as={BootstrapForm.Select} name="measurableActivities">
+                        {Configs.measurableActivityDropdownOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.key}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage name="measurableActivities" component="div" className="text-danger" />
+                    </BootstrapForm.Group>
+                  </div>
 
-              {/* Submit and Cancel Buttons */}
-              <div className='col-sm-12'></div>
-              <div className='d-flex justify-content-end align-content-end my-1'>
-                <button type="reset" disabled={formik.isSubmitting} className="btn btn-danger me-2">Cancel</button>
-                <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="btn btn-primary">Save</button>
+                  {/* Date Field */}
+                  <div className="col-sm-6 mb-3">
+                    <BootstrapForm.Group>
+                      <BootstrapForm.Label htmlFor="date">Date <span className="text-danger"> *</span></BootstrapForm.Label>
+                      <Field as={BootstrapForm.Control} type="date" name="date" />
+                      <ErrorMessage name="date" component="div" className="text-danger" />
+                    </BootstrapForm.Group>
+                  </div>
+
+                  <div className='col-12 d-flex justify-content-end mt-3'>
+                    <button type="reset" disabled={formik.isSubmitting} className="btn btn-danger me-2">Cancel</button>
+                    <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="btn btn-primary">Save</button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </Form>
-      )}
-    </Formik>
+            </Form>
+          )}
+        </Formik>
+      </Card.Body>
+    </Card>
+
   );
 }
 
