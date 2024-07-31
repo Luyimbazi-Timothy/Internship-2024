@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
-import { DisplaySidebarContext } from '../../components/ContextHook/useDisplayContext';
+import { DisplaySidebarContext } from '../../components/contextHook/useDisplayContext';
 
 function ContainerInsideExample() {
   const { displaySidebarPanel } = useContext(DisplaySidebarContext);
@@ -22,7 +22,7 @@ function ContainerInsideExample() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav className="ms-auto align-items-center">
-                <Nav.Item className="me-3 fw-bold">Welcome Derrick</Nav.Item>
+                <Nav.Item className="fw-medium">Welcome User</Nav.Item>
                 <NavDropdown
                   drop='down-centered'
                   title={

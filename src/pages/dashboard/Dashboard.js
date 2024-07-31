@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import TableHandler from "../appraisalActivity/activityTableData/TableHandler";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button, ButtonGroup } from "@mui/material";
-import TableHandler from "../AppraisalActivity/ActivityTableData/TableHandler";
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("Q1");
   const [tabDisplay, setTabDisplay] = useState(true);

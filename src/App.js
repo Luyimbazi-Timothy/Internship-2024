@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import Layout from './layout/fullPage/Layout';
-import { DisplaySidebarProvider } from './components/ContextHook/useDisplayContext';
-
+import { DisplaySidebarProvider } from './components/contextHook/useDisplayContext';
 
 function App() {
 

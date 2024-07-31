@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Nav } from 'react-bootstrap';
+import SettingsIcon from '@mui/icons-material/Settings'
+import DashboardIcon from '@mui/icons-material/Dashboard';
+
+
 function SideBar() {
   const [activeKey, setActiveKey] = useState(window.location.pathname);
 
@@ -14,12 +18,13 @@ function SideBar() {
         >
           <Nav.Item>
             <Nav.Link href="/dashboard" eventKey="/" className="text-white">
-              Dashboard
+            <DashboardIcon/>Dashboard
             </Nav.Link>
           </Nav.Item>
+          
           <Nav.Item>
             <Nav.Link href="/control-panel" eventKey="/control-panel" className="text-white">
-              Control Panel
+            <SettingsIcon/>Control Panel
             </Nav.Link>
           </Nav.Item>
         </Nav>

@@ -39,7 +39,6 @@ function AddActivityForm({ onSubmit }) {
   };
 
   return (
-
     <Card>
       <Card.Header>
         <h5 className='text-center fw-semibold label'>Create Activity Form</h5>
@@ -151,7 +150,6 @@ function AddActivityForm({ onSubmit }) {
         </Formik>
       </Card.Body>
     </Card>
-
   );
 }
 

@@ -1,11 +1,11 @@
 // src/Router/Routing.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import ControlPanel from "../pages/ControlPanel";
-import PageNotFound from "../pages/Error/PageNotFound";
-import DetailPage from "../pages/AppraisalActivity/ActivityTableData/DetailPage";
+import Dashboard from "../pages/dashboard/Dashboard";
+import ControlPanel from "../pages/controlPanel/ControlPanel";
+import PageNotFound from "../pages/error/PageNotFound";
 import Login from "../pages/auth/Login";
+import DetailPage from "../pages/appraisalActivity/activityTableData/DetailPage";
 
 function Routing() {
   return (
