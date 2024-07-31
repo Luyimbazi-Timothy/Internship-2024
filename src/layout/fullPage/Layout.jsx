@@ -2,8 +2,8 @@
 import React, { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Routing from "../../router/Routing";
-import SideBar from "../Default/SideBar";
-import Header from "../Default/Header";
+import SideBar from "../default/SideBar";
+import Header from "../default/Header";
 import { DisplaySidebarContext } from "../../components/ContextHook/useDisplayContext";
 
 function Layout() {

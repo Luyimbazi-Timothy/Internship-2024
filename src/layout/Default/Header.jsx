@@ -22,7 +22,7 @@ function ContainerInsideExample() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav className="ms-auto align-items-center">
-                <Nav.Item className="me-3 fw-bold">Welcome Derrick</Nav.Item>
+                <Nav.Item className="fw-medium">Welcome User</Nav.Item>
                 <NavDropdown
                   drop='down-centered'
                   title={
