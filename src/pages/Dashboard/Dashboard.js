@@ -13,7 +13,7 @@ function Dashboard() {
     const isFirstLoad = localStorage.getItem("isFirstLoad");
     if (!isFirstLoad) {
       Swal.fire({
-        position: 'top',
+        position: 'center',
         text: 'Welcome Derrick',
         icon: 'success',
         showConfirmButton: false,

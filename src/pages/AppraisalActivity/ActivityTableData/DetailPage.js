@@ -38,7 +38,7 @@ const DetailPage = () => {
     });
   };
 
-  const displyaSuccessMessage = () => {
+  const displaySuccessMessage = () => {
     Swal.fire({
       position: 'top',
       text: 'Record Saved Successfully',
@@ -50,9 +50,8 @@ const DetailPage = () => {
   };
 
   const handleSave = () => {
-    console.log('saved');
     handleClose();
-    displyaSuccessMessage();
+    displaySuccessMessage();
   };
 
   if (!data) {
@@ -96,7 +95,6 @@ const DetailPage = () => {
             size="small"
             onClick={() => {
               confirmDelete();
-              console.log("Delete action for row:", row.original);
             }}
           >
             Delete
@@ -147,7 +145,7 @@ const DetailPage = () => {
       <div className="d-flex justify-content-end align-items-end">
         <Button variant="contained" className="custom-blue-button mb-2 mt-2" onClick={handleShow}>+ New Record</Button>
       </div>
-      <AddNewInitiativeDetailsModal displyaSuccessMessage={displyaSuccessMessage} measurableActivity={data.measurableActivity.activity} show={show} handleClose={handleClose} />
+      <AddNewInitiativeDetailsModal displaySuccessMessage={displaySuccessMessage} measurableActivity={data.measurableActivity.activity} show={show} handleClose={handleClose} />
       <MaterialReactTable
         columns={columns}
         data={tableData}

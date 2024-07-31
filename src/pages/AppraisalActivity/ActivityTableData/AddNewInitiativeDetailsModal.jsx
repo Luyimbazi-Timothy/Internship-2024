@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-function AddNewInitiativeDetailsModal({displyaSuccessMessage, measurableActivity, show, handleClose }) {
+function AddNewInitiativeDetailsModal({displaySuccessMessage, measurableActivity, show, handleClose }) {
   return (
     <Modal size='lg' show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -62,7 +62,7 @@ function AddNewInitiativeDetailsModal({displyaSuccessMessage, measurableActivity
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => { handleClose(); displyaSuccessMessage(); }}>
+        <Button variant="primary" onClick={() => { handleClose(); displaySuccessMessage(); }}>
           Save Changes
         </Button>
       </Modal.Footer>
