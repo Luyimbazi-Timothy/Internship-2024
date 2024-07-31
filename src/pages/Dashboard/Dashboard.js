@@ -1,28 +1,11 @@
 import React, { useState, useEffect } from "react";
-import TableHandler from "../AppraisalActivity/activityTableData/TableHandler";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button, ButtonGroup } from "@mui/material";
-import Swal from "sweetalert2";
-
+import TableHandler from "../AppraisalActivity/ActivityTableData/TableHandler";
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("Q1");
   const [tabDisplay, setTabDisplay] = useState(true);
   const [quartileFilter, setQuartileFilter] = useState("Q1");
-
-  useEffect(() => {
-    const isFirstLoad = localStorage.getItem("isFirstLoad");
-    if (!isFirstLoad) {
-      Swal.fire({
-        position: 'center',
-        text: 'Welcome Derrick',
-        icon: 'success',
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 1500
-      });
-      localStorage.setItem("isFirstLoad", "false");
-    }
-  }, []);
 
   useEffect(() => {
     setQuartileFilter(activeTab);

@@ -10,11 +10,6 @@ const TableComponent = ({ data, onRowClick }) => {
 
   const columns = useMemo(() => [
     {
-      accessorKey: 'id',
-      header: 'ID',
-      size: 20,
-    },
-    {
       accessorKey: 'measurableActivity.period',
       header: 'Period',
       size: 20,

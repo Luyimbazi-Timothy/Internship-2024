@@ -1,7 +1,7 @@
 // src/components/Login/Login.js
 import React, { useContext, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { DisplaySidebarContext } from '../../Components/contextHook/useDisplayContext';
+import { DisplaySidebarContext } from '../../components/ContextHook/useDisplayContext';
 import { Link } from 'react-router-dom';
 
 function Login() {

@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
-import { DisplaySidebarContext } from '../../Components/contextHook/useDisplayContext';
+import { DisplaySidebarContext } from '../../components/ContextHook/useDisplayContext';
 
 function ContainerInsideExample() {
   const { displaySidebarPanel } = useContext(DisplaySidebarContext);
