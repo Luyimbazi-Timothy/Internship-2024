@@ -20,7 +20,7 @@ function Dashboard() {
   };
 
   return (
-    <Container className="mt-1">
+    <div className="mt-1">
       {tabDisplay ? (
         <Row className="mb-4">
           <Col>
@@ -44,7 +44,7 @@ function Dashboard() {
       <Row>
         <TableHandler quartileFilter={quartileFilter} toggleDashBoardBtnDisplay={toggleDashBoardBtnDisplay} />
       </Row>
-    </Container>
+    </div>
   );
 }
 

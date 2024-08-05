@@ -5,8 +5,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import { DisplaySidebarContext } from '../../components/contextHook/useDisplayContext';
+import useAuthService from '../../services/auth/AuthService';
 
 function ContainerInsideExample() {
+  const loggedInAs = localStorage.getItem('loggedInAs');
+  const { logout } = useAuthService();
+
+
   const { displaySidebarPanel } = useContext(DisplaySidebarContext);
 
   return (
@@ -22,7 +27,7 @@ function ContainerInsideExample() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
               <Nav className="ms-auto align-items-center">
-                <Nav.Item className="fw-medium">Welcome User</Nav.Item>
+                <Nav.Item className="fw-medium">Welcome {loggedInAs}</Nav.Item>
                 <NavDropdown
                   drop='down-centered'
                   title={
@@ -36,8 +41,8 @@ function ContainerInsideExample() {
                 >
                   <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="/logout">
-                    <Link to='/'>Logout</Link>
+                  <NavDropdown.Item onClick={()=>logout()}>
+                  Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
