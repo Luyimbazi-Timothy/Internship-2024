@@ -34,7 +34,8 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
   };
 
   return (
-    <Modal size="lg" show={show} onHide={handleClose}>
+    <Modal size="lg" show={show} onHide={handleClose}  backdrop="static"
+>
       <Modal.Header closeButton>
         <Modal.Title>Activity: {measurableActivity}</Modal.Title>
       </Modal.Header>
