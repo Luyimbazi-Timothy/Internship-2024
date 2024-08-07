@@ -1,4 +1,4 @@
-const loginUrl = 'http://localhost:5003/api/Users/login';
+const loginUrl = 'http://localhost:5003/api/User/login';
 
 
 
