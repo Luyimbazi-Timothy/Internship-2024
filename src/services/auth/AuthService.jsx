@@ -10,12 +10,16 @@ const useAuthService = () => {
   const { setDisplaySidebarPanel } = useContext(DisplaySidebarContext);
 
   const login = async (username, password, setError) => {
+    console.log(username, password)
     const loginUrl = urlConfig.loginUrl;
     try {
       const response = await axios.post(loginUrl, { username, password });
+
       if (response.status === 200) {
         const loggedInAs = response.data.lastName
-        const loggedInId = response.data.UserId
+        const loggedInId = response.data.userId
+
+        console.log(loggedInId)
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('loggedInAs', loggedInAs);
         localStorage.setItem('loggedInId', loggedInId);

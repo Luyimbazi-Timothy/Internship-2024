@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import fetchData from '../../../services/DataService';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import urlConfig from '../../../services/Urls';
 
 
 
@@ -13,12 +15,56 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const loggedInId = localStorage.getItem('loggedInId');
+  const configItemEndpoint =urlConfig.configItemEndpoint;
+  const measurableActivityImplementationsEndpoint = urlConfig.measurableActivityImplementationsEndpoint
+
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const result = await fetchData();
-        setData(result);
+        const url = urlConfig.allMeasurableActivitiesPropertiesUrl;
+        const response = await axios.get(url);
+        const records = response.data;
+
+        const formattedRecords = await Promise.all(records.map(async (record) => {
+          const [activityResponse, periodResponse, perspectiveResponse, initiativeResponse, ssMartaObjectivesResponse, implementationsResponse] = await Promise.all([
+            axios.get(configItemEndpoint + record.activityId),
+            axios.get(configItemEndpoint + record.periodId),
+            axios.get(configItemEndpoint + record.perspectiveId),
+            axios.get(configItemEndpoint + record.initiativeId),
+            axios.get(configItemEndpoint + record.ssMartaObjectivesId),
+            axios.get(measurableActivityImplementationsEndpoint + record.measurableActivityId),
+          ]);
+          
+          const activity = activityResponse.data.fieldDescription;
+          const period = periodResponse.data.fieldDescription;
+          const perspective = perspectiveResponse.data.fieldDescription;
+          const initiative = initiativeResponse.data.fieldDescription;
+          const ssMartaObjectives = ssMartaObjectivesResponse.data.fieldDescription;
+          const implementations = implementationsResponse.data.map(impl => ({
+            id: impl.implementationId,
+            description: impl.description,
+            comment: impl.comment,
+            stakeholder: impl.stakeholder,
+            evidence: impl.evidenceFileName,
+            date: impl.date,
+          }));
+
+          // Constructing the measurable activity object
+          return {
+            id: record.measurableActivityId,
+            measurableActivity: {
+              activity: activity,
+              period: period,
+              perspective: perspective,
+              ssMartaObjectives: ssMartaObjectives,
+              initiative: initiative,
+              implementations: implementations,
+            }
+          };
+        }));
+        setData(formattedRecords);
         setLoading(false);
       } catch (err) {
         setError(err);
