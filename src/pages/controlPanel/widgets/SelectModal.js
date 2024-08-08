@@ -2,12 +2,12 @@ import {  React, useContext} from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Context } from '../ControlPanel'
-import { dataSets, controlPanelOptions } from './ControlPanelConfig'
+import { controlPanelOptions } from './ControlPanelConfig'
 
 
 function SelectModal({setAddBtnLabel}) {
 
-    const {setColumnHeader, setTableData, setShowTableData } = useContext(Context)
+    const {setColumnHeader, setTableData, setShowTableData, dataSets } = useContext(Context)
 
       const handleChange = (event, value) => {
         if (value) {

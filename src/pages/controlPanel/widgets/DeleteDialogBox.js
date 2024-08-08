@@ -7,14 +7,33 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { Context } from '../ControlPanel'
 import Swal from 'sweetalert2'
+import axios from 'axios'
+
 
 function DeleteDialogBox() {
 
-    const {rowToDelete, tableData, alertOpen , setTableData, setAlertOpen } = useContext(Context)
+    const {rowToDelete, tableData, alertOpen , setTableData, setAlertOpen, editData, addBtnLabel } = useContext(Context)
 
     const handleFormDelete = () => {
         setTableData(tableData.filter(item => item !== rowToDelete.original))
         setAlertOpen(false)
+
+        if(addBtnLabel === 'Perspectives'){
+          axios.delete(`http://localhost:5003/api/Perspective/delete-a-perspective/${editData?.id}`)
+        }
+        else if(addBtnLabel === 'Initiatives') {
+          axios.delete(`http://localhost:5003/api/Initiative/delete-an-initiative/${editData?.id}`)
+        }
+        else if(addBtnLabel === 'Periods') {
+          axios.delete(`http://localhost:5003/api/Period/delete-period-item/${editData?.id}`)
+        }
+        else if(addBtnLabel === 'Ssmarta Objectives') {
+          axios.delete(`http://localhost:5003/api/ssmarta-objective/delete-objective-item/${editData?.id}`)
+        }
+        else if(addBtnLabel === 'Activities') {
+          axios.delete(`http://localhost:5003/api/Activity/delete-activity-item/${editData?.id}`)
+        }
+
         Swal.fire({
           position: "center",
           icon: "success",
