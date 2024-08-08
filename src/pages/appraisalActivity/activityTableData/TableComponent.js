@@ -7,7 +7,7 @@ const TableComponent = ({ data, onRowClick }) => {
   useEffect(() => {
     setTableData(data)
   }, [data])
-
+// const loggedinid =localstorage.get("loggedInId");
   const columns = useMemo(() => [
     {
       accessorKey: 'measurableActivity.period',
@@ -47,7 +47,7 @@ const TableComponent = ({ data, onRowClick }) => {
         onRowClick(row.id);
       },
       sx: {
-        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+        cursor: 'pointer',
       },
     }),
   });

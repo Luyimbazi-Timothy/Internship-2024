@@ -91,7 +91,7 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
                 <div className="col">
                   <Form.Group>
                     <Form.Label htmlFor="evidence">Evidence <span className="text-danger">*</span></Form.Label>
-                    <Field as={Form.Control} type="file" name="evidence" onChange={(event) => setFieldValue('evidence', event.currentTarget.files[0])} />
+                    <Field as={Form.Control} type="file" name="evidence" />
                     <ErrorMessage name="evidence" component="div" className="text-danger" />
                   </Form.Group>
                 </div>

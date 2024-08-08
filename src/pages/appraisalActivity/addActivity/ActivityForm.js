@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Card, Form as BootstrapForm, Button, Row, Col } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,7 +6,10 @@ import Configs from "../../../commons/Configs";
 import * as Yup from 'yup';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
+import urlConfig from '../../../services/Urls';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = Yup.object({
   period: Yup.string().required('This is a required field.'),
@@ -17,28 +20,84 @@ const validationSchema = Yup.object({
   date: Yup.date().required('This is a required field.').max(new Date(), 'Date cannot be in the future'),
 });
 
-function AddActivityForm({ onSubmit }) {
+function AddActivityForm() {
+  const [measurableActivityOptions, setMeasurableActivityOptions] = useState([]);
+  const [periodOptions, setPeriodOptions] = useState([]);
+  const [perspectiveOptions, setPerspectiveOptions] = useState([]);
+  const [ssMartaOptions, setSsMartaOptions] = useState([]);
+  const [initiativeOptions, setInitiativeOptions] = useState([]);
+  const loggedInId = localStorage.getItem('loggedInId');
+  const navigate = useNavigate();
+
+  const fetchData = async () => {
+    try {
+      const [measurableActivityresponse, periodResponse, perspectiveResponse, ssMartaResponse, initiativeResponse] = await Promise.all([
+        axios.get(urlConfig.allMeasurableActivitiesUrl),
+        axios.get(urlConfig.allPeriodsUrl),
+        axios.get(urlConfig.allPerspectivesUrl),
+        axios.get(urlConfig.allSsmartaObjectiveUrl),
+        axios.get(urlConfig.allInitiativesUrl),
+      ]);
+
+      setMeasurableActivityOptions(measurableActivityresponse.data);
+      setPeriodOptions(periodResponse.data);
+      setPerspectiveOptions(perspectiveResponse.data);
+      setSsMartaOptions(ssMartaResponse.data);
+      setInitiativeOptions(initiativeResponse.data);
+    } catch (error) {
+      Swal.fire({
+        title: 'Error fetching data',
+        text: error.message,
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
+  };
+
+  const createMeasurableActivityProperties = async (record) => {
+    const url = urlConfig.createMeasurableActivityPropertiesUrl;
+    try {
+      const response = await axios.post(url, record);
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Measurable Activity Details added successfully",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error adding measurable activity',
+        text: error.message,
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleSubmit = (values, onSubmitProps) => {
     const formData = {
       ...values,
       date: new Date(values.date).toISOString(),
     };
-
-    const new_record = {
-      id: 1,
-      measurableActivity: {
-        activity: formData.measurableActivities,
-        period: formData.period,
-        perspective: formData.perspective,
-        ssMartaObjectives: formData.ssMartaObjectives,
-        initiative: formData.initiative,
-        implementations: [],
-      },
+    const new_rec = {
+      periodId: formData.period,
+      activityId: formData.measurableActivities,
+      perspectiveId: formData.perspective,
+      ssMartaObjectivesId: formData.ssMartaObjectives,
+      initiativeId: formData.initiative,
+      userId: loggedInId,
     };
 
-    onSubmit(new_record);
-    onSubmitProps.setSubmitting(false);
-    onSubmitProps.resetForm();
+    createMeasurableActivityProperties(new_rec);
   };
 
   return (
@@ -75,9 +134,12 @@ function AddActivityForm({ onSubmit }) {
                           <BootstrapForm.Group>
                             <BootstrapForm.Label htmlFor='period'>Period <span className='text-danger'>*</span></BootstrapForm.Label>
                             <Field as={BootstrapForm.Select} name='period'>
-                              {Configs.quarterDropdownOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.key}
+                              <option key="default-period" value="">
+                                Select Period
+                              </option>
+                              {periodOptions && periodOptions.map(option => (
+                                <option key={option.itemId} value={option.itemId}>
+                                  {option.fieldDescription}
                                 </option>
                               ))}
                             </Field>
@@ -90,9 +152,12 @@ function AddActivityForm({ onSubmit }) {
                           <BootstrapForm.Group>
                             <BootstrapForm.Label htmlFor='perspective'>Perspective <span className='text-danger'>*</span></BootstrapForm.Label>
                             <Field as={BootstrapForm.Select} name='perspective'>
-                              {Configs.perspectiveDropdownOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.key}
+                              <option key="default" value="">
+                                Select Perspective
+                              </option>
+                              {perspectiveOptions && perspectiveOptions.map(option => (
+                                <option key={option.itemId} value={option.itemId}>
+                                  {option.fieldDescription}
                                 </option>
                               ))}
                             </Field>
@@ -105,9 +170,12 @@ function AddActivityForm({ onSubmit }) {
                           <BootstrapForm.Group>
                             <BootstrapForm.Label htmlFor='ssMartaObjectives'>SsMarta Objectives <span className='text-danger'>*</span></BootstrapForm.Label>
                             <Field as={BootstrapForm.Select} name='ssMartaObjectives'>
-                              {Configs.ssmartaObjectiveDropdownOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.key}
+                              <option key="default-object" value="">
+                                Select Objective
+                              </option>
+                              {ssMartaOptions && ssMartaOptions.map(option => (
+                                <option key={option.itemId} value={option.itemId}>
+                                  {option.fieldDescription}
                                 </option>
                               ))}
                             </Field>
@@ -120,9 +188,12 @@ function AddActivityForm({ onSubmit }) {
                           <BootstrapForm.Group>
                             <BootstrapForm.Label htmlFor='initiative'>Initiative <span className='text-danger'>*</span></BootstrapForm.Label>
                             <Field as={BootstrapForm.Select} name='initiative'>
-                              {Configs.initiativeDropdownOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.key}
+                              <option key="default-initiative" value="">
+                                Select Initiative
+                              </option>
+                              {initiativeOptions && initiativeOptions.map(option => (
+                                <option key={option.itemId} value={option.itemId}>
+                                  {option.fieldDescription}
                                 </option>
                               ))}
                             </Field>
@@ -135,9 +206,12 @@ function AddActivityForm({ onSubmit }) {
                           <BootstrapForm.Group>
                             <BootstrapForm.Label htmlFor='measurableActivities'>Measurable Activity <span className='text-danger'>*</span></BootstrapForm.Label>
                             <Field as={BootstrapForm.Select} name='measurableActivities'>
-                              {Configs.measurableActivityDropdownOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.key}
+                              <option key="default-measurable-activity" value="">
+                                Select Activity
+                              </option>
+                              {measurableActivityOptions && measurableActivityOptions.map(option => (
+                                <option key={option.itemId} value={option.itemId}>
+                                  {option.fieldDescription}
                                 </option>
                               ))}
                             </Field>
@@ -154,9 +228,9 @@ function AddActivityForm({ onSubmit }) {
                           </BootstrapForm.Group>
                         </div>
 
-                        <div className='col-12 d-flex justify-content-end mt-3'>
-                          <button type='reset' disabled={formik.isSubmitting} className='btn btn-danger me-2'>Cancel</button>
-                          <button type='submit' disabled={!formik.isValid || formik.isSubmitting} className='btn btn-primary'>Save</button>
+                        {/* Submit Button */}
+                        <div className='d-flex justify-content-end mt-3'>
+                          <Button type='submit' className='btn btn-primary'>Save</Button>
                         </div>
                       </div>
                     </div>
@@ -168,7 +242,6 @@ function AddActivityForm({ onSubmit }) {
         </Col>
       </Row>
     </>
-
   );
 }
 
