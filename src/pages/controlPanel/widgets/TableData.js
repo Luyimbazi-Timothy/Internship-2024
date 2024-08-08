@@ -12,7 +12,7 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
 function TableData({handleAdd, addBtnLabel}) {
-  const { columnHeader, tableData, setFormOpen, setEditData, setIsPreview, setRowToDelete, setAlertOpen } = useContext(Context)
+  const { columnHeader, tableData, setFormOpen, setEditData, setIsPreview, setRowToDelete, setAlertOpen} = useContext(Context)
 
   const navigate = useNavigate()
 
@@ -31,9 +31,11 @@ function TableData({handleAdd, addBtnLabel}) {
     setFormOpen(true)
     setIsPreview(true)
     setEditData(row.original)
+
   }
 
   const handleDelete = (row) => {
+    setEditData(row.original)
     setRowToDelete(row)
     setAlertOpen(true)
   }
