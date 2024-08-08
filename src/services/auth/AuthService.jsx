@@ -16,6 +16,7 @@ const useAuthService = () => {
       const response = await axios.post(loginUrl, { username, password });
 
       if (response.status === 200) {
+        
         const loggedInAs = response.data.lastName
         const loggedInId = response.data.userId
 
@@ -24,6 +25,7 @@ const useAuthService = () => {
         localStorage.setItem('loggedInAs', loggedInAs);
         localStorage.setItem('loggedInId', loggedInId);
         setDisplaySidebarPanel(true);
+
         navigate('/dashboard');
       } else {
         setError('Invalid username or password');
