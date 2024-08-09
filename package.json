@@ -57,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-bootstrap": "^0.32.37",
     "ajv": "^7.2.4"
   }
 }
