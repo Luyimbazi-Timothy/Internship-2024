@@ -44,7 +44,8 @@ const TableComponent = ({ data, onRowClick }) => {
     initialState: { density: 'compact' },
     muiTableBodyRowProps: ({ row }) => ({
       onClick: (event) => {
-        onRowClick(row.id);
+        const measurableActivityId=row.original.id
+        onRowClick(measurableActivityId,row.id);
       },
       sx: {
         cursor: 'pointer',

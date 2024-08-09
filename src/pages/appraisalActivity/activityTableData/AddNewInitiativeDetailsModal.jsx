@@ -6,7 +6,7 @@ import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId}) {
+function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
   const today = new Date().toISOString().split('T')[0];
 
   const initialValues = {
@@ -31,19 +31,19 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
     console.log(userId, MeasurableActivityId)
 
 
-    var date="2024-08-02T16:58:37Z"
+    var date = "2024-08-02T16:58:37Z"
     const formData = {
       CreatedDate: date,
       Description: values.implementation,
-       Comment: values.comment,
-       Stakeholder: values.stakeholder,
+      Comment: values.comment,
+      Stakeholder: values.stakeholder,
       Evidence: values.evidence,
       MeasurableActivityId: MeasurableActivityId,
       UserId: userId
     }
 
     console.log(formData)
-    
+
 
     try {
       const response = await axios.post('http://localhost:5003/api/Implementations/create-an-implementation', formData, {
@@ -57,14 +57,15 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
     } catch (error) {
       console.error(error);
     } finally {
+      refresh(true)
       setSubmitting(false);
     }
   };
 
 
   return (
-    <Modal size="lg" show={show} onHide={handleClose}  backdrop="static"
->
+    <Modal size="lg" show={show} onHide={handleClose} backdrop="static"
+    >
       <Modal.Header closeButton>
         <Modal.Title>Activity: {measurableActivity}</Modal.Title>
       </Modal.Header>
@@ -118,7 +119,7 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
 
               <div className="row mb-3">
                 <div className="col">
-                <Form.Group>
+                  <Form.Group>
                     <Form.Label htmlFor="evidence">Evidence <span className="text-danger">*</span></Form.Label>
                     <input
                       id="evidence"
