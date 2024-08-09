@@ -4,8 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
-function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivity, show, handleClose }) {
+function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId}) {
   const today = new Date().toISOString().split('T')[0];
 
   const initialValues = {
@@ -24,14 +25,42 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
     evidence: Yup.mixed().required('Required'),
   });
 
-  const onSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+  const onSubmit = async (values, { setSubmitting }) => {
+
+    const userId = localStorage.getItem("loggedInId")
+    console.log(userId, MeasurableActivityId)
+
+
+    var date="2024-08-02T16:58:37Z"
+    const formData = {
+      CreatedDate: date,
+      Description: values.implementation,
+       Comment: values.comment,
+       Stakeholder: values.stakeholder,
+      Evidence: values.evidence,
+      MeasurableActivityId: MeasurableActivityId,
+      UserId: userId
+    }
+
+    console.log(formData)
+    
+
+    try {
+      const response = await axios.post('http://localhost:5003/api/Implementations/create-an-implementation', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+      displaySuccessMessage();
+      handleClose();
+    } catch (error) {
+      console.error(error);
+    } finally {
       setSubmitting(false);
-    }, 400);
-    displaySuccessMessage();
-    handleClose();
+    }
   };
+
 
   return (
     <Modal size="lg" show={show} onHide={handleClose}  backdrop="static"
@@ -89,11 +118,20 @@ function AddNewInitiativeDetailsModal({ displaySuccessMessage, measurableActivit
 
               <div className="row mb-3">
                 <div className="col">
-                  <Form.Group>
+                <Form.Group>
                     <Form.Label htmlFor="evidence">Evidence <span className="text-danger">*</span></Form.Label>
-                    <Field as={Form.Control} type="file" name="evidence" />
+                    <input
+                      id="evidence"
+                      name="evidence"
+                      type="file"
+                      onChange={(event) => {
+                        setFieldValue('evidence', event.currentTarget.files[0]);
+                      }}
+                      className="form-control"
+                    />
                     <ErrorMessage name="evidence" component="div" className="text-danger" />
                   </Form.Group>
+
                 </div>
 
               </div>

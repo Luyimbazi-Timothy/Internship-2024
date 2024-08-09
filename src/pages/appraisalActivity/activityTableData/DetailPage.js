@@ -57,7 +57,6 @@ const DetailPage = () => {
   if (!data) {
     return <Container><p>No data available</p></Container>;
   }
-console.log("Data",data)
   const tableData = data.measurableActivity.implementations.map((implementation) => ({
     id: implementation.id,
     date: implementation.date,
@@ -141,7 +140,7 @@ console.log("Data",data)
       <div className="d-flex justify-content-end align-items-end">
         <Button variant="contained" className="custom-blue-button mb-2 mt-2" onClick={handleShow}>+ New Record</Button>
       </div>
-      <AddNewInitiativeDetailsModal displaySuccessMessage={displaySuccessMessage} measurableActivity={data.measurableActivity.activity}   show={show} handleClose={handleClose} />
+      <AddNewInitiativeDetailsModal displaySuccessMessage={displaySuccessMessage} measurableActivity={data.measurableActivity.activity} MeasurableActivityId={data.id}  show={show} handleClose={handleClose} />
       <MaterialReactTable
         columns={columns}
         data={tableData}
