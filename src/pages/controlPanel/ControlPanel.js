@@ -6,6 +6,7 @@ import DeleteDialogBox from './widgets/DeleteDialogBox'
 import SelectModal from './widgets/SelectModal'
 import AddModal from './widgets/AddModal'
 import axios from 'axios'
+import urlConfig from '../../services/Urls'
 
 export const Context = createContext()
 
@@ -32,16 +33,15 @@ const ControlPanel = () => {
   });
 
   
-const userId = "5d61e6ab-00f3-45b2-bddd-cedb7edeaaf7"
 
   useEffect(() => {
 
-    const fetchData = async (userId) => {
-    const periods = await axios.get(`http://localhost:5003/api/Period/all-period-items/${userId}`);
-    const perspectives = await axios.get(`http://localhost:5003/api/Perspective/get-all-perspectives/${userId}`);
-    const objectives = await axios.get(`http://localhost:5003/api/ssmarta-objective/all-objective-items/${userId}`);
-    const initiatives = await axios.get(`http://localhost:5003/api/Initiative/get-all-initiatives/${userId}`);
-    const activities = await axios.get(`http://localhost:5003/api/Activity/all-activity-items/${userId}`);
+    const fetchData = async () => {
+    const periods = await axios.get(`${urlConfig.allPeriodsUrl}`);
+    const perspectives = await axios.get(`${urlConfig.allPerspectivesUrl}`);
+    const objectives = await axios.get(`${urlConfig.allSsmartaObjectiveUrl}`);
+    const initiatives = await axios.get(`${urlConfig.allInitiativesUrl}`);
+    const activities = await axios.get(`${urlConfig.allMeasurableActivitiesUrl}`);
 
 
     
@@ -70,7 +70,7 @@ const userId = "5d61e6ab-00f3-45b2-bddd-cedb7edeaaf7"
         console.error(errors);
     });
   }
-  fetchData(userId)
+  fetchData()
     
 
   },[] ); 
@@ -96,7 +96,7 @@ const userId = "5d61e6ab-00f3-45b2-bddd-cedb7edeaaf7"
             </Context.Provider>
           </Grid>
           {/* Add / Edit Modal  */}
-          <Context.Provider value={{isPreview, formOpen, setFormOpen, tableData, setTableData, editData, setEditData, addBtnLabel, userId}}>
+          <Context.Provider value={{isPreview, formOpen, setFormOpen, tableData, setTableData, editData, setEditData, addBtnLabel}}>
             <AddModal />
           </Context.Provider>
           {/* Delete dialog box  */}

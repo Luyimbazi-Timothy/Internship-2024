@@ -18,6 +18,7 @@ const configItemEndpoint = "http://localhost:5003/api/configurables/get-a-config
 
 
 const urlConfig = {
+    loggedInId,
     loginUrl,
     allMeasurableActivitiesUrl,
     allPeriodsUrl,
