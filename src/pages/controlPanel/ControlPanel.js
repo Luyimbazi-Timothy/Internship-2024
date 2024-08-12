@@ -44,9 +44,16 @@ const ControlPanel = () => {
       .then(
         axios.spread(
           (periods, perspectives, objectives, initiatives, activities) => {
-            const updatedDataSets = { ...dataSets };
+            const updatedDataSets = {
+              1: [],
+              2: [],
+              3: [],
+              4: [],
+              5: [],
+            };
             periods.data.forEach((item) => {
-              updatedDataSets[1].push({ //all periods
+              updatedDataSets[1].push({
+                //all periods
                 field: item.fieldDescription,
                 id: item.itemId,
               });
@@ -78,7 +85,6 @@ const ControlPanel = () => {
 
             setDataSets(updatedDataSets);
             console.log("periods from dataSet", dataSets[1]);
-
           }
         )
       )
@@ -88,7 +94,6 @@ const ControlPanel = () => {
   };
 
   useEffect(() => {
-    
     fetchData();
   }, [noOfNewUpdates]);
 
@@ -126,10 +131,10 @@ const ControlPanel = () => {
               setEditData,
               addBtnLabel,
               setNoOfNewUpdates,
-              dataSets
+              dataSets,
             }}
           >
-            <AddModal isPreview={isPreview}/>
+            <AddModal isPreview={isPreview} />
           </Context.Provider>
           {/* Delete dialog box  */}
           <Context.Provider
@@ -141,11 +146,12 @@ const ControlPanel = () => {
               setAlertOpen,
               editData,
               addBtnLabel,
+              setNoOfNewUpdates,
             }}
           >
             <DeleteDialogBox />
           </Context.Provider>
-          
+
           {showTableData && (
             <Grid item xs={12}>
               {/* table data  */}

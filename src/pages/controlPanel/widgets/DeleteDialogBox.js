@@ -12,7 +12,7 @@ import axios from 'axios'
 
 function DeleteDialogBox() {
 
-    const {rowToDelete, tableData, alertOpen , setTableData, setAlertOpen, editData, addBtnLabel } = useContext(Context)
+    const {rowToDelete, tableData, alertOpen , setTableData, setAlertOpen, editData, addBtnLabel, setNoOfNewUpdates } = useContext(Context)
 
     const handleFormDelete = () => {
         setTableData(tableData.filter(item => item !== rowToDelete.original))
@@ -41,6 +41,8 @@ function DeleteDialogBox() {
           showConfirmButton: false,
           timer: 1500
         })
+        setNoOfNewUpdates((_prev) => _prev + 1);
+        
       }
 
       const handleClose = () => {
