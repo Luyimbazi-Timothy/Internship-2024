@@ -6,10 +6,14 @@ const allPeriodsUrl = "http://localhost:5003/api/Period/all-period-items/" + log
 const allPerspectivesUrl = "http://localhost:5003/api/Perspective/get-all-perspectives/" + loggedInId;
 const allSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/all-objective-items/" + loggedInId;
 const allInitiativesUrl = "http://localhost:5003/api/Initiative/get-all-initiatives/" + loggedInId;
-const  createMeasurableActivityPropertiesUrl = "http://localhost:5003/api/Measurable-Activities/add-measurable-activity";
-const  allMeasurableActivitiesPropertiesUrl = "http://localhost:5003/api/Measurable-Activities/get-all-measurable-activities/"+loggedInId;
+const createMeasurableActivityPropertiesUrl = "http://localhost:5003/api/Measurable-Activities/add-measurable-activity";
+const allMeasurableActivitiesPropertiesUrl = "http://localhost:5003/api/Measurable-Activities/get-all-measurable-activities/" + loggedInId;
 const configItemEndpoint = "http://localhost:5003/api/configurables/get-a-config-item/";
 const measurableActivityImplementationsEndpoint = "http://localhost:5003/api/Implementations/all-implementations-for-single-activity/"
+const deleteAnImplementationEndpoint = "http://localhost:5003/api/Implementations/delete-an-implementation?Id="
+const downloadEvidenceEndpoint = "http://localhost:5003/api/Implementations/get-evidence-file?id="
+const updateAnImplementation = 'http://localhost:5003/api/Implementations/update-an-implementation?id=';
+const createAnImplementation = 'http://localhost:5003/api/Implementations/create-an-implementation'
 
 const addPerspectiveUrl = "http://localhost:5003/api/Perspective/add-a-perspective"
 const updatePerspectiveUrl = "http://localhost:5003/api/Perspective/update-a-perspective"
@@ -44,6 +48,10 @@ const urlConfig = {
     allMeasurableActivitiesPropertiesUrl,
     configItemEndpoint,
     measurableActivityImplementationsEndpoint,
+    deleteAnImplementationEndpoint,
+    downloadEvidenceEndpoint,
+    updateAnImplementation,
+    createAnImplementation,
     addPerspectiveUrl,
     addActivityUrl,
     addInitiativeUrl,

@@ -16,7 +16,7 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const loggedInId = localStorage.getItem('loggedInId');
-  const configItemEndpoint =urlConfig.configItemEndpoint;
+  const configItemEndpoint = urlConfig.configItemEndpoint;
   const measurableActivityImplementationsEndpoint = urlConfig.measurableActivityImplementationsEndpoint
 
 
@@ -36,7 +36,7 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
             axios.get(configItemEndpoint + record.ssMartaObjectivesId),
             axios.get(measurableActivityImplementationsEndpoint + record.measurableActivityId),
           ]);
-          
+
           const activity = activityResponse.data.fieldDescription;
           const period = periodResponse.data.fieldDescription;
           const perspective = perspectiveResponse.data.fieldDescription;
@@ -82,12 +82,14 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
     filterData();
   }, [quartileFilter, data]);
 
-  const handleRowClick = (index) => {
-    navigateTo(filteredData[index]);
+  const handleRowClick = (measurableActivityId, index) => {
+    navigateTo(measurableActivityId, filteredData[index]);
+
   };
 
-  const navigateTo = (rowData) => {
-    navigate('/appraisal-details', { state: { data: rowData } });
+  const navigateTo = (measurableActivityId, rowData) => {
+    navigate('/appraisal-details', { state: { activityId: measurableActivityId, data: rowData } });
+
   };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
