@@ -18,6 +18,7 @@ const deleteAnImplementationEndpoint = "http://localhost:5003/api/Implementation
 
 
 const urlConfig = {
+    loggedInId,
     loginUrl,
     allMeasurableActivitiesUrl,
     allPeriodsUrl,
