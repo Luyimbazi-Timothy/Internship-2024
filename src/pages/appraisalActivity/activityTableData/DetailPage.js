@@ -149,13 +149,6 @@ const DetailPage = () => {
     }
   };
 
-
-  const handleSaveEdit = () => {
-    handleClose();
-    displaySuccessMessage();
-    setEditData(null);
-  };
-
   const handleEdit = (row) => {
     setEditData(row.original);
     handleShow();

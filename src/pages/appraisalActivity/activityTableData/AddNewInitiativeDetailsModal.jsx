@@ -95,7 +95,9 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
       );
 
       if(response){
-        displaySuccessMessage("");
+        displaySuccessMessage("success");
+        setEdit(false)
+        initialData=null;
         handleClose();
       }else{
         displaySuccessMessage("success");
