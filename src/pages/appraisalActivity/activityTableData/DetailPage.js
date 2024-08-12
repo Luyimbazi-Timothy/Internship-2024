@@ -3,11 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Box, TextField } from '@mui/material';
 import { FaArrowLeft } from 'react-icons/fa';
 import { MaterialReactTable } from 'material-react-table';
-import { Card } from 'react-bootstrap';
-import AddNewInitiativeDetailsModal from './AddNewInitiativeDetailsModal';
+import { Card, Stack } from 'react-bootstrap';
+import AddNewInitiativeDetailsModal from './AddNewInitiativeDetailsModal'; // Or replace with CustomEditModal if applicable
 import Swal from 'sweetalert2';
 import urlConfig from '../../../services/Urls';
 import axios from 'axios';
+import { FaRegFilePdf, FaFileWord, FaFilePowerpoint, FaFileAlt, } from 'react-icons/fa'; 
+import { PiFilePngThin } from "react-icons/pi";
+
 
 const DetailPage = () => {
   const [show, setShow] = useState(false);
@@ -15,7 +18,7 @@ const DetailPage = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [tableData, setTableData] = useState([]);
-  const [editData, setEditData] = useState(null); // State to hold data for editing
+  const [editData, setEditData] = useState(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,10 +32,9 @@ const DetailPage = () => {
           const urlEndpoint = urlConfig.measurableActivityImplementationsEndpoint + measurableActivityId;
           const response = await axios.get(urlEndpoint);
           const implementations = response.data;
-          console.log(implementations);
           setTableData(implementations.map((implementation) => ({
             id: implementation.implementationId,
-            date: implementation.date,
+            date: new Date(implementation.createdDate).toLocaleString(),  // Convert to Date object first
             description: implementation.description,
             comments: implementation.comment,
             stakeholders: implementation.stakeholder,
@@ -44,8 +46,39 @@ const DetailPage = () => {
       }
       fetchData();
     }
-
   }, [measurableActivityId, refresh]);
+
+  const columns = [
+    { header: 'Date', accessorKey: 'date', size: 50 },
+    { header: 'Implementations', accessorKey: 'description' },
+    { header: 'Comments', accessorKey: 'comments' },
+    { header: 'Stakeholders', accessorKey: 'stakeholders' },
+    { header: 'Evidence', accessorKey: 'evidence' },
+    {
+      header: 'Action',
+      accessorKey: 'action',
+      Cell: ({ row }) => (
+        <Box display="flex" gap={1}>
+          <Button
+            variant="outlined"
+            color="info"
+            size="small"
+            onClick={() => handleEdit(row)}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            size="small"
+            onClick={() => confirmDelete(row.original.id)}
+          >
+            Delete
+          </Button>
+        </Box>
+      ),
+    },
+  ];
 
   const confirmDelete = async (implementationId) => {
     Swal.fire({
@@ -62,8 +95,7 @@ const DetailPage = () => {
       if (result.isConfirmed) {
         const urlEndpoint = urlConfig.deleteAnImplementationEndpoint + implementationId;
         try {
-          const response = await axios.delete(urlEndpoint);
-          console.log(response.data);
+          await axios.delete(urlEndpoint);
           setTableData(prevData => prevData.filter(item => item.id !== implementationId));
           Swal.fire({
             title: "Deleted!",
@@ -93,10 +125,10 @@ const DetailPage = () => {
     });
   };
 
-  const handleSave = () => {
+  const handleSaveEdit = () => {
     handleClose();
     displaySuccessMessage();
-    setEditData(null); // Reset edit data
+    setEditData(null);
   };
 
   const handleEdit = (row) => {
@@ -108,112 +140,52 @@ const DetailPage = () => {
     return <Container><p>No data available</p></Container>;
   }
 
-  const columns = [
-    { header: 'Date', accessorKey: 'date', size: 50 },
-    { header: 'Implementations', accessorKey: 'description' },
-    { header: 'Comments', accessorKey: 'comments' },
-    { header: 'Stakeholders', accessorKey: 'stakeholders' },
-    { header: 'Evidence', accessorKey: 'evidence' },
-    {
-      header: 'Action',
-      accessorKey: 'action',
-      Cell: ({ cell, row, table }) => (
-        <Box display="flex" gap={1}>
-          <Button
-            variant="outlined"
-            color="info"
-            size="small"
-            onClick={() => handleEdit(row)}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            color="error"
-            size="small"
-            onClick={() => {
-              const implementationId = row.original.id;
-              confirmDelete(implementationId);
-            }}
-          >
-            Delete
-          </Button>
-        </Box>
-      ),
-    },
-  ];
-
-  const CustomEditModal = ({ row, onClose, onSave }) => {
-    const [editValues, setEditValues] = useState({
-      date: row?.date || '',
-      description: row?.description || '',
-      comments: row?.comments || '',
-      stakeholders: row?.stakeholders || '',
-      evidence: row?.evidence || null,
-    });
-
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setEditValues({
-        ...editValues,
-        [name]: value,
-      });
-    };
-
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      setEditValues({
-        ...editValues,
-        evidence: file,
-      });
-    };
-
-    const handleSaveClick = () => {
-      onSave(editValues);
-      onClose();
-    };
-
+  const getFileTypeIcon = (fileName) => {
+    const fileExtension = fileName.split('.').pop().toLowerCase();
+  
+    switch (fileExtension) {
+      case 'png':
+        return <PiFilePngThin color="orange"/>;
+      case 'pdf':
+        return <FaRegFilePdf color="red" />;
+      case 'doc':
+      case 'docx':
+        return <FaFileWord color="blue" />;
+      case 'ppt':
+      case 'pptx':
+        return <FaFilePowerpoint color="orange" />;
+      default:
+        return <FaFileAlt color="gray" />;
+    }
+  };
+  
+  const renderEvidence = (row) => {
     return (
-      <Box>
-        <TextField
-          label="Date"
-          name="date"
-          value={editValues.date}
-          onChange={handleInputChange}
-          fullWidth
-        />
-        <TextField
-          label="Description"
-          name="description"
-          value={editValues.description}
-          onChange={handleInputChange}
-          fullWidth
-        />
-        <TextField
-          label="Comments"
-          name="comments"
-          value={editValues.comments}
-          onChange={handleInputChange}
-          fullWidth
-        />
-        <TextField
-          label="Stakeholders"
-          name="stakeholders"
-          value={editValues.stakeholders}
-          onChange={handleInputChange}
-          fullWidth
-        />
-        <input
-          type="file"
-          name="evidence"
-          onChange={handleFileChange}
-          fullWidth
-        />
-        <Button onClick={handleSaveClick}>Save</Button>
-        <Button onClick={onClose}>Cancel</Button>
-      </Box>
+      <div>
+        <Stack direction="horizontal" gap={3}>
+          <div>
+            <strong>Evidence:</strong> {getFileTypeIcon(row.original.evidence)} {row.original.evidence}
+          </div>
+          <div>
+            <strong>
+              <Button
+                className='btn btn-primary'
+                onClick={() => { downloadEvidence(row.original.id) }}
+              >
+                Download
+              </Button>
+            </strong>
+          </div>
+        </Stack>
+      </div>
     );
   };
+
+  const downloadEvidence = (implementationId) => {
+    const urlEndpoint = urlConfig.downloadEvidenceEndpoint + implementationId;
+    window.open(urlEndpoint, '_blank');
+  };
+
 
   return (
     <Card variant="outlined" style={{ padding: '16px', margin: '16px 0' }}>
@@ -268,20 +240,27 @@ const DetailPage = () => {
         MeasurableActivityId={data.id}
         show={show}
         handleClose={handleClose}
-        initialData={editData} // Pass edit data to modal
+        initialData={editData}
       />
+
       <MaterialReactTable
         columns={columns}
         data={tableData}
+        renderDetailPanel={({ row }) => (
+          <Box>
+            <div>
+              <strong>Description:</strong> {row.original.description}
+            </div>
+            <div>
+              <strong>Comments:</strong> {row.original.comments}
+            </div>
+            <div>
+              <strong>Stakeholders:</strong> {row.original.stakeholders}
+            </div>
+            {renderEvidence(row)}
+          </Box>
+        )}
       />
-
-      {editData && (
-        <CustomEditModal
-          row={editData}
-          onClose={handleClose}
-          onSave={handleSave}
-        />
-      )}
     </Card>
   );
 };

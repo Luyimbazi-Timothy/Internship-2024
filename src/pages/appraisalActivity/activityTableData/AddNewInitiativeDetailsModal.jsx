@@ -1,37 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import urlConfig from '../../../services/Urls';
 
-function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
+function AddNewInitiativeDetailsModal({ initialData, refresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
+
+  const [edit, setEdit] = useState(false);
   const today = new Date().toISOString().split('T')[0];
+  const userId = localStorage.getItem("loggedInId");
+  useEffect(() => {
+    if (initialData) {
+      setEdit(true);
+    }
+  }, [initialData]);
 
   const initialValues = {
-    date: today,
-    implementation: '',
-    comment: '',
-    stakeholder: '',
-    evidence: '', // Initialize as an empty string
+    date: initialData ? initialData.date : today,
+    implementation: initialData ? initialData.description : '',
+    comment: initialData ? initialData.comments : '',
+    stakeholder: initialData ? initialData.stakeholders : '',
+    evidence: initialData ? initialData.evidence : '',
   };
 
   const validationSchema = Yup.object({
     date: Yup.date().max(today, "Date cannot be in the future"),
-    implementation: Yup.string().max(40, 'Must be 20 characters or less').required('Required'),
+    implementation: Yup.string().max(40, 'Must be 40 characters or less').required('Required'),
     comment: Yup.string().required('Required'),
     stakeholder: Yup.string().required('Required'),
     evidence: Yup.mixed().required('Required'),
   });
 
   const onSubmit = async (values, { setSubmitting }) => {
-
-    const userId = localStorage.getItem("loggedInId")
-    console.log(userId, MeasurableActivityId)
-
-
-    var date = "2024-08-02T16:58:37Z"
+    const userId = localStorage.getItem("loggedInId");
+    const currentDate = new Date(values.date);
+    const date = currentDate.toISOString();
     const formData = {
       CreatedDate: date,
       Description: values.implementation,
@@ -40,10 +46,7 @@ function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurab
       Evidence: values.evidence,
       MeasurableActivityId: MeasurableActivityId,
       UserId: userId
-    }
-
-    console.log(formData)
-
+    };
 
     try {
       const response = await axios.post('http://localhost:5003/api/Implementations/create-an-implementation', formData, {
@@ -57,20 +60,54 @@ function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurab
     } catch (error) {
       console.error(error);
     } finally {
-      refresh(true)
+      refresh(true);
       setSubmitting(false);
     }
   };
 
+  const onSubmitEdit = async (values, { setSubmitting }) => {
+    const currentDate = new Date(values.date);
+    const date = currentDate.toISOString();
+    
+    const formData = new FormData();
+    formData.append('ImplementationId', initialData.id);
+    formData.append('Description', values.implementation);
+    formData.append('Comment', values.comment);
+    formData.append('Stakeholder', values.stakeholder);
+    formData.append('Evidence', values.evidence);  // This should now be properly handled as a file
+    formData.append('EvidenceContentType', values.evidence.type);
+    formData.append('EvidenceFileName', values.evidence.name);
+    formData.append('CreatedDate', date);
+    formData.append('MeasurableActivityId', MeasurableActivityId);
+    formData.append('UserId', userId);
+  
+    try {
+      const response = await axios.post(urlConfig.updateAnImplementation, formData);
+
+      if(response){
+        displaySuccessMessage();
+        handleClose();
+      }else{
+        alert("Update failed")
+      }
+      
+    } catch (error) {
+      console.error(error);
+    } finally {
+      refresh(true);
+      setSubmitting(false);
+    }
+  };
+  
+  
 
   return (
-    <Modal size="lg" show={show} onHide={handleClose} backdrop="static"
-    >
+    <Modal size="lg" show={show} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>Activity: {measurableActivity}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={edit ? onSubmitEdit : onSubmit}>
           {({ setFieldValue }) => (
             <FormikForm>
               <div className="row">
@@ -95,9 +132,8 @@ function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurab
                   <Form.Group>
                     <div>
                       <Form.Label htmlFor="implementation">Implementation <span className="text-danger"> *</span></Form.Label>
-
                     </div>
-                    <Field as={Form.Control} as="textarea" style={{ width: "100%" }} rows={3} name="implementation" />
+                    <Field as="textarea" style={{ width: "100%" }} rows={3} name="implementation" />
                     <ErrorMessage name="implementation" component="div" className="text-danger" />
                   </Form.Group>
                 </div>
@@ -106,16 +142,13 @@ function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurab
                 <div className="col">
                   <Form.Group>
                     <div>
-                      <Form.Label htmlFor="comment">Comment<span className="text-danger"> *</span></Form.Label>
-
+                      <Form.Label htmlFor="comment">Comment <span className="text-danger"> *</span></Form.Label>
                     </div>
-                    <Field as={Form.Control} as="textarea" style={{ width: "100%" }} rows={3} name="comment" />
+                    <Field as="textarea" style={{ width: "100%" }} rows={3} name="comment" />
                     <ErrorMessage name="comment" component="div" className="text-danger" />
                   </Form.Group>
                 </div>
               </div>
-
-
 
               <div className="row mb-3">
                 <div className="col">
@@ -132,9 +165,7 @@ function AddNewInitiativeDetailsModal({ refresh, displaySuccessMessage, measurab
                     />
                     <ErrorMessage name="evidence" component="div" className="text-danger" />
                   </Form.Group>
-
                 </div>
-
               </div>
 
               <hr />

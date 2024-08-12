@@ -11,8 +11,8 @@ const allMeasurableActivitiesPropertiesUrl = "http://localhost:5003/api/Measurab
 const configItemEndpoint = "http://localhost:5003/api/configurables/get-a-config-item/";
 const measurableActivityImplementationsEndpoint = "http://localhost:5003/api/Implementations/all-implementations-for-single-activity/"
 const deleteAnImplementationEndpoint = "http://localhost:5003/api/Implementations/delete-an-implementation?Id="
-
-
+const downloadEvidenceEndpoint = "http://localhost:5003/api/Implementations/get-evidence-file?id="
+const updateAnImplementation = 'http://localhost:5003/api/Implementations/update-an-implementation';
 
 
 
@@ -28,8 +28,9 @@ const urlConfig = {
     allMeasurableActivitiesPropertiesUrl,
     configItemEndpoint,
     measurableActivityImplementationsEndpoint,
-    deleteAnImplementationEndpoint
-
+    deleteAnImplementationEndpoint,
+    downloadEvidenceEndpoint,
+    updateAnImplementation
 }
 
 export default urlConfig;

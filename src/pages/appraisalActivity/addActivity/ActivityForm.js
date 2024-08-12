@@ -58,20 +58,37 @@ function AddActivityForm() {
   const createMeasurableActivityProperties = async (record) => {
     const url = urlConfig.createMeasurableActivityPropertiesUrl;
     try {
-      const response = await axios.post(url, record);
-      if (response.status === 200) {
-        Swal.fire({
-          title: "Measurable Activity Details added successfully",
-          icon: "success",
-          timer: 2000,
-          showConfirmButton: false,
-        });
+      const result = await Swal.fire({
+        title: "Save measurable Activity Details?",
+        showConfirmButton: true,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ok",
+        cancelButtonText: "Cancel",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+
+      if (result.isConfirmed) {
+        const response = await axios.post(url, record);
+        if (response.status === 200) {
+          Swal.fire({
+            title: "Details saved successfully.",
+            icon: "success",
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        navigate("/dashboard");
+        }
+      } else {
         navigate("/dashboard");
       }
+
     } catch (error) {
       Swal.fire({
         title: 'Error adding measurable activity',
-        text: error.message,
+        text: error.response?.data?.message || error.message,
         icon: 'error',
         timer: 2000,
         showConfirmButton: false,
