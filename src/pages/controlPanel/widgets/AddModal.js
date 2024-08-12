@@ -23,7 +23,6 @@ function AddModal({ isPreview }) {
     setEditData,
     addBtnLabel,
     setNoOfNewUpdates,
-    dataSets,
   } = useContext(Context);
 
   const initialValues = { content: editData ? editData.field : "" };
@@ -43,7 +42,7 @@ function AddModal({ isPreview }) {
 
       if (addBtnLabel === "Perspectives") {
         axios.put(
-          `http://localhost:5003/api/Perspective/update-a-perspective/${editData?.id}`,
+          `${urlConfig.updatePerspectiveUrl}/${editData?.id}`,
           {
             fieldName: "Perspective",
             fieldDescription: values.content,
@@ -52,7 +51,7 @@ function AddModal({ isPreview }) {
         );
       } else if (addBtnLabel === "Initiatives") {
         axios.put(
-          `http://localhost:5003/api/Initiative/update-an-initiative/${editData?.id}`,
+          `${urlConfig.updateInitiativeUrl}/${editData?.id}`,
           {
             fieldName: "Initiative",
             fieldDescription: values.content,
@@ -62,7 +61,7 @@ function AddModal({ isPreview }) {
       } else if (addBtnLabel === "Periods") {
         axios
           .post(
-            `http://localhost:5003/api/Period/update-period-item/${editData?.id}`,
+            `${urlConfig.updatePeriodUrl}/${editData?.id}`,
             {
               fieldName: "Period",
               fieldDescription: values.content,
@@ -74,7 +73,7 @@ function AddModal({ isPreview }) {
           });
       } else if (addBtnLabel === "Ssmarta Objectives") {
         axios.post(
-          `http://localhost:5003/api/ssmarta-objective/update-objective-item/${editData?.id}`,
+          `${urlConfig.updateSsmartaObjectiveUrl}/${editData?.id}`,
           {
             fieldName: "Objective",
             fieldDescription: values.content,
@@ -83,7 +82,7 @@ function AddModal({ isPreview }) {
         );
       } else if (addBtnLabel === "Activities") {
         axios.post(
-          `http://localhost:5003/api/Activity/update-activity-item/${editData?.id}`,
+          `${urlConfig.updateActivityUrl}/${editData?.id}`,
           {
             fieldName: "Measurable Activity",
             fieldDescription: values.content,
@@ -107,7 +106,7 @@ function AddModal({ isPreview }) {
 
       if (addBtnLabel === "Perspectives") {
         axios
-          .post("http://localhost:5003/api/Perspective/add-a-perspective", {
+          .post(`${urlConfig.addPerspectiveUrl}`, {
             fieldName: "Perspective",
             fieldDescription: values.content,
             userId: urlConfig.loggedInId,
@@ -123,7 +122,7 @@ function AddModal({ isPreview }) {
           });
       } else if (addBtnLabel === "Initiatives") {
         axios
-          .post("http://localhost:5003/api/Initiative/add-an-initiative", {
+          .post(`${urlConfig.addInitiativeUrl}`, {
             fieldName: "Initiative",
             fieldDescription: values.content,
             userId: urlConfig.loggedInId,
@@ -139,7 +138,7 @@ function AddModal({ isPreview }) {
           });
       } else if (addBtnLabel === "Periods") {
         axios
-          .post("http://localhost:5003/api/Period/create-period-item", {
+          .post(`${urlConfig.addPeriodUrl}`, {
             fieldName: "Period",
             fieldDescription: values.content,
             userId: urlConfig.loggedInId,
@@ -156,7 +155,7 @@ function AddModal({ isPreview }) {
       } else if (addBtnLabel === "Ssmarta Objectives") {
         axios
           .post(
-            "http://localhost:5003/api/ssmarta-objective/create-objective-item",
+            `${urlConfig.addSsmartaObjectiveUrl}`,
             {
               fieldName: "Objective",
               fieldDescription: values.content,
@@ -176,7 +175,7 @@ function AddModal({ isPreview }) {
           });
       } else if (addBtnLabel === "Activities") {
         axios
-          .post("http://localhost:5003/api/Activity/create-activity-item", {
+          .post(`${urlConfig.addActivityUrl}`, {
             fieldName: "Measurable Activity",
             fieldDescription: values.content,
             userId: urlConfig.loggedInId,
