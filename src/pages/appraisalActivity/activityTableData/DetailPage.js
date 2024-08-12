@@ -40,6 +40,7 @@ const DetailPage = () => {
             stakeholders: implementation.stakeholder,
             evidence: implementation.evidenceFileName,
           })));
+          // setRefresh(false)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -114,16 +115,40 @@ const DetailPage = () => {
     });
   };
 
-  const displaySuccessMessage = () => {
-    Swal.fire({
-      position: 'top',
-      text: 'Record Saved Successfully',
-      icon: 'success',
-      showConfirmButton: false,
-      timerProgressBar: true,
-      timer: 2000
-    });
+  const displaySuccessMessage = (type) => {
+    if (type === 'error') {
+      Swal.fire({
+        position: 'top',
+        text: "Error occurred.",
+        icon: 'success',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 2000
+      });
+
+    } else if (type === 'success') {
+      Swal.fire({
+        position: 'top',
+        text: "Implementation added successfully",
+        icon: 'success',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 2000
+      });
+
+    } else {
+      Swal.fire({
+        position: 'top',
+        text: "Record Updated Successfully",
+        icon: 'success',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 2000
+      });
+
+    }
   };
+
 
   const handleSaveEdit = () => {
     handleClose();
@@ -234,7 +259,7 @@ const DetailPage = () => {
       </div>
 
       <AddNewInitiativeDetailsModal
-        refresh={setRefresh}
+        setRefresh={setRefresh}
         displaySuccessMessage={displaySuccessMessage}
         measurableActivity={data.measurableActivity.activity}
         MeasurableActivityId={data.id}

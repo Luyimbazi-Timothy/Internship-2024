@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import urlConfig from '../../../services/Urls';
 
-function AddNewInitiativeDetailsModal({ initialData, refresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
+function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
 
   const [edit, setEdit] = useState(false);
   const today = new Date().toISOString().split('T')[0];
@@ -49,18 +49,24 @@ function AddNewInitiativeDetailsModal({ initialData, refresh, displaySuccessMess
     };
 
     try {
-      const response = await axios.post('http://localhost:5003/api/Implementations/create-an-implementation', formData, {
+      const response = await axios.post(urlConfig.createAnImplementation, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data);
-      displaySuccessMessage();
-      handleClose();
+      if(response){
+        displaySuccessMessage("success");
+        handleClose();
+      }else{
+        displaySuccessMessage("error");
+
+      }
+      
     } catch (error) {
       console.error(error);
     } finally {
-      refresh(true);
+      setRefresh(true);
+      // setRefresh((refresh)=>refresh+1);
       setSubmitting(false);
     }
   };
@@ -80,7 +86,7 @@ function AddNewInitiativeDetailsModal({ initialData, refresh, displaySuccessMess
     };
   
     try {
-      const response = await axios.post(urlConfig.updateAnImplementation+initialData.id, {implementation:formData},
+      const response = await axios.post(urlConfig.updateAnImplementation+initialData.id, formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -89,16 +95,16 @@ function AddNewInitiativeDetailsModal({ initialData, refresh, displaySuccessMess
       );
 
       if(response){
-        displaySuccessMessage();
+        displaySuccessMessage("");
         handleClose();
       }else{
-        alert("Update failed")
+        displaySuccessMessage("success");
       }
       
     } catch (error) {
       console.error(error);
     } finally {
-      refresh(true);
+      setRefresh(true);
       setSubmitting(false);
     }
   };

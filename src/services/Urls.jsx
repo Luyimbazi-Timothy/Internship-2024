@@ -13,6 +13,7 @@ const measurableActivityImplementationsEndpoint = "http://localhost:5003/api/Imp
 const deleteAnImplementationEndpoint = "http://localhost:5003/api/Implementations/delete-an-implementation?Id="
 const downloadEvidenceEndpoint = "http://localhost:5003/api/Implementations/get-evidence-file?id="
 const updateAnImplementation = 'http://localhost:5003/api/Implementations/update-an-implementation?id=';
+const createAnImplementation = 'http://localhost:5003/api/Implementations/create-an-implementation'
 
 
 
@@ -31,7 +32,8 @@ const urlConfig = {
     measurableActivityImplementationsEndpoint,
     deleteAnImplementationEndpoint,
     downloadEvidenceEndpoint,
-    updateAnImplementation
+    updateAnImplementation,
+    createAnImplementation
 }
 
 export default urlConfig;
