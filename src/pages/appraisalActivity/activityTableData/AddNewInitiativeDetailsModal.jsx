@@ -68,21 +68,25 @@ function AddNewInitiativeDetailsModal({ initialData, refresh, displaySuccessMess
   const onSubmitEdit = async (values, { setSubmitting }) => {
     const currentDate = new Date(values.date);
     const date = currentDate.toISOString();
-    
-    const formData = new FormData();
-    formData.append('ImplementationId', initialData.id);
-    formData.append('Description', values.implementation);
-    formData.append('Comment', values.comment);
-    formData.append('Stakeholder', values.stakeholder);
-    formData.append('Evidence', values.evidence);  // This should now be properly handled as a file
-    formData.append('EvidenceContentType', values.evidence.type);
-    formData.append('EvidenceFileName', values.evidence.name);
-    formData.append('CreatedDate', date);
-    formData.append('MeasurableActivityId', MeasurableActivityId);
-    formData.append('UserId', userId);
+    console.log("values: ",values.evidence)
+    const formData = {
+      CreatedDate: date,
+      Description: values.implementation,
+      Comment: values.comment,
+      Stakeholder: values.stakeholder,
+      Evidence: values.evidence,
+      MeasurableActivityId: MeasurableActivityId,
+      UserId: userId
+    };
   
     try {
-      const response = await axios.post(urlConfig.updateAnImplementation, formData);
+      const response = await axios.post(urlConfig.updateAnImplementation+initialData.id, {implementation:formData},
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
       if(response){
         displaySuccessMessage();
