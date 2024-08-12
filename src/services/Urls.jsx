@@ -9,12 +9,27 @@ const allInitiativesUrl = "http://localhost:5003/api/Initiative/get-all-initiati
 const  createMeasurableActivityPropertiesUrl = "http://localhost:5003/api/Measurable-Activities/add-measurable-activity";
 const  allMeasurableActivitiesPropertiesUrl = "http://localhost:5003/api/Measurable-Activities/get-all-measurable-activities/"+loggedInId;
 const configItemEndpoint = "http://localhost:5003/api/configurables/get-a-config-item/";
- const measurableActivityImplementationsEndpoint = "http://localhost:5003/api/Implementations/all-implementations-for-single-activity/"
+const measurableActivityImplementationsEndpoint = "http://localhost:5003/api/Implementations/all-implementations-for-single-activity/"
 
+const addPerspectiveUrl = "http://localhost:5003/api/Perspective/add-a-perspective"
+const updatePerspectiveUrl = "http://localhost:5003/api/Perspective/update-a-perspective"
+const deletePerspectiveUrl = "http://localhost:5003/api/Perspective/delete-a-perspective"
 
+const addPeriodUrl = "http://localhost:5003/api/Period/create-period-item"
+const updatePeriodUrl = "http://localhost:5003/api/Period/update-period-item"
+const deletePeriodUrl = "http://localhost:5003/api/Period/delete-period-item"
 
+const addInitiativeUrl = "http://localhost:5003/api/Initiative/add-an-initiative"
+const updateInitiativeUrl = "http://localhost:5003/api/Initiative/update-an-initiative"
+const deleteInitiativeUrl = "http://localhost:5003/api/Initiative/delete-an-initiative"
 
+const addSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/create-objective-item"
+const updateSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/update-objective-item"
+const deleteSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/delete-objective-item"
 
+const addActivityUrl = "http://localhost:5003/api/Activity/create-activity-item"
+const updateActivityUrl = "http://localhost:5003/api/Activity/update-activity-item"
+const deleteActivityUrl = "http://localhost:5003/api/Activity/delete-activity-item"
 
 
 const urlConfig = {
@@ -28,7 +43,22 @@ const urlConfig = {
     createMeasurableActivityPropertiesUrl,
     allMeasurableActivitiesPropertiesUrl,
     configItemEndpoint,
-    measurableActivityImplementationsEndpoint
+    measurableActivityImplementationsEndpoint,
+    addPerspectiveUrl,
+    addActivityUrl,
+    addInitiativeUrl,
+    addPeriodUrl,
+    addSsmartaObjectiveUrl,
+    updateActivityUrl,
+    updateInitiativeUrl,
+    updatePeriodUrl,
+    updateSsmartaObjectiveUrl,
+    updatePerspectiveUrl,
+    deleteActivityUrl,
+    deleteInitiativeUrl,
+    deletePeriodUrl,
+    deletePerspectiveUrl,
+    deleteSsmartaObjectiveUrl
 
 }
 

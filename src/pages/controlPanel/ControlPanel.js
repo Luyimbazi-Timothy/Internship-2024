@@ -129,7 +129,6 @@ const ControlPanel = () => {
               setEditData,
               addBtnLabel,
               setNoOfNewUpdates,
-              dataSets,
             }}
           >
             <AddModal isPreview={isPreview} />
