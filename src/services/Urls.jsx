@@ -15,7 +15,25 @@ const downloadEvidenceEndpoint = "http://localhost:5003/api/Implementations/get-
 const updateAnImplementation = 'http://localhost:5003/api/Implementations/update-an-implementation?id=';
 const createAnImplementation = 'http://localhost:5003/api/Implementations/create-an-implementation'
 
+const addPerspectiveUrl = "http://localhost:5003/api/Perspective/add-a-perspective"
+const updatePerspectiveUrl = "http://localhost:5003/api/Perspective/update-a-perspective"
+const deletePerspectiveUrl = "http://localhost:5003/api/Perspective/delete-a-perspective"
 
+const addPeriodUrl = "http://localhost:5003/api/Period/create-period-item"
+const updatePeriodUrl = "http://localhost:5003/api/Period/update-period-item"
+const deletePeriodUrl = "http://localhost:5003/api/Period/delete-period-item"
+
+const addInitiativeUrl = "http://localhost:5003/api/Initiative/add-an-initiative"
+const updateInitiativeUrl = "http://localhost:5003/api/Initiative/update-an-initiative"
+const deleteInitiativeUrl = "http://localhost:5003/api/Initiative/delete-an-initiative"
+
+const addSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/create-objective-item"
+const updateSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/update-objective-item"
+const deleteSsmartaObjectiveUrl = "http://localhost:5003/api/ssmarta-objective/delete-objective-item"
+
+const addActivityUrl = "http://localhost:5003/api/Activity/create-activity-item"
+const updateActivityUrl = "http://localhost:5003/api/Activity/update-activity-item"
+const deleteActivityUrl = "http://localhost:5003/api/Activity/delete-activity-item"
 
 
 const urlConfig = {
@@ -33,7 +51,23 @@ const urlConfig = {
     deleteAnImplementationEndpoint,
     downloadEvidenceEndpoint,
     updateAnImplementation,
-    createAnImplementation
+    createAnImplementation,
+    addPerspectiveUrl,
+    addActivityUrl,
+    addInitiativeUrl,
+    addPeriodUrl,
+    addSsmartaObjectiveUrl,
+    updateActivityUrl,
+    updateInitiativeUrl,
+    updatePeriodUrl,
+    updateSsmartaObjectiveUrl,
+    updatePerspectiveUrl,
+    deleteActivityUrl,
+    deleteInitiativeUrl,
+    deletePeriodUrl,
+    deletePerspectiveUrl,
+    deleteSsmartaObjectiveUrl
+
 }
 
 export default urlConfig;
