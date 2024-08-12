@@ -6,6 +6,7 @@ import DeleteDialogBox from "./widgets/DeleteDialogBox";
 import SelectModal from "./widgets/SelectModal";
 import AddModal from "./widgets/AddModal";
 import axios from "axios";
+import urlConfig from "../../services/Urls";
 
 export const Context = createContext();
 
@@ -19,7 +20,7 @@ const ControlPanel = () => {
   const [tableData, setTableData] = useState([]);
   const [showTableData, setShowTableData] = useState(false);
   const [addBtnLabel, setAddBtnLabel] = useState("");
-  const loggedInId = localStorage.getItem("loggedInId");
+  const [noOfNewUpdates, setNoOfNewUpdates] = useState(0);
 
   const [dataSets, setDataSets] = useState({
     1: [],
@@ -28,72 +29,71 @@ const ControlPanel = () => {
     4: [],
     5: [],
   });
+  
+  const fetchData = async () => {
+    const periods = await axios.get(`${urlConfig.allPeriodsUrl}`);
+    const perspectives = await axios.get(`${urlConfig.allPerspectivesUrl}`);
+    const objectives = await axios.get(`${urlConfig.allSsmartaObjectiveUrl}`);
+    const initiatives = await axios.get(`${urlConfig.allInitiativesUrl}`);
+    const activities = await axios.get(
+      `${urlConfig.allMeasurableActivitiesUrl}`
+    );
+
+    axios
+      .all([periods, perspectives, objectives, initiatives, activities])
+      .then(
+        axios.spread(
+          (periods, perspectives, objectives, initiatives, activities) => {
+            const updatedDataSets = {
+              1: [],
+              2: [],
+              3: [],
+              4: [],
+              5: [],
+            };
+            periods.data.forEach((item) => {
+              updatedDataSets[1].push({
+                //all periods
+                field: item.fieldDescription,
+                id: item.itemId,
+              });
+            });
+            perspectives.data.forEach((item) => {
+              updatedDataSets[2].push({
+                field: item.fieldDescription,
+                id: item.itemId,
+              });
+            });
+            objectives.data.forEach((item) => {
+              updatedDataSets[3].push({
+                field: item.fieldDescription,
+                id: item.itemId,
+              });
+            });
+            initiatives.data.forEach((item) => {
+              updatedDataSets[4].push({
+                field: item.fieldDescription,
+                id: item.itemId,
+              });
+            });
+            activities.data.forEach((item) => {
+              updatedDataSets[5].push({
+                field: item.fieldDescription,
+                id: item.itemId,
+              });
+            });
+            setDataSets(updatedDataSets);
+          }
+        )
+      )
+      .catch((errors) => {
+        console.error(errors);
+      });
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const periods = await axios.get(
-        `http://localhost:5003/api/Period/all-period-items/${loggedInId}`
-      );
-      const perspectives = await axios.get(
-        `http://localhost:5003/api/Perspective/get-all-perspectives/${loggedInId}`
-      );
-      const objectives = await axios.get(
-        `http://localhost:5003/api/ssmarta-objective/all-objective-items/${loggedInId}`
-      );
-      const initiatives = await axios.get(
-        `http://localhost:5003/api/Initiative/get-all-initiatives/${loggedInId}`
-      );
-      const activities = await axios.get(
-        `http://localhost:5003/api/Activity/all-activity-items/${loggedInId}`
-      );
-
-      axios
-        .all([periods, perspectives, objectives, initiatives, activities])
-        .then(
-          axios.spread(
-            (periods, perspectives, objectives, initiatives, activities) => {
-              const updatedDataSets = { ...dataSets };
-              periods.data.forEach((item) => {
-                updatedDataSets[1].push({
-                  field: item.fieldDescription,
-                  id: item.itemId,
-                });
-              });
-              perspectives.data.forEach((item) => {
-                updatedDataSets[2].push({
-                  field: item.fieldDescription,
-                  id: item.itemId,
-                });
-              });
-              objectives.data.forEach((item) => {
-                updatedDataSets[3].push({
-                  field: item.fieldDescription,
-                  id: item.itemId,
-                });
-              });
-              initiatives.data.forEach((item) => {
-                updatedDataSets[4].push({
-                  field: item.fieldDescription,
-                  id: item.itemId,
-                });
-              });
-              activities.data.forEach((item) => {
-                updatedDataSets[5].push({
-                  field: item.fieldDescription,
-                  id: item.itemId,
-                });
-              });
-
-              setDataSets(updatedDataSets);
-            }
-          )
-        )
-        .catch((errors) => {
-          console.error(errors);
-        });
-    };
-    fetchData(loggedInId);
-  }, []);
+    fetchData();
+  }, [noOfNewUpdates]);
 
   const handleAdd = () => {
     setFormOpen(true);
@@ -121,7 +121,6 @@ const ControlPanel = () => {
           {/* Add / Edit Modal  */}
           <Context.Provider
             value={{
-              isPreview,
               formOpen,
               setFormOpen,
               tableData,
@@ -129,10 +128,11 @@ const ControlPanel = () => {
               editData,
               setEditData,
               addBtnLabel,
-              loggedInId,
+              setNoOfNewUpdates,
+              dataSets,
             }}
           >
-            <AddModal />
+            <AddModal isPreview={isPreview} />
           </Context.Provider>
           {/* Delete dialog box  */}
           <Context.Provider
@@ -144,10 +144,12 @@ const ControlPanel = () => {
               setAlertOpen,
               editData,
               addBtnLabel,
+              setNoOfNewUpdates,
             }}
           >
             <DeleteDialogBox />
           </Context.Provider>
+
           {showTableData && (
             <Grid item xs={12}>
               {/* table data  */}

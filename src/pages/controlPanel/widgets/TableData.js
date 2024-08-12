@@ -1,63 +1,73 @@
-import { useMemo, React, useContext } from 'react'
-import {
-  MaterialReactTable,
-  MRT_ActionMenuItem
-} from 'material-react-table'
-import { Edit, Delete } from '@mui/icons-material'
-import { Context } from '../ControlPanel'
-import Box from '@mui/material/Box'
-import AddIcon from '@mui/icons-material/Add'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Button from '@mui/material/Button'
-import { useNavigate } from 'react-router-dom'
+import { useMemo, React, useContext } from "react";
+import { MaterialReactTable, MRT_ActionMenuItem } from "material-react-table";
+import { Edit, Delete } from "@mui/icons-material";
+import { Context } from "../ControlPanel";
+import Box from "@mui/material/Box";
+import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-function TableData({handleAdd, addBtnLabel}) {
-  const { columnHeader, tableData, setFormOpen, setEditData, setIsPreview, setRowToDelete, setAlertOpen} = useContext(Context)
+function TableData({ handleAdd, addBtnLabel }) {
+  const {
+    columnHeader,
+    tableData,
+    setFormOpen,
+    setEditData,
+    setIsPreview,
+    setRowToDelete,
+    setAlertOpen,
+  } = useContext(Context);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'field',
+        accessorKey: "field",
         header: columnHeader,
         size: 150,
       },
     ],
-    [columnHeader],
-  )
+    [columnHeader]
+  );
 
   const handleEdit = (row) => {
-    setFormOpen(true)
-    setIsPreview(true)
-    setEditData(row.original)
-
-  }
+    setFormOpen(true);
+    setIsPreview(true);
+    setEditData(row.original);
+    console.log("Original Data", row.original);
+  };
 
   const handleDelete = (row) => {
-    setEditData(row.original)
-    setRowToDelete(row)
-    setAlertOpen(true)
-  }
+    setEditData(row.original);
+    setRowToDelete(row);
+    setAlertOpen(true);
+  };
 
   const handleToDashboardNavigation = () => {
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   return (
     <>
       <Box display="flex" justifyContent="flex-end" width="100%">
-        <Button onClick={handleToDashboardNavigation} variant="contained" color="secondary" startIcon={<ArrowBackIcon />}>
+        <Button
+          onClick={handleToDashboardNavigation}
+          variant="contained"
+          color="secondary"
+          startIcon={<ArrowBackIcon />}
+        >
           Back to Dashboard
         </Button>
       </Box>
-      <br/>
+      <br />
       <Box display="flex" justifyContent="flex-end" width="100%">
         <Button onClick={handleAdd} variant="contained" endIcon={<AddIcon />}>
           Add {addBtnLabel}
         </Button>
       </Box>
-      <br/>
+      <br />
       <MaterialReactTable
         columns={columns}
         data={tableData}
@@ -82,7 +92,7 @@ function TableData({handleAdd, addBtnLabel}) {
         ]}
       />
     </>
-  )
+  );
 }
 
-export default TableData
+export default TableData;
