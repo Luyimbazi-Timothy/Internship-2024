@@ -103,7 +103,7 @@ const ControlPanel = () => {
 
   return (
     <>
-      <div>
+      <Container>
         <Grid container spacing={1}>
           {/* Select Field to configure  */}
           <Grid item xs={12}>
@@ -168,7 +168,7 @@ const ControlPanel = () => {
             </Grid>
           )}
         </Grid>
-      </div>
+      </Container>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from './TableComponent';
 import { Link } from 'react-router-dom';
-import fetchData from '../../../services/DataService';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -15,7 +14,6 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const loggedInId = localStorage.getItem('loggedInId');
   const configItemEndpoint = urlConfig.configItemEndpoint;
   const measurableActivityImplementationsEndpoint = urlConfig.measurableActivityImplementationsEndpoint
 
@@ -72,7 +70,7 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
       }
     };
     getData();
-  }, []);
+  }, [configItemEndpoint, measurableActivityImplementationsEndpoint]);
 
   useEffect(() => {
     const filterData = () => {
