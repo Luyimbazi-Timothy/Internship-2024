@@ -1,10 +1,9 @@
-import React from 'react';
-import './App.css';
-import Layout from './layout/fullPage/Layout';
-import { DisplaySidebarProvider } from './components/contextHook/useDisplayContext';
+import React from "react";
+import "./App.css";
+import Layout from "./layout/fullPage/Layout";
+import { DisplaySidebarProvider } from "./components/contextHook/useDisplayContext";
 
 function App() {
-
   return (
     <DisplaySidebarProvider>
       <Layout />

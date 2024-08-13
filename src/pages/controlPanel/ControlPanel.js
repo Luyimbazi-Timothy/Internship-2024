@@ -29,7 +29,7 @@ const ControlPanel = () => {
     4: [],
     5: [],
   });
-  
+
   const fetchData = async () => {
     const periods = await axios.get(`${urlConfig.allPeriodsUrl}`);
     const perspectives = await axios.get(`${urlConfig.allPerspectivesUrl}`);
