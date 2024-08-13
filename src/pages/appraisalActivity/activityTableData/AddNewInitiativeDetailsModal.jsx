@@ -8,8 +8,15 @@ import axios from 'axios';
 import urlConfig from '../../../services/Urls';
 import { format, parse } from 'date-fns';
 
-function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
-
+function AddNewInitiativeDetailsModal({
+  initialData,
+  setRefresh,
+  displaySuccessMessage,
+  measurableActivity,
+  show,
+  handleClose,
+  MeasurableActivityId,
+}) {
   const [edit, setEdit] = useState(false);
   const today = format(new Date(), 'yyyy-MM-dd'); // Use yyyy-MM-dd format
   const userId = localStorage.getItem("loggedInId");
@@ -30,10 +37,12 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
 
   const validationSchema = Yup.object({
     date: Yup.date().max(today, "Date cannot be in the future"),
-    implementation: Yup.string().max(40, 'Must be 40 characters or less').required('Required'),
-    comment: Yup.string().required('Required'),
-    stakeholder: Yup.string().required('Required'),
-    evidence: Yup.mixed().required('Required'),
+    implementation: Yup.string()
+      .max(40, "Must be 40 characters or less")
+      .required("Required"),
+    comment: Yup.string().required("Required"),
+    stakeholder: Yup.string().required("Required"),
+    evidence: Yup.mixed().required("Required"),
   });
 
   const onSubmit = async (values, { setSubmitting }) => {
@@ -47,7 +56,7 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
       Stakeholder: values.stakeholder,
       Evidence: values.evidence,
       MeasurableActivityId: MeasurableActivityId,
-      UserId: userId
+      UserId: userId,
     };
 
     try {
@@ -62,7 +71,6 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
       } else {
         displaySuccessMessage("error");
       }
-
     } catch (error) {
       console.error(error);
     } finally {
@@ -81,14 +89,14 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
       Stakeholder: values.stakeholder,
       Evidence: values.evidence,
       MeasurableActivityId: MeasurableActivityId,
-      UserId: userId
+      UserId: userId,
     };
 
     try {
       const response = await axios.post(urlConfig.updateAnImplementation + initialData.id, formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -102,7 +110,6 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
         displaySuccessMessage("error");
         setRefresh(true);
       }
-
     } catch (error) {
       console.error(error);
     } finally {
@@ -117,22 +124,43 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
         <Modal.Title>Activity: {measurableActivity}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={edit ? onSubmitEdit : onSubmit}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={edit ? onSubmitEdit : onSubmit}
+        >
           {({ setFieldValue }) => (
             <FormikForm>
               <div className="row">
                 <div className="col">
                   <Form.Group className="mb-3">
-                    <Form.Label htmlFor="date">Date <span className="text-danger"> *</span></Form.Label>
-                    <Field as={Form.Control} type="date" name="date" max={today} />
-                    <ErrorMessage name="date" component="div" className="text-danger" />
+                    <Form.Label htmlFor="date">
+                      Date <span className="text-danger"> *</span>
+                    </Form.Label>
+                    <Field
+                      as={Form.Control}
+                      type="date"
+                      name="date"
+                      max={today}
+                    />
+                    <ErrorMessage
+                      name="date"
+                      component="div"
+                      className="text-danger"
+                    />
                   </Form.Group>
                 </div>
                 <div className="col">
                   <Form.Group className="mb-3">
-                    <Form.Label htmlFor="stakeholder">Stakeholders <span className="text-danger"> *</span></Form.Label>
+                    <Form.Label htmlFor="stakeholder">
+                      Stakeholders <span className="text-danger"> *</span>
+                    </Form.Label>
                     <Field as={Form.Control} name="stakeholder" />
-                    <ErrorMessage name="stakeholder" component="div" className="text-danger" />
+                    <ErrorMessage
+                      name="stakeholder"
+                      component="div"
+                      className="text-danger"
+                    />
                   </Form.Group>
                 </div>
               </div>
@@ -141,10 +169,21 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
                 <div className="col">
                   <Form.Group>
                     <div>
-                      <Form.Label htmlFor="implementation">Implementation <span className="text-danger"> *</span></Form.Label>
+                      <Form.Label htmlFor="implementation">
+                        Implementation <span className="text-danger"> *</span>
+                      </Form.Label>
                     </div>
-                    <Field as="textarea" style={{ width: "100%" }} rows={3} name="implementation" />
-                    <ErrorMessage name="implementation" component="div" className="text-danger" />
+                    <Field
+                      as="textarea"
+                      style={{ width: "100%" }}
+                      rows={3}
+                      name="implementation"
+                    />
+                    <ErrorMessage
+                      name="implementation"
+                      component="div"
+                      className="text-danger"
+                    />
                   </Form.Group>
                 </div>
               </div>
@@ -152,10 +191,21 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
                 <div className="col">
                   <Form.Group>
                     <div>
-                      <Form.Label htmlFor="comment">Comment <span className="text-danger"> *</span></Form.Label>
+                      <Form.Label htmlFor="comment">
+                        Comment <span className="text-danger"> *</span>
+                      </Form.Label>
                     </div>
-                    <Field as="textarea" style={{ width: "100%" }} rows={3} name="comment" />
-                    <ErrorMessage name="comment" component="div" className="text-danger" />
+                    <Field
+                      as="textarea"
+                      style={{ width: "100%" }}
+                      rows={3}
+                      name="comment"
+                    />
+                    <ErrorMessage
+                      name="comment"
+                      component="div"
+                      className="text-danger"
+                    />
                   </Form.Group>
                 </div>
               </div>
@@ -163,17 +213,23 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
               <div className="row mb-3">
                 <div className="col">
                   <Form.Group>
-                    <Form.Label htmlFor="evidence">Evidence <span className="text-danger">*</span></Form.Label>
+                    <Form.Label htmlFor="evidence">
+                      Evidence <span className="text-danger">*</span>
+                    </Form.Label>
                     <input
                       id="evidence"
                       name="evidence"
                       type="file"
                       onChange={(event) => {
-                        setFieldValue('evidence', event.currentTarget.files[0]);
+                        setFieldValue("evidence", event.currentTarget.files[0]);
                       }}
                       className="form-control"
                     />
-                    <ErrorMessage name="evidence" component="div" className="text-danger" />
+                    <ErrorMessage
+                      name="evidence"
+                      component="div"
+                      className="text-danger"
+                    />
                   </Form.Group>
                 </div>
               </div>
@@ -181,7 +237,11 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
               <hr />
               <div className="row">
                 <div className="col d-flex justify-content-end align-items-end">
-                  <Button variant="secondary" className="m-1" onClick={handleClose}>
+                  <Button
+                    variant="secondary"
+                    className="m-1"
+                    onClick={handleClose}
+                  >
                     Close
                   </Button>
                   <Button variant="primary" className="m-1" type="submit">

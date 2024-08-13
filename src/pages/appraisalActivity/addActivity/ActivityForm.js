@@ -90,17 +90,16 @@ function AddActivityForm() {
             timer: 1000,
             showConfirmButton: false,
           });
-        navigate("/dashboard");
+          navigate("/dashboard");
         }
       } else {
         navigate("/dashboard");
       }
-
     } catch (error) {
       Swal.fire({
-        title: 'Error adding measurable activity',
+        title: "Error adding measurable activity",
         text: error.response?.data?.message || error.message,
-        icon: 'error',
+        icon: "error",
         timer: 2000,
         showConfirmButton: false,
       });

@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Button, Box } from '@mui/material';
-import { FaArrowLeft } from 'react-icons/fa';
-import { MaterialReactTable } from 'material-react-table';
-import { Card, Stack } from 'react-bootstrap';
-import AddNewInitiativeDetailsModal from './AddNewInitiativeDetailsModal'; // Or replace with CustomEditModal if applicable
-import Swal from 'sweetalert2';
-import urlConfig from '../../../services/Urls';
-import axios from 'axios';
-import { FaRegFilePdf, FaFileWord, FaFilePowerpoint, FaFileAlt, } from 'react-icons/fa';
-import { PiFilePngThin } from "react-icons/pi";
-import { tableExportHeaders } from '../../../components/exportTableData/ExportTableData';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Container, Button, Box } from "@mui/material";
+import { FaArrowLeft } from "react-icons/fa";
+import { MaterialReactTable } from "material-react-table";
+import { Card, Stack } from "react-bootstrap";
+import AddNewInitiativeDetailsModal from "./AddNewInitiativeDetailsModal"; // Or replace with CustomEditModal if applicable
+import Swal from "sweetalert2";
+import urlConfig from "../../../services/Urls";
+import axios from "axios";
+import {
+  FaRegFilePdf,
+  FaFileWord,
+  FaFilePowerpoint,
+  FaFileAlt,
+} from "react-icons/fa";
 
+import { PiFilePngThin } from "react-icons/pi";
+import { tableExportHeaders } from "../../../components/exportTableData/ExportTableData";
 
 const DetailPage = () => {
   const [show, setShow] = useState(false);
@@ -30,18 +35,22 @@ const DetailPage = () => {
     if (measurableActivityId) {
       async function fetchData() {
         try {
-          const urlEndpoint = urlConfig.measurableActivityImplementationsEndpoint + measurableActivityId;
+          const urlEndpoint =
+            urlConfig.measurableActivityImplementationsEndpoint +
+            measurableActivityId;
           const response = await axios.get(urlEndpoint);
           const implementations = response.data;
-          setTableData(implementations.map((implementation) => ({
-            id: implementation.implementationId,
-            date: new Date(implementation.createdDate).toLocaleString(),  // Convert to Date object first
-            description: implementation.description,
-            comments: implementation.comment,
-            stakeholders: implementation.stakeholder,
-            evidence: implementation.evidenceFileName,
-          })));
-          setRefresh(false)
+          setTableData(
+            implementations.map((implementation) => ({
+              id: implementation.implementationId,
+              date: new Date(implementation.createdDate).toLocaleString(), // Convert to Date object first
+              description: implementation.description,
+              comments: implementation.comment,
+              stakeholders: implementation.stakeholder,
+              evidence: implementation.evidenceFileName,
+            }))
+          );
+          setRefresh(false);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -50,19 +59,19 @@ const DetailPage = () => {
     }
 
     if (!refresh) {
-      setEditData(null)
+      setEditData(null);
     }
   }, [measurableActivityId, refresh]);
 
   const columns = [
-    { header: 'Date', accessorKey: 'date', size: 50 },
-    { header: 'Implementations', accessorKey: 'description' },
-    { header: 'Comments', accessorKey: 'comments' },
-    { header: 'Stakeholders', accessorKey: 'stakeholders' },
-    { header: 'Evidence', accessorKey: 'evidence' },
+    { header: "Date", accessorKey: "date", size: 50 },
+    { header: "Implementations", accessorKey: "description" },
+    { header: "Comments", accessorKey: "comments" },
+    { header: "Stakeholders", accessorKey: "stakeholders" },
+    { header: "Evidence", accessorKey: "evidence" },
     {
-      header: 'Action',
-      accessorKey: 'action',
+      header: "Action",
+      accessorKey: "action",
       Cell: ({ row }) => (
         <Box display="flex" gap={1}>
           <Button
@@ -99,21 +108,24 @@ const DetailPage = () => {
       allowEscapeKey: false,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const urlEndpoint = urlConfig.deleteAnImplementationEndpoint + implementationId;
+        const urlEndpoint =
+          urlConfig.deleteAnImplementationEndpoint + implementationId;
         try {
           await axios.delete(urlEndpoint);
-          setTableData(prevData => prevData.filter(item => item.id !== implementationId));
+          setTableData((prevData) =>
+            prevData.filter((item) => item.id !== implementationId)
+          );
           Swal.fire({
             title: "Deleted!",
             text: "Implementation activity deleted successfully.",
-            icon: "success"
+            icon: "success",
           });
         } catch (error) {
           console.error("Error deleting implementation:", error);
           Swal.fire({
             title: "Error!",
             text: "There was a problem deleting the implementation.",
-            icon: "error"
+            icon: "error",
           });
         }
       }
@@ -121,36 +133,33 @@ const DetailPage = () => {
   };
 
   const displaySuccessMessage = (type) => {
-    if (type === 'error') {
+    if (type === "error") {
       Swal.fire({
-        position: 'top',
+        position: "top",
         text: "Error occurred.",
-        icon: 'success',
+        icon: "success",
         showConfirmButton: false,
         timerProgressBar: true,
-        timer: 2000
+        timer: 2000,
       });
-
-    } else if (type === 'success') {
+    } else if (type === "success") {
       Swal.fire({
-        position: 'top',
+        position: "top",
         text: "Implementation added successfully",
-        icon: 'success',
+        icon: "success",
         showConfirmButton: false,
         timerProgressBar: true,
-        timer: 2000
+        timer: 2000,
       });
-
     } else {
       Swal.fire({
-        position: 'top',
+        position: "top",
         text: "Record Updated Successfully",
-        icon: 'success',
+        icon: "success",
         showConfirmButton: false,
         timerProgressBar: true,
-        timer: 2000
+        timer: 2000,
       });
-
     }
   };
 
@@ -160,22 +169,26 @@ const DetailPage = () => {
   };
 
   if (!data) {
-    return <Container><p>No data available</p></Container>;
+    return (
+      <Container>
+        <p>No data available</p>
+      </Container>
+    );
   }
 
   const getFileTypeIcon = (fileName) => {
-    const fileExtension = fileName.split('.').pop().toLowerCase();
+    const fileExtension = fileName.split(".").pop().toLowerCase();
 
     switch (fileExtension) {
-      case 'png':
+      case "png":
         return <PiFilePngThin color="orange" />;
-      case 'pdf':
+      case "pdf":
         return <FaRegFilePdf color="red" />;
-      case 'doc':
-      case 'docx':
+      case "doc":
+      case "docx":
         return <FaFileWord color="blue" />;
-      case 'ppt':
-      case 'pptx':
+      case "ppt":
+      case "pptx":
         return <FaFilePowerpoint color="orange" />;
       default:
         return <FaFileAlt color="gray" />;
@@ -187,13 +200,16 @@ const DetailPage = () => {
       <div>
         <Stack direction="horizontal" gap={3}>
           <div>
-            <strong>Evidence:</strong> {getFileTypeIcon(row.original.evidence)} {row.original.evidence}
+            <strong>Evidence:</strong> {getFileTypeIcon(row.original.evidence)}{" "}
+            {row.original.evidence}
           </div>
           <div>
             <strong>
               <Button
-                className='btn btn-primary'
-                onClick={() => { downloadEvidence(row.original.id) }}
+                className="btn btn-primary"
+                onClick={() => {
+                  downloadEvidence(row.original.id);
+                }}
               >
                 Download
               </Button>
@@ -206,14 +222,27 @@ const DetailPage = () => {
 
   const downloadEvidence = (implementationId) => {
     const urlEndpoint = urlConfig.downloadEvidenceEndpoint + implementationId;
-    window.open(urlEndpoint, '_blank');
+    window.open(urlEndpoint, "_blank");
   };
-  const TablefileName = data.measurableActivity.activity + "- Implementations"
+
+  const TablefileName = data.measurableActivity.activity + "- Implementations";
 
   return (
-    <Card variant="outlined" style={{ padding: '16px', margin: '16px 0' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} className='mb-1'>
-        <h3>Activity:<span className='ms-2 text-primary'>{data.measurableActivity.activity}</span></h3>
+    <Card variant="outlined" style={{ padding: "16px", margin: "16px 0" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+        className="mb-1"
+      >
+        <h3>
+          Activity:
+          <span className="ms-2 text-primary">
+            {data.measurableActivity.activity}
+          </span>
+        </h3>
         <Button
           variant="contained"
           startIcon={<FaArrowLeft />}
@@ -226,24 +255,30 @@ const DetailPage = () => {
       <Card.Header>
         <h4>Contract Defaults</h4>
       </Card.Header>
-      <div className='mb-4'>
-        <div className='my-1' style={{ marginBottom: '16px' }}>
-          <div className='border-1'>
+      <div className="mb-4">
+        <div className="my-1" style={{ marginBottom: "16px" }}>
+          <div className="border-1">
             <div>
-              <span className='me-2'>Period:</span>
+              <span className="me-2">Period:</span>
               <span className="fw-bold">{data.measurableActivity.period}</span>
             </div>
             <div>
-              <span className='me-2'>Perspective:</span>
-              <span className="fw-bold">{data.measurableActivity.perspective}</span>
+              <span className="me-2">Perspective:</span>
+              <span className="fw-bold">
+                {data.measurableActivity.perspective}
+              </span>
             </div>
             <div>
-              <span className='me-2'>SSMARTA Objectives: </span>
-              <span className="fw-bold">{data.measurableActivity.ssMartaObjectives}</span>
+              <span className="me-2">SSMARTA Objectives: </span>
+              <span className="fw-bold">
+                {data.measurableActivity.ssMartaObjectives}
+              </span>
             </div>
             <div>
-              <span className='me-2'>Initiative:</span>
-              <span className="fw-bold">{data.measurableActivity.initiative}</span>
+              <span className="me-2">Initiative:</span>
+              <span className="fw-bold">
+                {data.measurableActivity.initiative}
+              </span>
             </div>
           </div>
         </div>
@@ -253,7 +288,13 @@ const DetailPage = () => {
         <h4>Measurable Activity Implementations</h4>
       </Card.Header>
       <div className="d-flex justify-content-end align-items-end">
-        <Button variant="contained" className="custom-blue-button mb-2 mt-1" onClick={handleShow}>Add Implementation</Button>
+        <Button
+          variant="contained"
+          className="custom-blue-button mb-2 mt-1"
+          onClick={handleShow}
+        >
+          Add Implementation
+        </Button>
       </div>
 
       <AddNewInitiativeDetailsModal
@@ -288,9 +329,9 @@ const DetailPage = () => {
         columnFilterDisplayMode="popover"
         paginationDisplayMode="pages"
         positionToolbarAlertBanner="bottom"
-        renderTopToolbarCustomActions={({ table, fileName = TablefileName }) => (
+        renderTopToolbarCustomActions={({ table, fileName = TablefileName }) =>
           tableExportHeaders(table, columns, fileName)
-        )}
+        }
       />
     </Card>
   );

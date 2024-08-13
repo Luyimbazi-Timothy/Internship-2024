@@ -25,16 +25,30 @@ function Dashboard() {
         <Row className="mb-4">
           <Col>
             <div className="d-flex justify-content-around align-items-center">
-              <ButtonGroup variant="contained" aria-label="outlined primary button group" fullWidth>
-                {["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"].map((quarter) => (
-                  <Button
-                    key={quarter}
-                    sx={{ mx: 1, height: 70, marginY: 2, fontSize: 20, color: 'black', backgroundColor: activeTab === quarter ? "lightgray" : "primary.main" }}
-                    onClick={() => handleTabClick(quarter)}
-                  >
-                    {quarter}
-                  </Button>
-                ))}
+              <ButtonGroup
+                variant="contained"
+                aria-label="outlined primary button group"
+                fullWidth
+              >
+                {["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"].map(
+                  (quarter) => (
+                    <Button
+                      key={quarter}
+                      sx={{
+                        mx: 1,
+                        height: 70,
+                        marginY: 2,
+                        fontSize: 20,
+                        color: "black",
+                        backgroundColor:
+                          activeTab === quarter ? "lightgray" : "primary.main",
+                      }}
+                      onClick={() => handleTabClick(quarter)}
+                    >
+                      {quarter}
+                    </Button>
+                  )
+                )}
               </ButtonGroup>
             </div>
           </Col>
@@ -42,7 +56,10 @@ function Dashboard() {
       ) : null}
 
       <Row>
-        <TableHandler quartileFilter={quartileFilter} toggleDashBoardBtnDisplay={toggleDashBoardBtnDisplay} />
+        <TableHandler
+          quartileFilter={quartileFilter}
+          toggleDashBoardBtnDisplay={toggleDashBoardBtnDisplay}
+        />
       </Row>
     </div>
   );

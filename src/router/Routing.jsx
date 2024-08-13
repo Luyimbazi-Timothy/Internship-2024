@@ -1,4 +1,3 @@
-// src/Router/Routing.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/dashboard/Dashboard";
@@ -13,7 +12,7 @@ function Routing() {
     <>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route element={<ProtectedRoute />} >
+        <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-new-activity" element={<AddActivityForm />} />
           <Route path="/control-panel" element={<ControlPanel />} />
