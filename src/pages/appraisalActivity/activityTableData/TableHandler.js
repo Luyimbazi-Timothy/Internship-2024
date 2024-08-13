@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import TableComponent from "./TableComponent";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import axios from "axios";
-import urlConfig from "../../../services/Urls";
+import React, { useState, useEffect } from 'react';
+import TableComponent from './TableComponent';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import urlConfig from '../../../services/Urls';
 
 function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
   const navigate = useNavigate();
@@ -12,10 +12,8 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const loggedInId = localStorage.getItem("loggedInId");
   const configItemEndpoint = urlConfig.configItemEndpoint;
-  const measurableActivityImplementationsEndpoint =
-    urlConfig.measurableActivityImplementationsEndpoint;
+  const measurableActivityImplementationsEndpoint = urlConfig.measurableActivityImplementationsEndpoint;
 
   useEffect(() => {
     const getData = async () => {
@@ -41,7 +39,7 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
               axios.get(configItemEndpoint + record.ssMartaObjectivesId),
               axios.get(
                 measurableActivityImplementationsEndpoint +
-                  record.measurableActivityId
+                record.measurableActivityId
               ),
             ]);
 
@@ -84,7 +82,7 @@ function TableHandler({ quartileFilter, toggleDashBoardBtnDisplay }) {
       }
     };
     getData();
-  }, []);
+  }, [configItemEndpoint, measurableActivityImplementationsEndpoint]);
 
   useEffect(() => {
     const filterData = () => {

@@ -9,7 +9,7 @@ const useAuthService = () => {
   const { setDisplaySidebarPanel } = useContext(DisplaySidebarContext);
 
   const login = async (username, password, setError) => {
-    console.log(username, password);
+
     const loginUrl = urlConfig.loginUrl;
     try {
       const response = await axios.post(loginUrl, { username, password });
@@ -18,10 +18,10 @@ const useAuthService = () => {
         const loggedInAs = response.data.lastName;
         const loggedInId = response.data.userId;
 
-        console.log(loggedInId);
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("loggedInAs", loggedInAs);
-        localStorage.setItem("loggedInId", loggedInId);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('loggedInAs', loggedInAs);
+        localStorage.setItem('loggedInId', loggedInId);
+
         setDisplaySidebarPanel(true);
         navigate("/dashboard");
       } else {

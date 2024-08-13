@@ -103,7 +103,7 @@ const ControlPanel = () => {
 
   return (
     <>
-      <Container minWidth="sm">
+      <Container>
         <Grid container spacing={1}>
           {/* Select Field to configure  */}
           <Grid item xs={12}>

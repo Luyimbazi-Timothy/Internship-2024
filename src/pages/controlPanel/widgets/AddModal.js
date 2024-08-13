@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { controlPanelValidationSchema } from "../../appraisalActivity/addActivity/Schema";
 import axios from "axios";
 import urlConfig from "../../../services/Urls";
+import { Container } from "react-bootstrap";
 
 function AddModal({ isPreview }) {
   const {
@@ -98,7 +99,7 @@ function AddModal({ isPreview }) {
         showConfirmButton: false,
         timer: 1500,
       });
-      
+
       setNoOfNewUpdates((_prev) => _prev + 1);
 
     } else {
@@ -219,41 +220,47 @@ function AddModal({ isPreview }) {
           >
             {(formik) => (
               <Form>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      label=""
-                      id="content"
-                      name="content"
-                    />
-                    <ErrorMessage
-                      component="div"
-                      name="content"
-                      className="error"
-                    />
+                <Container>
+                  <Grid spacing={2}>
+                    <Grid item xs={12}>
+                      <Field
+                        as={TextField}
+                        label=""
+                        id="content"
+                        name="content"
+                        className="mb-2"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        name="content"
+                        className="error"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Box display="flex" justifyContent="flex-end">
+
+                        <Button
+                          onClick={handleClose}
+                          color="error"
+                          variant="contained"
+                          sx={{ mr: 1 }}
+                        >
+                          Cancel
+                        </Button>
+
+                        <Button
+                          type="submit"
+                          disabled={!formik.isValid || formik.isSubmitting}
+                          color="primary"
+                          variant="contained"
+
+                        >
+                          {isPreview ? "Save" : "Add"}
+                        </Button>
+                      </Box>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Box display="flex" justifyContent="flex-end">
-                      <Button
-                        type="submit"
-                        disabled={!formik.isValid || formik.isSubmitting}
-                        color="primary"
-                        variant="contained"
-                        sx={{ mr: 1 }}
-                      >
-                        {isPreview ? "Save" : "Add"}
-                      </Button>
-                      <Button
-                        onClick={handleClose}
-                        color="error"
-                        variant="contained"
-                      >
-                        Cancel
-                      </Button>
-                    </Box>
-                  </Grid>
-                </Grid>
+                </Container>
               </Form>
             )}
           </Formik>

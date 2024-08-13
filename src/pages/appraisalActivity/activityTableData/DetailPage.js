@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Button, Box, TextField } from "@mui/material";
+import { Container, Button, Box } from "@mui/material";
 import { FaArrowLeft } from "react-icons/fa";
 import { MaterialReactTable } from "material-react-table";
 import { Card, Stack } from "react-bootstrap";
@@ -14,7 +14,9 @@ import {
   FaFilePowerpoint,
   FaFileAlt,
 } from "react-icons/fa";
+
 import { PiFilePngThin } from "react-icons/pi";
+import { tableExportHeaders } from "../../../components/exportTableData/ExportTableData";
 
 const DetailPage = () => {
   const [show, setShow] = useState(false);
@@ -48,12 +50,16 @@ const DetailPage = () => {
               evidence: implementation.evidenceFileName,
             }))
           );
-          // setRefresh(false)
+          setRefresh(false);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       }
       fetchData();
+    }
+
+    if (!refresh) {
+      setEditData(null);
     }
   }, [measurableActivityId, refresh]);
 
@@ -219,6 +225,8 @@ const DetailPage = () => {
     window.open(urlEndpoint, "_blank");
   };
 
+  const TablefileName = data.measurableActivity.activity + "- Implementations";
+
   return (
     <Card variant="outlined" style={{ padding: "16px", margin: "16px 0" }}>
       <div
@@ -316,6 +324,14 @@ const DetailPage = () => {
             {renderEvidence(row)}
           </Box>
         )}
+        enableRowSelection={true}
+        enableSubRowSelection={true}
+        columnFilterDisplayMode="popover"
+        paginationDisplayMode="pages"
+        positionToolbarAlertBanner="bottom"
+        renderTopToolbarCustomActions={({ table, fileName = TablefileName }) =>
+          tableExportHeaders(table, columns, fileName)
+        }
       />
     </Card>
   );

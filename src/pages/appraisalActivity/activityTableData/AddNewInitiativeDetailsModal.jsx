@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import urlConfig from "../../../services/Urls";
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+import urlConfig from '../../../services/Urls';
+import { format, parse } from 'date-fns';
 
 function AddNewInitiativeDetailsModal({
   initialData,
@@ -17,8 +18,9 @@ function AddNewInitiativeDetailsModal({
   MeasurableActivityId,
 }) {
   const [edit, setEdit] = useState(false);
-  const today = new Date().toISOString().split("T")[0];
+  const today = format(new Date(), 'yyyy-MM-dd'); // Use yyyy-MM-dd format
   const userId = localStorage.getItem("loggedInId");
+
   useEffect(() => {
     if (initialData) {
       setEdit(true);
@@ -26,11 +28,11 @@ function AddNewInitiativeDetailsModal({
   }, [initialData]);
 
   const initialValues = {
-    date: initialData ? initialData.date : today,
-    implementation: initialData ? initialData.description : "",
-    comment: initialData ? initialData.comments : "",
-    stakeholder: initialData ? initialData.stakeholders : "",
-    evidence: initialData ? initialData.evidence : "",
+    date: initialData ? format(parse(initialData.date, 'M/d/yyyy, h:mm:ss a', new Date()), 'yyyy-MM-dd') : today,
+    implementation: initialData ? initialData.description : '',
+    comment: initialData ? initialData.comments : '',
+    stakeholder: initialData ? initialData.stakeholders : '',
+    evidence: initialData ? initialData.evidence : '',
   };
 
   const validationSchema = Yup.object({
@@ -58,15 +60,11 @@ function AddNewInitiativeDetailsModal({
     };
 
     try {
-      const response = await axios.post(
-        urlConfig.createAnImplementation,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(urlConfig.createAnImplementation, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       if (response) {
         displaySuccessMessage("success");
         handleClose();
@@ -77,7 +75,6 @@ function AddNewInitiativeDetailsModal({
       console.error(error);
     } finally {
       setRefresh(true);
-      // setRefresh((refresh)=>refresh+1);
       setSubmitting(false);
     }
   };
@@ -96,9 +93,7 @@ function AddNewInitiativeDetailsModal({
     };
 
     try {
-      const response = await axios.post(
-        urlConfig.updateAnImplementation + initialData.id,
-        formData,
+      const response = await axios.post(urlConfig.updateAnImplementation + initialData.id, formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -109,10 +104,11 @@ function AddNewInitiativeDetailsModal({
       if (response) {
         displaySuccessMessage("success");
         setEdit(false);
-        initialData = null;
-        handleClose();
+        setRefresh(true);
+        handleClose(false);
       } else {
-        displaySuccessMessage("success");
+        displaySuccessMessage("error");
+        setRefresh(true);
       }
     } catch (error) {
       console.error(error);

@@ -380,6 +380,8 @@ const fetchData = async () => {
 
 export default fetchData;
 
+<<<<<<< HEAD
+=======
 const obj_structure = [
   {
     id: 1,
@@ -411,3 +413,4 @@ const obj_structure = [
     },
   },
 ];
+>>>>>>> main
