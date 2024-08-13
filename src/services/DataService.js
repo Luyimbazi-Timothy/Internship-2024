@@ -379,38 +379,34 @@ const fetchData = async () => {
 };
 
 export default fetchData;
-
-<<<<<<< HEAD
-=======
-const obj_structure = [
-  {
-    id: 1,
-    measurableActivities: {
-      period: "Q2",
-      perspective: "Operational",
-      ssMartaObjectives: "Enhance Efficiency",
-      initiative: "Optimize tax processing systems",
-      implementations: [
-        {
-          id: 2897,
-          description: "Automate tax calculation process ",
-          comment:
-            "Initial implementation phase showed a 20% increase in processing speed.",
-          stakeholder: ["Manager 1", "Manager 2"],
-          evidence: "Implementation report and process audit",
-          date: "2024-04-20",
-        },
-        {
-          id: 2898,
-          description: "Develop and deploy a new automated billing system .",
-          comment:
-            "The new system is expected to reduce overdue invoices by 30%.",
-          stakeholder: ["Billing Department", "Accounting Team"],
-          evidence: "System deployment report and user feedback",
-          date: "2024-07-15",
-        },
-      ],
-    },
-  },
-];
->>>>>>> main
+// const obj_structure = [
+//   {
+//     id: 1,
+//     measurableActivities: {
+//       period: "Q2",
+//       perspective: "Operational",
+//       ssMartaObjectives: "Enhance Efficiency",
+//       initiative: "Optimize tax processing systems",
+//       implementations: [
+//         {
+//           id: 2897,
+//           description: "Automate tax calculation process ",
+//           comment:
+//             "Initial implementation phase showed a 20% increase in processing speed.",
+//           stakeholder: ["Manager 1", "Manager 2"],
+//           evidence: "Implementation report and process audit",
+//           date: "2024-04-20",
+//         },
+//         {
+//           id: 2898,
+//           description: "Develop and deploy a new automated billing system .",
+//           comment:
+//             "The new system is expected to reduce overdue invoices by 30%.",
+//           stakeholder: ["Billing Department", "Accounting Team"],
+//           evidence: "System deployment report and user feedback",
+//           date: "2024-07-15",
+//         },
+//       ],
+//     },
+//   },
+// ];
