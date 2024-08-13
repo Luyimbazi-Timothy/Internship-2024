@@ -1,5 +1,5 @@
 import { useMemo, React, useContext } from "react";
-import { MaterialReactTable, MRT_ActionMenuItem } from "material-react-table";
+import { MaterialReactTable } from "material-react-table";
 import { Edit, Delete } from "@mui/icons-material";
 import { Context } from "../ControlPanel";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { tableExportHeaders } from '../../../components/exportTableData/ExportTableData';
 
 function TableData({ handleAdd, addBtnLabel }) {
   const {
@@ -26,8 +27,37 @@ function TableData({ handleAdd, addBtnLabel }) {
       {
         accessorKey: "field",
         header: columnHeader,
-        size: 150,
+        size: 650,
       },
+      {
+        id: 'actions', // Custom column for actions
+        header: 'Actions',
+        size: 40,
+        Cell: ({ row, table }) => (
+          <Box display="flex">
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              className="me-2"
+              startIcon={<Edit />}
+              onClick={() => handleEdit(row)}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              startIcon={<Delete />}
+              onClick={() => handleDelete(row)}
+            >
+              Delete
+            </Button>
+          </Box>
+        ),
+      },
+     
     ],
     [columnHeader]
   );
@@ -48,6 +78,8 @@ function TableData({ handleAdd, addBtnLabel }) {
   const handleToDashboardNavigation = () => {
     navigate("/dashboard");
   };
+
+  const tableName = "My " + addBtnLabel;
 
   return (
     <>
@@ -71,25 +103,14 @@ function TableData({ handleAdd, addBtnLabel }) {
       <MaterialReactTable
         columns={columns}
         data={tableData}
-        enableRowActions
-        renderRowActionMenuItems={({ row, table }) => [
-          // eslint-disable-next-line react/jsx-pascal-case
-          <MRT_ActionMenuItem
-            icon={<Edit />}
-            key="edit"
-            label="Edit"
-            onClick={() => handleEdit(row)}
-            table={table}
-          />,
-          // eslint-disable-next-line react/jsx-pascal-case
-          <MRT_ActionMenuItem
-            icon={<Delete />}
-            key="delete"
-            label="Delete"
-            onClick={() => handleDelete(row)}
-            table={table}
-          />,
-        ]}
+        // enableRowActions
+        enableRowSelection={true}
+        columnFilterDisplayMode="popover"
+        paginationDisplayMode="pages"
+        positionToolbarAlertBanner="bottom"
+        renderTopToolbarCustomActions={({ table, fileName = tableName }) => (
+          tableExportHeaders(table, columns, fileName)
+        )}
       />
     </>
   );

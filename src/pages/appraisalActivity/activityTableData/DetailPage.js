@@ -8,8 +8,9 @@ import AddNewInitiativeDetailsModal from './AddNewInitiativeDetailsModal'; // Or
 import Swal from 'sweetalert2';
 import urlConfig from '../../../services/Urls';
 import axios from 'axios';
-import { FaRegFilePdf, FaFileWord, FaFilePowerpoint, FaFileAlt, } from 'react-icons/fa'; 
+import { FaRegFilePdf, FaFileWord, FaFilePowerpoint, FaFileAlt, } from 'react-icons/fa';
 import { PiFilePngThin } from "react-icons/pi";
+import { tableExportHeaders } from '../../../components/exportTableData/ExportTableData';
 
 
 const DetailPage = () => {
@@ -40,12 +41,16 @@ const DetailPage = () => {
             stakeholders: implementation.stakeholder,
             evidence: implementation.evidenceFileName,
           })));
-          // setRefresh(false)
+          setRefresh(false)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       }
       fetchData();
+    }
+
+    if (!refresh) {
+      setEditData(null)
     }
   }, [measurableActivityId, refresh]);
 
@@ -160,10 +165,10 @@ const DetailPage = () => {
 
   const getFileTypeIcon = (fileName) => {
     const fileExtension = fileName.split('.').pop().toLowerCase();
-  
+
     switch (fileExtension) {
       case 'png':
-        return <PiFilePngThin color="orange"/>;
+        return <PiFilePngThin color="orange" />;
       case 'pdf':
         return <FaRegFilePdf color="red" />;
       case 'doc':
@@ -176,7 +181,7 @@ const DetailPage = () => {
         return <FaFileAlt color="gray" />;
     }
   };
-  
+
   const renderEvidence = (row) => {
     return (
       <div>
@@ -203,7 +208,7 @@ const DetailPage = () => {
     const urlEndpoint = urlConfig.downloadEvidenceEndpoint + implementationId;
     window.open(urlEndpoint, '_blank');
   };
-
+  const TablefileName = data.measurableActivity.activity + "- Implementations"
 
   return (
     <Card variant="outlined" style={{ padding: '16px', margin: '16px 0' }}>
@@ -277,6 +282,14 @@ const DetailPage = () => {
             </div>
             {renderEvidence(row)}
           </Box>
+        )}
+        enableRowSelection={true}
+        enableSubRowSelection={true}
+        columnFilterDisplayMode="popover"
+        paginationDisplayMode="pages"
+        positionToolbarAlertBanner="bottom"
+        renderTopToolbarCustomActions={({ table, fileName = TablefileName }) => (
+          tableExportHeaders(table, columns, fileName)
         )}
       />
     </Card>

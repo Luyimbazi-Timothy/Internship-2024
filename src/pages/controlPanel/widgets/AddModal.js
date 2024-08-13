@@ -219,13 +219,14 @@ function AddModal({ isPreview }) {
           >
             {(formik) => (
               <Form>
-                <Grid container spacing={2}>
+                <Grid  spacing={2}>
                   <Grid item xs={12}>
                     <Field
                       as={TextField}
                       label=""
                       id="content"
                       name="content"
+                      className="mb-2"
                     />
                     <ErrorMessage
                       component="div"
@@ -235,21 +236,24 @@ function AddModal({ isPreview }) {
                   </Grid>
                   <Grid item xs={12}>
                     <Box display="flex" justifyContent="flex-end">
+                      
+                      <Button
+                        onClick={handleClose}
+                        color="error"
+                        variant="contained"
+                        sx={{ mr: 1 }}
+                      >
+                        Cancel
+                      </Button>
+
                       <Button
                         type="submit"
                         disabled={!formik.isValid || formik.isSubmitting}
                         color="primary"
                         variant="contained"
-                        sx={{ mr: 1 }}
+                        
                       >
                         {isPreview ? "Save" : "Add"}
-                      </Button>
-                      <Button
-                        onClick={handleClose}
-                        color="error"
-                        variant="contained"
-                      >
-                        Cancel
                       </Button>
                     </Box>
                   </Grid>

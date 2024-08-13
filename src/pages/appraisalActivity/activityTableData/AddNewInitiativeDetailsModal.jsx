@@ -6,12 +6,14 @@ import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import urlConfig from '../../../services/Urls';
+import { format, parse } from 'date-fns';
 
 function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessMessage, measurableActivity, show, handleClose, MeasurableActivityId }) {
 
   const [edit, setEdit] = useState(false);
-  const today = new Date().toISOString().split('T')[0];
+  const today = format(new Date(), 'yyyy-MM-dd'); // Use yyyy-MM-dd format
   const userId = localStorage.getItem("loggedInId");
+
   useEffect(() => {
     if (initialData) {
       setEdit(true);
@@ -19,7 +21,7 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
   }, [initialData]);
 
   const initialValues = {
-    date: initialData ? initialData.date : today,
+    date: initialData ? format(parse(initialData.date, 'M/d/yyyy, h:mm:ss a', new Date()), 'yyyy-MM-dd') : today,
     implementation: initialData ? initialData.description : '',
     comment: initialData ? initialData.comments : '',
     stakeholder: initialData ? initialData.stakeholders : '',
@@ -54,19 +56,17 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
           'Content-Type': 'multipart/form-data',
         },
       });
-      if(response){
+      if (response) {
         displaySuccessMessage("success");
         handleClose();
-      }else{
+      } else {
         displaySuccessMessage("error");
-
       }
-      
+
     } catch (error) {
       console.error(error);
     } finally {
       setRefresh(true);
-      // setRefresh((refresh)=>refresh+1);
       setSubmitting(false);
     }
   };
@@ -74,7 +74,6 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
   const onSubmitEdit = async (values, { setSubmitting }) => {
     const currentDate = new Date(values.date);
     const date = currentDate.toISOString();
-    console.log("values: ",values.evidence)
     const formData = {
       CreatedDate: date,
       Description: values.implementation,
@@ -84,9 +83,9 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
       MeasurableActivityId: MeasurableActivityId,
       UserId: userId
     };
-  
+
     try {
-      const response = await axios.post(urlConfig.updateAnImplementation+initialData.id, formData,
+      const response = await axios.post(urlConfig.updateAnImplementation + initialData.id, formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -94,15 +93,16 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
         }
       );
 
-      if(response){
+      if (response) {
         displaySuccessMessage("success");
-        setEdit(false)
-        initialData=null;
-        handleClose();
-      }else{
-        displaySuccessMessage("success");
+        setEdit(false);
+        setRefresh(false);
+        handleClose(false);
+      } else {
+        displaySuccessMessage("error");
+        setRefresh(true);
       }
-      
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -110,8 +110,6 @@ function AddNewInitiativeDetailsModal({ initialData, setRefresh, displaySuccessM
       setSubmitting(false);
     }
   };
-  
-  
 
   return (
     <Modal size="lg" show={show} onHide={handleClose} backdrop="static">
