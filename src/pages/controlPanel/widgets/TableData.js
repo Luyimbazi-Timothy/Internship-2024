@@ -45,7 +45,7 @@ function TableData({ handleAdd, addBtnLabel }) {
             >
               Edit
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               color="secondary"
               size="small"
@@ -53,7 +53,7 @@ function TableData({ handleAdd, addBtnLabel }) {
               onClick={() => handleDelete(row)}
             >
               Delete
-            </Button>
+            </Button> */}
           </Box>
         ),
       },
