@@ -12,8 +12,6 @@ import urlConfig from "../../../services/Urls";
 
 function DeleteDialogBox() {
   const {
-    rowToDelete,
-    tableData,
     alertOpen,
     setTableData,
     setAlertOpen,
@@ -23,19 +21,45 @@ function DeleteDialogBox() {
   } = useContext(Context);
 
   const handleFormDelete = () => {
-    setTableData(tableData.filter((item) => item !== rowToDelete.original));
     setAlertOpen(false);
 
-    if (addBtnLabel === "Perspectives") {
-      axios.delete(`${urlConfig.deletePerspectiveUrl}/${editData?.id}`);
-    } else if (addBtnLabel === "Initiatives") {
-      axios.delete(`${urlConfig.deleteInitiativeUrl}/${editData?.id}`);
-    } else if (addBtnLabel === "Periods") {
-      axios.delete(`${urlConfig.deletePeriodUrl}/${editData?.id}`);
+    if (addBtnLabel === "Initiatives") {
+      axios.delete(`${urlConfig.deleteInitiativeUrl}/${editData?.id}`)
+      .then(() => {
+        axios.get(`${urlConfig.allInitiativesUrl}`).then((response) => {
+          const formattedData = response.data.map((item) => ({
+            field: item.fieldDescription,
+            id: item.itemId,
+          }));
+          setTableData(formattedData);
+        });
+      });
     } else if (addBtnLabel === "Ssmarta Objectives") {
-      axios.delete(`${urlConfig.deleteSsmartaObjectiveUrl}/${editData?.id}`);
+      axios.delete(`${urlConfig.deleteSsmartaObjectiveUrl}/${editData?.id}`)
+      .then(() => {
+        axios
+          .get(`${urlConfig.allSsmartaObjectiveUrl}`)
+          .then((response) => {
+            const formattedData = response.data.map((item) => ({
+              field: item.fieldDescription,
+              id: item.itemId,
+            }));
+            setTableData(formattedData);
+          });
+      });
     } else if (addBtnLabel === "Activities") {
-      axios.delete(`${urlConfig.deleteActivityUrl}/${editData?.id}`);
+      axios.delete(`${urlConfig.deleteActivityUrl}/${editData?.id}`)
+      .then(() => {
+        axios
+          .get(`${urlConfig.allMeasurableActivitiesUrl}`)
+          .then((response) => {
+            const formattedData = response.data.map((item) => ({
+              field: item.fieldDescription,
+              id: item.itemId,
+            }));
+            setTableData(formattedData);
+          });
+      });
     }
 
     Swal.fire({

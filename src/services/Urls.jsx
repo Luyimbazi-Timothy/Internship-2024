@@ -4,9 +4,9 @@ const loginUrl = "http://localhost:5003/api/User/login";
 const allMeasurableActivitiesUrl =
   "http://localhost:5003/api/Activity/all-activity-items/" + loggedInId;
 const allPeriodsUrl =
-  "http://localhost:5003/api/Period/all-period-items/" + loggedInId;
+  "http://localhost:5003/api/Period/all-period-items";
 const allPerspectivesUrl =
-  "http://localhost:5003/api/Perspective/get-all-perspectives/" + loggedInId;
+  "http://localhost:5003/api/Perspective/get-all-perspectives";
 const allSsmartaObjectiveUrl =
   "http://localhost:5003/api/ssmarta-objective/all-objective-items/" +
   loggedInId;
