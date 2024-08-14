@@ -18,7 +18,6 @@ function AddModal({ isPreview }) {
   const {
     formOpen,
     setFormOpen,
-    tableData,
     setTableData,
     editData,
     setEditData,
@@ -35,25 +34,7 @@ function AddModal({ isPreview }) {
 
   const handleFormSubmit = (values) => {
     if (isPreview) {
-      if (addBtnLabel === "Perspectives") {
-        axios.put(
-          `${urlConfig.updatePerspectiveUrl}/${editData?.id}`,
-          {
-            fieldName: "Perspective",
-            fieldDescription: values.content,
-            userId: urlConfig.loggedInId,
-          }
-        )
-        .then(() => {
-          axios.get(`${urlConfig.allPerspectivesUrl}`).then((response) => {
-            const formattedData = response.data.map((item) => ({
-              field: item.fieldDescription,
-              id: item.itemId,
-            }));
-            setTableData(formattedData);
-          });
-        });
-      } else if (addBtnLabel === "Initiatives") {
+      if (addBtnLabel === "Initiatives") {
         axios.put(
           `${urlConfig.updateInitiativeUrl}/${editData?.id}`,
           {
@@ -71,26 +52,6 @@ function AddModal({ isPreview }) {
             setTableData(formattedData);
           });
         });
-      } else if (addBtnLabel === "Periods") {
-        axios
-          .post(
-            `${urlConfig.updatePeriodUrl}/${editData?.id}`,
-            {
-              fieldName: "Period",
-              fieldDescription: values.content,
-              userId: urlConfig.loggedInId,
-            }
-          )
-          .then(() => {
-            axios.get(`${urlConfig.allPeriodsUrl}`).then((response) => {
-              const formattedData = response.data.map((item) => ({
-                field: item.fieldDescription,
-                id: item.itemId,
-              }));
-              setTableData(formattedData);
-            });
-          });
-
       } else if (addBtnLabel === "Ssmarta Objectives") {
         axios.post(
           `${urlConfig.updateSsmartaObjectiveUrl}/${editData?.id}`,
@@ -144,25 +105,7 @@ function AddModal({ isPreview }) {
       setNoOfNewUpdates((_prev) => _prev + 1);
 
     } else {
-      // const newEntry = { field: values.content }
-
-      if (addBtnLabel === "Perspectives") {
-        axios
-          .post(`${urlConfig.addPerspectiveUrl}`, {
-            fieldName: "Perspective",
-            fieldDescription: values.content,
-            userId: urlConfig.loggedInId,
-          })
-          .then(() => {
-            axios.get(`${urlConfig.allPerspectivesUrl}`).then((response) => {
-              const formattedData = response.data.map((item) => ({
-                field: item.fieldDescription,
-                id: item.itemId,
-              }));
-              setTableData(formattedData);
-            });
-          });
-      } else if (addBtnLabel === "Initiatives") {
+      if (addBtnLabel === "Initiatives") {
         axios
           .post(`${urlConfig.addInitiativeUrl}`, {
             fieldName: "Initiative",
@@ -178,23 +121,7 @@ function AddModal({ isPreview }) {
               setTableData(formattedData);
             });
           });
-      } else if (addBtnLabel === "Periods") {
-        axios
-          .post(`${urlConfig.addPeriodUrl}`, {
-            fieldName: "Period",
-            fieldDescription: values.content,
-            userId: urlConfig.loggedInId,
-          })
-          .then(() => {
-            axios.get(`${urlConfig.allPeriodsUrl}`).then((response) => {
-              const formattedData = response.data.map((item) => ({
-                field: item.fieldDescription,
-                id: item.itemId,
-              }));
-              setTableData(formattedData);
-            });
-          });
-      } else if (addBtnLabel === "Ssmarta Objectives") {
+      }  else if (addBtnLabel === "Ssmarta Objectives") {
         axios
           .post(
             `${urlConfig.addSsmartaObjectiveUrl}`,

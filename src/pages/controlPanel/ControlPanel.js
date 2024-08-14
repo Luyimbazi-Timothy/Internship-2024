@@ -31,53 +31,34 @@ const ControlPanel = () => {
   });
 
   const fetchData = async () => {
-    const periods = await axios.get(`${urlConfig.allPeriodsUrl}`);
-    const perspectives = await axios.get(`${urlConfig.allPerspectivesUrl}`);
     const objectives = await axios.get(`${urlConfig.allSsmartaObjectiveUrl}`);
     const initiatives = await axios.get(`${urlConfig.allInitiativesUrl}`);
-    const activities = await axios.get(
-      `${urlConfig.allMeasurableActivitiesUrl}`
-    );
+    const activities = await axios.get(`${urlConfig.allMeasurableActivitiesUrl}`);
 
     axios
-      .all([periods, perspectives, objectives, initiatives, activities])
+      .all([objectives, initiatives, activities])
       .then(
         axios.spread(
-          (periods, perspectives, objectives, initiatives, activities) => {
+          (objectives, initiatives, activities) => {
             const updatedDataSets = {
               1: [],
               2: [],
               3: [],
-              4: [],
-              5: [],
             };
-            periods.data.forEach((item) => {
-              updatedDataSets[1].push({
-                //all periods
-                field: item.fieldDescription,
-                id: item.itemId,
-              });
-            });
-            perspectives.data.forEach((item) => {
-              updatedDataSets[2].push({
-                field: item.fieldDescription,
-                id: item.itemId,
-              });
-            });
             objectives.data.forEach((item) => {
-              updatedDataSets[3].push({
+              updatedDataSets[1].push({
                 field: item.fieldDescription,
                 id: item.itemId,
               });
             });
             initiatives.data.forEach((item) => {
-              updatedDataSets[4].push({
+              updatedDataSets[2].push({
                 field: item.fieldDescription,
                 id: item.itemId,
               });
             });
             activities.data.forEach((item) => {
-              updatedDataSets[5].push({
+              updatedDataSets[3].push({
                 field: item.fieldDescription,
                 id: item.itemId,
               });
@@ -123,7 +104,6 @@ const ControlPanel = () => {
             value={{
               formOpen,
               setFormOpen,
-              tableData,
               setTableData,
               editData,
               setEditData,
@@ -136,7 +116,6 @@ const ControlPanel = () => {
           {/* Delete dialog box  */}
           <Context.Provider
             value={{
-              rowToDelete,
               alertOpen,
               setTableData,
               setAlertOpen,

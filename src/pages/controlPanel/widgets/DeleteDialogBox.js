@@ -12,7 +12,6 @@ import urlConfig from "../../../services/Urls";
 
 function DeleteDialogBox() {
   const {
-    rowToDelete,
     alertOpen,
     setTableData,
     setAlertOpen,
@@ -22,36 +21,12 @@ function DeleteDialogBox() {
   } = useContext(Context);
 
   const handleFormDelete = () => {
-    // setTableData(tableData.filter((item) => item !== rowToDelete.original));
     setAlertOpen(false);
-    console.log(editData.id)
 
-    if (addBtnLabel === "Perspectives") {
-      axios.delete(`${urlConfig.deletePerspectiveUrl}/${editData?.id}`)
-      .then(() => {
-        axios.get(`${urlConfig.allPerspectivesUrl}`).then((response) => {
-          const formattedData = response.data.map((item) => ({
-            field: item.fieldDescription,
-            id: item.itemId,
-          }));
-          setTableData(formattedData);
-        });
-      });
-    } else if (addBtnLabel === "Initiatives") {
+    if (addBtnLabel === "Initiatives") {
       axios.delete(`${urlConfig.deleteInitiativeUrl}/${editData?.id}`)
       .then(() => {
         axios.get(`${urlConfig.allInitiativesUrl}`).then((response) => {
-          const formattedData = response.data.map((item) => ({
-            field: item.fieldDescription,
-            id: item.itemId,
-          }));
-          setTableData(formattedData);
-        });
-      });
-    } else if (addBtnLabel === "Periods") {
-      axios.delete(`${urlConfig.deletePeriodUrl}/${editData?.id}`)
-      .then(() => {
-        axios.get(`${urlConfig.allPeriodsUrl}`).then((response) => {
           const formattedData = response.data.map((item) => ({
             field: item.fieldDescription,
             id: item.itemId,
