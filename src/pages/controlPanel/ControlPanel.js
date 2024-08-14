@@ -137,7 +137,6 @@ const ControlPanel = () => {
           <Context.Provider
             value={{
               rowToDelete,
-              tableData,
               alertOpen,
               setTableData,
               setAlertOpen,
