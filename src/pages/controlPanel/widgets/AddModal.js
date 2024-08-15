@@ -176,19 +176,18 @@ function AddModal({ isPreview }) {
   };
   return (
     <>
-      <Dialog open={formOpen} onClose={handleClose}>
+      <Dialog open={formOpen} onClose={handleClose} maxWidth="sm" fullWidth={true}>
         <DialogTitle>{isPreview ? "Edit details" : "Add an Item"}</DialogTitle>
         <DialogContent>
           <Formik
             initialValues={initialValues}
             validationSchema={controlPanelValidationSchema}
-            onSubmit={handleFormSubmit}
+            onSubmit={handleFormSubmit} 
             validateOnChange={true}
             enableReinitialize
           >
             {(formik) => (
               <Form>
-                <Container>
                   <Grid spacing={2}>
                     <Grid item xs={12}>
                       <Field
@@ -197,6 +196,8 @@ function AddModal({ isPreview }) {
                         id="content"
                         name="content"
                         className="mb-2"
+                        fullWidth
+                        variant="outlined"
                       />
                       <ErrorMessage
                         component="div"
@@ -228,7 +229,6 @@ function AddModal({ isPreview }) {
                       </Box>
                     </Grid>
                   </Grid>
-                </Container>
               </Form>
             )}
           </Formik>
