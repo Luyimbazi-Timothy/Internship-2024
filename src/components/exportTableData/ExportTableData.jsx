@@ -31,7 +31,6 @@ export const exportTableData = (columns, rows, fileName = 'tableRows.pdf') => {
 
 
 export const tableExportHeaders = (table, columns, fileName) => {
-
   return (
     <>
       <Box
