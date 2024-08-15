@@ -165,6 +165,7 @@ const DetailPage = () => {
 
   const handleEdit = (row) => {
     setEditData(row.original);
+    console.log("Edit Data :",editData)
     handleShow();
   };
 

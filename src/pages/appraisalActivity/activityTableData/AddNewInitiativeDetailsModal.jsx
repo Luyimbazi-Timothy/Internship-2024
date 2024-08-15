@@ -118,6 +118,8 @@ function AddNewInitiativeDetailsModal({
     }
   };
 
+  console.log("initialData: ",initialData)
+
   return (
     <Modal size="lg" show={show} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
