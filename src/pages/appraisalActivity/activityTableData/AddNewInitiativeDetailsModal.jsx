@@ -80,6 +80,7 @@ function AddNewInitiativeDetailsModal({
   };
 
   const onSubmitEdit = async (values, { setSubmitting }) => {
+    console.log("initialData :",initialData)
     const currentDate = new Date(values.date);
     const date = currentDate.toISOString();
     const formData = {
