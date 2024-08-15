@@ -25,9 +25,7 @@ const ControlPanel = () => {
   const [dataSets, setDataSets] = useState({
     1: [],
     2: [],
-    3: [],
-    4: [],
-    5: [],
+    3: []
   });
 
   const fetchData = async () => {
