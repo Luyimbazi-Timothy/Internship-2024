@@ -72,7 +72,7 @@ function AddNewInitiativeDetailsModal({
         displaySuccessMessage("error");
       }
     } catch (error) {
-      console.error(error);
+      displaySuccessMessage("error");
     } finally {
       setRefresh(true);
       setSubmitting(false);
@@ -80,7 +80,6 @@ function AddNewInitiativeDetailsModal({
   };
 
   const onSubmitEdit = async (values, { setSubmitting }) => {
-    console.log("initialData :",initialData)
     const currentDate = new Date(values.date);
     const date = currentDate.toISOString();
     const formData = {
@@ -112,14 +111,12 @@ function AddNewInitiativeDetailsModal({
         setRefresh(true);
       }
     } catch (error) {
-      console.error(error);
+      displaySuccessMessage("error");
     } finally {
       setRefresh(true);
       setSubmitting(false);
     }
   };
-
-  console.log("initialData: ",initialData)
 
   return (
     <Modal size="lg" show={show} onHide={handleClose} backdrop="static">
