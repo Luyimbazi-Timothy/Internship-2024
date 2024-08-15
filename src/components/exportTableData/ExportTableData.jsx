@@ -9,9 +9,12 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 export const exportTableData = (columns, rows, fileName = 'tableRows.pdf') => {
   const doc = new jsPDF();
 
-  const tableHeaders = columns.map((col) => col.header);
+  // Filter out columns without accessorKey
+  const filteredColumns = columns.filter((col) => col.accessorKey);
+
+  const tableHeaders = filteredColumns.map((col) => col.header);
   const tableData = rows.map((row) =>
-    columns.map((col) => {
+    filteredColumns.map((col) => {
       const accessorKey = col.accessorKey.split('.');
       let value = row.original;
       accessorKey.forEach((key) => {

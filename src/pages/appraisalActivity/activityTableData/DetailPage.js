@@ -301,12 +301,11 @@ const DetailPage = () => {
         setRefresh={setRefresh}
         displaySuccessMessage={displaySuccessMessage}
         measurableActivity={data.measurableActivity.activity}
-        MeasurableActivityId={data.id}
+        MeasurableActivityId={measurableActivityId}
         show={show}
         handleClose={handleClose}
         initialData={editData}
       />
-
       <MaterialReactTable
         columns={columns}
         data={tableData}

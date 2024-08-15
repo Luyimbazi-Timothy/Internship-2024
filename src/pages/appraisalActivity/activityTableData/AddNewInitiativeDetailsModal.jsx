@@ -72,7 +72,7 @@ function AddNewInitiativeDetailsModal({
         displaySuccessMessage("error");
       }
     } catch (error) {
-      console.error(error);
+      displaySuccessMessage("error");
     } finally {
       setRefresh(true);
       setSubmitting(false);
@@ -111,7 +111,7 @@ function AddNewInitiativeDetailsModal({
         setRefresh(true);
       }
     } catch (error) {
-      console.error(error);
+      displaySuccessMessage("error");
     } finally {
       setRefresh(true);
       setSubmitting(false);
